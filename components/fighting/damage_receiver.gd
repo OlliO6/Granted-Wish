@@ -1,6 +1,8 @@
 class_name DamageReceiver
 extends Node
 
+const NODE_NAME = "DamageReceiver"
+
 signal damage_taken(amount: int)
 signal took_damage
 

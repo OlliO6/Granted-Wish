@@ -1,6 +1,8 @@
 class_name Health
 extends Node
 
+const NODE_NAME = "Health"
+
 signal health_changed
 signal healed(amount: int)
 signal took_damage(amount: int)

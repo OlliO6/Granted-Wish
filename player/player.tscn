@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=19 format=3 uid="uid://dpkbomvltkwjd"]
 
+[ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="1_paw6x"]
 [ext_resource type="Texture2D" uid="uid://ct7nfwbu580sb" path="res://player/player.png" id="1_qhmnx"]
@@ -13,6 +14,14 @@ radius = 3.16228
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1dcy7"]
 shader = ExtResource("1_g6ufr")
 shader_parameter/magic_color = Color(0.466667, 0.890196, 0.384314, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0no1"]
+atlas = ExtResource("1_qhmnx")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjg2g"]
+atlas = ExtResource("1_qhmnx")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t40de"]
 atlas = ExtResource("1_qhmnx")
@@ -41,6 +50,17 @@ region = Rect2(64, 0, 16, 16)
 [sub_resource type="SpriteFrames" id="SpriteFrames_0sax3"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0no1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjg2g")
+}],
+"loop": true,
+"name": &"damage",
+"speed": 10.0
+}, {
+"frames": [{
 "duration": 1.5,
 "texture": SubResource("AtlasTexture_t40de")
 }, {
@@ -55,7 +75,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_di4a8")
 }],
-"loop": true,
+"loop": false,
 "name": &"magic",
 "speed": 5.0
 }, {
@@ -78,12 +98,8 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-
-[node name="DamageReceiver" type="Node" parent="."]
-script = ExtResource("1_v2v0g")
-
-[node name="Health" type="Node" parent="."]
-script = ExtResource("2_blm1e")
+script = ExtResource("1_fwlov")
+movement_speed = 15.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
 script = ExtResource("1_paw6x")
@@ -95,12 +111,22 @@ script = ExtResource("2_mo2lt")
 [node name="RunState" type="Node" parent="StateMachine"]
 script = ExtResource("2_mo2lt")
 
+[node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("1_v2v0g")
+health = NodePath("../Health")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_blm1e")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_ja0ya")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_1dcy7")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_0sax3")
-animation = &"run"
-frame_progress = 0.436114
+animation = &"idle"
+
+[connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
+[connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]
