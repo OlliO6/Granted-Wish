@@ -1,7 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=16 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
+[ext_resource type="Script" path="res://components/state_machine.gd" id="1_paw6x"]
 [ext_resource type="Texture2D" uid="uid://ct7nfwbu580sb" path="res://player/player.png" id="1_qhmnx"]
+[ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_v2v0g"]
+[ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
+[ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
 radius = 3.16228
@@ -75,6 +79,22 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 
+[node name="DamageReceiver" type="Node" parent="."]
+script = ExtResource("1_v2v0g")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_blm1e")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
+script = ExtResource("1_paw6x")
+start_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("2_mo2lt")
+
+[node name="RunState" type="Node" parent="StateMachine"]
+script = ExtResource("2_mo2lt")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ja0ya")
 
@@ -83,4 +103,4 @@ material = SubResource("ShaderMaterial_1dcy7")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_0sax3")
 animation = &"run"
-frame_progress = 0.479141
+frame_progress = 0.436114
