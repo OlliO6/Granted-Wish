@@ -3,7 +3,7 @@ extends Node
 
 const NODE_NAME = "Health"
 
-signal health_changed
+signal health_changed(health: int)
 signal healed(amount: int)
 signal took_damage(amount: int)
 signal died
@@ -16,9 +16,9 @@ var health: int:
 		if is_dead:
 			return
 		health = v
-		health_changed.emit()
 		if health <= 0:
 			die()
+		health_changed.emit(health)
 
 var is_dead: bool
 

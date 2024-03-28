@@ -3,7 +3,7 @@ extends Node
 
 const NODE_NAME = "DamageReceiver"
 
-signal damage_taken(amount: int)
+signal damage_taken(amount: int, dealer: DamageDealer)
 signal took_damage
 
 @export var invincible: bool
@@ -16,8 +16,8 @@ func _process(delta: float) -> void:
 	if invis_timer > 0:
 		invis_timer -= delta
 
-func take_damage(dmg: int) -> void:
-	damage_taken.emit(dmg)
+func take_damage(dmg: int, dealer: DamageDealer) -> void:
+	damage_taken.emit(dmg, dealer)
 	took_damage.emit()
 	invis_timer = invis_time
 	if health:

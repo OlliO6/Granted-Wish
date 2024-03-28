@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://b7ifegmm708j0"]
+
+[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://content/spells/particle_sheet.png" id="1_c86mm"]
+[ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="2_jncim"]
+[ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="3_2u1px"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qju78"]
+radius = 2.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_21qm4"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_6pl41"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 26.9784), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iew3n"]
+curve = SubResource("Curve_6pl41")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_3icsx"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.55
+angle_min = -720.0
+angle_max = 720.0
+flatness = 0.533
+initial_velocity_min = 6.45
+initial_velocity_max = 6.45
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 2.0
+linear_accel_max = 2.0
+linear_accel_curve = SubResource("CurveTexture_iew3n")
+
+[node name="FireSpell" type="CharacterBody2D"]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qju78")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(1, 0.364706, 0.188235, 1)
+material = SubResource("CanvasItemMaterial_21qm4")
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_3icsx")
+texture = ExtResource("1_c86mm")
+
+[node name="DamageDealer" type="Node" parent="."]
+script = ExtResource("2_jncim")
+
+[node name="AttackArea" type="Area2D" parent="." node_paths=PackedStringArray("damage_dealer")]
+collision_layer = 0
+collision_mask = 5
+monitorable = false
+script = ExtResource("3_2u1px")
+damage_dealer = NodePath("../DamageDealer")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://7cw2k7tpryji"]
+
+[ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
+[ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="2_clbah"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_v2y50")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(58, 74)
+texture = ExtResource("2_clbah")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Icon"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Icon/StaticBody2D"]
+polygon = PackedVector2Array(64, -59.6, 64, 59, 59.6, 64, -59, 64, -64, 59.6, -64, -59.6, -59, -63.9, 59, -64)
