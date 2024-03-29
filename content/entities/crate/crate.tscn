@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4a43y8y3pfei"]
+[gd_scene load_steps=8 format=3 uid="uid://b4a43y8y3pfei"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_eryqk"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_m1is0"]
 [ext_resource type="PackedScene" uid="uid://ebxmqawynko7" path="res://utils/dmg_flash_sprite.tscn" id="3_7s35q"]
 [ext_resource type="Shader" path="res://shaders/sprite_flash.gdshader" id="3_cqbcn"]
+[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt.wav" id="5_h344l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5tmo"]
 size = Vector2(13, 13)
@@ -11,7 +12,7 @@ size = Vector2(13, 13)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ocv7n"]
 resource_local_to_scene = true
 shader = ExtResource("3_cqbcn")
-shader_parameter/flash = 1.0
+shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [node name="Crate" type="CharacterBody2D"]
@@ -31,5 +32,11 @@ shape = SubResource("RectangleShape2D_i5tmo")
 [node name="Sprite2D" parent="." instance=ExtResource("3_7s35q")]
 material = SubResource("ShaderMaterial_ocv7n")
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_h344l")
+pitch_scale = 0.8
+bus = &"Sfx"
+
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
+[connection signal="took_damage" from="DamageReceiver" to="AudioStreamPlayer2D" method="play"]
 [connection signal="died" from="Health" to="." method="queue_free"]

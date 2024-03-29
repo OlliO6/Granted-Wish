@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="SpellData" load_steps=3 format=3 uid="uid://capjs85u3qpvr"]
+[gd_resource type="Resource" script_class="SpellData" load_steps=4 format=3 uid="uid://capjs85u3qpvr"]
 
-[ext_resource type="Script" path="res://content/entities/spells/spell_data.gd" id="1_iukvq"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="2_nd3x2"]
+[ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="1_r1mxo"]
+[ext_resource type="Script" path="res://content/entities/spells/spell_data.gd" id="2_v81bl"]
+[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="3_lkuia"]
 
 [resource]
-script = ExtResource("1_iukvq")
-spell_scene = ExtResource("2_nd3x2")
-color = Color(0.988235, 0.415686, 0.32549, 1)
+script = ExtResource("2_v81bl")
+spell_scene = ExtResource("3_lkuia")
 rotated = true
 cast_delay = 1.0
 allow_hold = true
+color = Color(0.988235, 0.415686, 0.32549, 1)
+cast_sfx = ExtResource("1_r1mxo")
+sfx_pitch_range = Vector2(1.8, 2)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=23 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
+[ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
 radius = 3.16228
@@ -99,10 +100,15 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v37cn"]
+streams_count = 1
+stream_0/stream = ExtResource("10_vi8ss")
+stream_0/weight = 1.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_fwlov")
-movement_speed = 15.0
+movement_speed = 30.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
 script = ExtResource("1_paw6x")
@@ -138,6 +144,9 @@ spell_data = ExtResource("9_e8mk7")
 
 [node name="Timer" type="Timer" parent="SpellCaster"]
 one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SpellCaster"]
+stream = SubResource("AudioStreamRandomizer_v37cn")
 
 [connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
 [connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]

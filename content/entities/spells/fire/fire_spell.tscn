@@ -1,9 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://b7ifegmm708j0"]
+[gd_scene load_steps=32 format=3 uid="uid://b7ifegmm708j0"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="1_pehbd"]
 [ext_resource type="Script" path="res://components/fighting/killable.gd" id="2_2nxna"]
+[ext_resource type="AudioStream" uid="uid://81oq30bkr5jj" path="res://sfx/spells/fire_spell_sustain.mp3" id="3_cvpat"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://content/entities/spells/particle_sheet.png" id="3_s1sw3"]
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="4_0vw7e"]
+[ext_resource type="AudioStream" uid="uid://4xjqrgtw7yk7" path="res://sfx/spells/fire_spell_impact.mp3" id="5_gaogb"]
 
 [sub_resource type="Animation" id="Animation_jiilk"]
 length = 0.001
@@ -108,6 +110,33 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [1.0, 0.0]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AudioStreamPlayer2D")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 4.89,
+"start_offset": 0.0,
+"stream": ExtResource("3_cvpat")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/4/use_blend = true
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AudioStreamPlayer2D:volume_db")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(5.65685, 1),
+"update": 0,
+"values": [0.0, -80.0]
 }
 
 [sub_resource type="Animation" id="Animation_qn0jv"]
@@ -321,6 +350,15 @@ damage_dealer = NodePath("../../DamageDealer")
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_mmrge")
 
+[node name="ImpactAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_gaogb")
+bus = &"Sfx"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+bus = &"Sfx"
+
 [connection signal="died" from="Killable" to="AnimationPlayer" method="play" binds= ["die"]]
 [connection signal="body_entered" from="Area2D" to="Killable" method="die" unbinds=1]
+[connection signal="body_entered" from="Area2D" to="ImpactAudioPlayer2D" method="play" unbinds=1]
 [connection signal="damage_applied" from="Area2D/AttackArea" to="Killable" method="die" unbinds=1]
+[connection signal="damage_applied" from="Area2D/AttackArea" to="ImpactAudioPlayer2D" method="play" unbinds=1]

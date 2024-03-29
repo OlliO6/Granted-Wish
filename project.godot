@@ -15,6 +15,11 @@ run/main_scene="res://content/main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://sfx/bus_layout.tres"
+general/2d_panning_strength=1.5
+
 [autoload]
 
 InputManager="*res://singletons/input_manager.gd"
