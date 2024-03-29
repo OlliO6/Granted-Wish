@@ -1,7 +1,10 @@
 class_name AttackArea
 extends Area2D
 
+signal damage_applied(body: Node2D)
+
 @export var damage_dealer: DamageDealer
+@export var deactivate_on_damage_dealed: bool
 @export var active: bool = true:
 	set(v):
 		active = v
@@ -19,4 +22,10 @@ func _apply_damage(body: Node2D) -> void:
 	if !active:
 		return
 
-	damage_dealer.apply_damage(body)
+	if damage_dealer:
+		damage_dealer.apply_damage(body)
+	
+	if deactivate_on_damage_dealed:
+		active = false
+
+	damage_applied.emit(body)

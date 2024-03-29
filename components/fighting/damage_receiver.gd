@@ -1,8 +1,6 @@
 class_name DamageReceiver
 extends Node
 
-const NODE_NAME = "DamageReceiver"
-
 signal damage_taken(amount: int, dealer: DamageDealer)
 signal took_damage
 

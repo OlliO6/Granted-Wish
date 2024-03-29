@@ -1,13 +1,9 @@
 class_name Health
-extends Node
-
-const NODE_NAME = "Health"
+extends Killable
 
 signal health_changed(health: int)
 signal healed(amount: int)
 signal took_damage(amount: int)
-signal died
-signal revived
 
 @export var max_health: int = 10
 
@@ -20,10 +16,10 @@ var health: int:
 			die()
 		health_changed.emit(health)
 
-var is_dead: bool
-
 func _ready() -> void:
 	health = max_health
+	died.connect(_on_died)
+	revived.connect(_on_revived)
 
 func take_damage(dmg: int) -> void:
 	if is_dead:
@@ -37,18 +33,8 @@ func heal(amount: int) -> void:
 	health = amount
 	healed.emit(amount)
 
-func die() -> void:
-	if is_dead:
-		return
-	is_dead = true
+func _on_died() -> void:
 	health = 0
-	died.emit()
 
-func revive(health_amount: int=- 1) -> bool:
-	if !is_dead:
-		return false
-	
-	is_dead = false
-	health = health_amount if health_amount > 0 else max_health
-	revived.emit()
-	return true
+func _on_revived() -> void:
+	health = max_health
