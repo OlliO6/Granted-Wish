@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
-[ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/spells/spell_data/fire_spell.tres" id="9_e8mk7"]
+[ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/spells/fire/fire_spell.tres" id="9_e8mk7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
 radius = 3.16228

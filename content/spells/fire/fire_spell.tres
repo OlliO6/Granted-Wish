@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SpellData" load_steps=3 format=3 uid="uid://capjs85u3qpvr"]
 
-[ext_resource type="Script" path="res://content/spells/spell_data/spell_data.gd" id="1_iukvq"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/spells/fire_spell.tscn" id="2_nd3x2"]
+[ext_resource type="Script" path="res://content/spells/spell_data.gd" id="1_iukvq"]
+[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/spells/fire/fire_spell.tscn" id="2_nd3x2"]
 
 [resource]
 script = ExtResource("1_iukvq")

@@ -1,3 +1,4 @@
+#TODO: Make plugin that generates this
 class_name Components
 extends Node
 

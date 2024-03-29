@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
 [ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="2_clbah"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/spells/fire_spell.tscn" id="3_6pgig"]
+[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/spells/fire/fire_spell.tscn" id="3_6pgig"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
