@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=21 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_v2v0g"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
+[ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
+[ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/spells/spell_data/fire_spell.tres" id="9_e8mk7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
 radius = 3.16228
@@ -128,6 +130,14 @@ material = SubResource("ShaderMaterial_1dcy7")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_0sax3")
 animation = &"idle"
+
+[node name="SpellCaster" type="Node2D" parent="."]
+position = Vector2(0, -4)
+script = ExtResource("8_4qdl6")
+spell_data = ExtResource("9_e8mk7")
+
+[node name="Timer" type="Timer" parent="SpellCaster"]
+one_shot = true
 
 [connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
 [connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]
