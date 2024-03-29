@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://ebxmqawynko7"]
+
+[ext_resource type="Shader" path="res://shaders/sprite_flash.gdshader" id="1_ga5bo"]
+[ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="2_2dkom"]
+[ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="3_4qxnj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6qn8x"]
+resource_local_to_scene = true
+shader = ExtResource("1_ga5bo")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[node name="Sprite2D" type="Sprite2D"]
+material = SubResource("ShaderMaterial_6qn8x")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_2dkom")
+centered = false
+script = ExtResource("3_4qxnj")

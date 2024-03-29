@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4a43y8y3pfei"]
+
+[ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_eryqk"]
+[ext_resource type="Script" path="res://components/fighting/health.gd" id="2_m1is0"]
+[ext_resource type="PackedScene" uid="uid://ebxmqawynko7" path="res://utils/dmg_flash_sprite.tscn" id="3_7s35q"]
+[ext_resource type="Shader" path="res://shaders/sprite_flash.gdshader" id="3_cqbcn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5tmo"]
+size = Vector2(13, 13)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocv7n"]
+resource_local_to_scene = true
+shader = ExtResource("3_cqbcn")
+shader_parameter/flash = 1.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[node name="Crate" type="CharacterBody2D"]
+
+[node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("1_eryqk")
+health = NodePath("../Health")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_m1is0")
+max_health = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6.5, 6.5)
+shape = SubResource("RectangleShape2D_i5tmo")
+
+[node name="Sprite2D" parent="." instance=ExtResource("3_7s35q")]
+material = SubResource("ShaderMaterial_ocv7n")
+
+[connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
+[connection signal="died" from="Health" to="." method="queue_free"]

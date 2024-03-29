@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=8 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
 [ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="2_clbah"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/spells/fire/fire_spell.tscn" id="3_6pgig"]
+[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="3_6pgig"]
+[ext_resource type="PackedScene" uid="uid://b4a43y8y3pfei" path="res://content/entities/crate/crate.tscn" id="4_qeshn"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
@@ -10,7 +11,7 @@ glow_enabled = true
 glow_levels/4 = 0.5
 glow_levels/5 = 0.0
 glow_normalized = true
-glow_strength = 1.25
+glow_strength = 1.15
 glow_blend_mode = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xl5km"]
@@ -46,3 +47,15 @@ layer_0/tile_data = PackedInt32Array(-1, 65536, 1, 65535, 65536, 1, 131071, 6553
 
 [node name="FireSpell" parent="." instance=ExtResource("3_6pgig")]
 position = Vector2(-28, 39)
+
+[node name="Crate" parent="." instance=ExtResource("4_qeshn")]
+position = Vector2(-42, -43)
+
+[node name="Crate2" parent="." instance=ExtResource("4_qeshn")]
+position = Vector2(-23, -42)
+
+[node name="Crate3" parent="." instance=ExtResource("4_qeshn")]
+position = Vector2(8, -42)
+
+[node name="Crate4" parent="." instance=ExtResource("4_qeshn")]
+position = Vector2(43, -41)
