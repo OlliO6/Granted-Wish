@@ -4,6 +4,10 @@ const DEADZONE = 0.2
 
 signal attack_pressed
 
+signal next_spell_pressed
+signal previous_spell_pressed
+signal spell_selected(idx: int)
+
 func _unhandled_input(event: InputEvent) -> void:
 
     if event.is_echo():
@@ -11,6 +15,20 @@ func _unhandled_input(event: InputEvent) -> void:
 
     if event.is_action_pressed("attack"):
         attack_pressed.emit()
+        return
+    
+    if event.is_action_pressed("next_spell"):
+        next_spell_pressed.emit()
+        return
+    
+    if event.is_action_pressed("previous_spell"):
+        previous_spell_pressed.emit()
+        return
+    
+    if event is InputEventKey:
+        var c = char(event.unicode)
+        if c.is_valid_int():
+            spell_selected.emit(c.to_int())
 
 func is_attack_pressed() -> bool:
     return Input.is_action_pressed("attack")
