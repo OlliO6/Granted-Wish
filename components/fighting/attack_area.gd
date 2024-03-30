@@ -18,14 +18,14 @@ func rescan() -> void:
 	for b in get_overlapping_bodies():
 		_apply_damage(b)
 
+func set_active(a: bool):
+	active = a
+
 func _apply_damage(body: Node2D) -> void:
 	if !active:
 		return
 
-	if damage_dealer:
-		damage_dealer.apply_damage(body)
-	
-	if deactivate_on_damage_dealed:
-		active = false
-
-	damage_applied.emit(body)
+	if damage_dealer and damage_dealer.apply_damage(body):
+		damage_applied.emit(body)
+		if deactivate_on_damage_dealed:
+			active = false

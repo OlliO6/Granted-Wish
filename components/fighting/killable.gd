@@ -4,6 +4,8 @@ extends Node
 signal died
 signal revived
 
+@export var allow_revival: bool
+
 var is_dead: bool
 
 func die() -> void:
@@ -13,7 +15,7 @@ func die() -> void:
 	died.emit()
 
 func revive() -> bool:
-	if !is_dead:
+	if !is_dead or !allow_revival:
 		return false
 	
 	is_dead = false
