@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=27 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_v2v0g"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
+[ext_resource type="Script" path="res://components/fighting/knockback.gd" id="6_wvrdg"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
 [ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
@@ -19,6 +20,11 @@ radius = 3.16228
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1dcy7"]
 shader = ExtResource("1_g6ufr")
 shader_parameter/magic_color = Color(0.466667, 0.890196, 0.556863, 1)
+shader_parameter/invis = false
+shader_parameter/invis_blink_speed = 30.0
+shader_parameter/invis_blink_color = Color(1, 0.301961, 0.337255, 0)
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0no1"]
 atlas = ExtResource("1_qhmnx")
@@ -132,12 +138,19 @@ script = ExtResource("2_mo2lt")
 [node name="RunState" type="Node" parent="StateMachine"]
 script = ExtResource("2_mo2lt")
 
+[node name="DamageState" type="Node" parent="StateMachine"]
+script = ExtResource("2_mo2lt")
+
 [node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
 script = ExtResource("1_v2v0g")
+invis_time = 2.0
 health = NodePath("../Health")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_blm1e")
+
+[node name="Knockback" type="Node" parent="."]
+script = ExtResource("6_wvrdg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
@@ -147,7 +160,7 @@ shape = SubResource("CircleShape2D_ja0ya")
 material = SubResource("ShaderMaterial_1dcy7")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_0sax3")
-animation = &"idle"
+animation = &"damage"
 
 [node name="SpellCaster" type="Node2D" parent="."]
 position = Vector2(0, -4)
@@ -162,4 +175,7 @@ stream = SubResource("AudioStreamRandomizer_v37cn")
 
 [connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
 [connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]
+[connection signal="state_entered" from="StateMachine/DamageState" to="AnimatedSprite2D" method="play" binds= ["damage"]]
+[connection signal="invis_time_ended" from="DamageReceiver" to="." method="_on_invis_time_ended"]
+[connection signal="took_damage" from="DamageReceiver" to="." method="_on_took_damage"]
 [connection signal="selected_spell_changed" from="SpellCaster" to="." method="_on_selected_spell_changed" flags=3]

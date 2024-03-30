@@ -135,9 +135,6 @@ render_target_clear_mode = 1
 [node name="BloodEffect" parent="Sprite2D/BloodViewport" instance=ExtResource("5_8p0uu")]
 position = Vector2(100, 50)
 
-[node name="GPUParticles2D" parent="Sprite2D/BloodViewport/BloodEffect" index="0"]
-emitting = true
-
 [connection signal="timeout" from="Crate/Spawner/Timer" to="Crate/Spawner" method="spawn"]
 
 [editable path="Crate"]

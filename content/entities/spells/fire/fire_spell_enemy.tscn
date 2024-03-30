@@ -10,8 +10,12 @@ shader_parameter/line_scale = 1.0
 
 [node name="FireSpell" instance=ExtResource("1_am1pk")]
 
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = true
+
 [node name="CanvasGroup" parent="Area2D" index="1"]
 material = SubResource("ShaderMaterial_yg0sn")
 
 [node name="AttackArea" parent="Area2D" index="2"]
+visible = true
 collision_mask = 3
