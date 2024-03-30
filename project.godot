@@ -23,6 +23,7 @@ general/2d_panning_strength=1.5
 [autoload]
 
 InputManager="*res://singletons/input_manager.gd"
+Globals="*res://singletons/globals.gd"
 
 [display]
 

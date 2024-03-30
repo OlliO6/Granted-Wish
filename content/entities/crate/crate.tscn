@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://b4a43y8y3pfei"]
+[gd_scene load_steps=10 format=3 uid="uid://b4a43y8y3pfei"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_eryqk"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_m1is0"]
 [ext_resource type="PackedScene" uid="uid://ebxmqawynko7" path="res://utils/dmg_flash_sprite.tscn" id="3_7s35q"]
-[ext_resource type="Shader" path="res://shaders/sprite_flash.gdshader" id="3_cqbcn"]
-[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt.wav" id="5_h344l"]
+[ext_resource type="Shader" path="res://vfx/shaders/sprite_flash.gdshader" id="3_cqbcn"]
+[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="5_ki6pp"]
+[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="6_kjx8f"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="7_eaasu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i5tmo"]
 size = Vector2(13, 13)
@@ -33,10 +35,16 @@ shape = SubResource("RectangleShape2D_i5tmo")
 material = SubResource("ShaderMaterial_ocv7n")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("5_h344l")
+stream = ExtResource("5_ki6pp")
 pitch_scale = 0.8
 bus = &"Sfx"
+
+[node name="BloodSpawner" type="Node2D" parent="."]
+position = Vector2(6, 6)
+script = ExtResource("6_kjx8f")
+effect_scn = ExtResource("7_eaasu")
 
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
 [connection signal="took_damage" from="DamageReceiver" to="AudioStreamPlayer2D" method="play"]
 [connection signal="died" from="Health" to="." method="queue_free"]
+[connection signal="died" from="Health" to="BloodSpawner" method="spawn"]

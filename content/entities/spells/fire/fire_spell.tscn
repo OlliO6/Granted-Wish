@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="1_pehbd"]
 [ext_resource type="Script" path="res://components/fighting/killable.gd" id="2_2nxna"]
 [ext_resource type="AudioStream" uid="uid://81oq30bkr5jj" path="res://sfx/spells/fire_spell_sustain.mp3" id="3_cvpat"]
-[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://content/entities/spells/particle_sheet.png" id="3_s1sw3"]
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="4_0vw7e"]
+[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="4_5a2no"]
 [ext_resource type="AudioStream" uid="uid://4xjqrgtw7yk7" path="res://sfx/spells/fire_spell_impact.mp3" id="5_gaogb"]
 
 [sub_resource type="Animation" id="Animation_jiilk"]
@@ -327,7 +327,7 @@ material = SubResource("CanvasItemMaterial_21qm4")
 position = Vector2(1, 0)
 amount = 12
 process_material = SubResource("ParticleProcessMaterial_3icsx")
-texture = ExtResource("3_s1sw3")
+texture = ExtResource("4_5a2no")
 explosiveness = 0.19
 local_coords = true
 
@@ -336,7 +336,7 @@ show_behind_parent = true
 material = SubResource("CanvasItemMaterial_21qm4")
 amount = 6
 process_material = SubResource("ParticleProcessMaterial_kq3wh")
-texture = ExtResource("3_s1sw3")
+texture = ExtResource("4_5a2no")
 explosiveness = 0.19
 
 [node name="AttackArea" type="Area2D" parent="Area2D" node_paths=PackedStringArray("damage_dealer")]

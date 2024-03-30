@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://bdwlpvhvpqmqf"]
+
+[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_fcw08"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vr8a1"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_2bkij"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.31559, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_8vc4f"]
+curve_y = SubResource("Curve_2bkij")
+
+[sub_resource type="Curve" id="Curve_melm4"]
+_data = [Vector2(0, 0), 0.0, 1.94225, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mtubc"]
+curve = SubResource("Curve_melm4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ey3pc"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 60.2
+initial_velocity_min = 9.7
+initial_velocity_max = 20.15
+directional_velocity_min = 1.0
+directional_velocity_max = 13.8
+directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_mtubc")
+anim_offset_max = 1.0
+
+[node name="BloodEffect" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.380392, 0.14902, 0.219608, 1)
+material = SubResource("CanvasItemMaterial_vr8a1")
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_ey3pc")
+texture = ExtResource("1_fcw08")
+one_shot = true
+explosiveness = 0.85
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="ready" from="GPUParticles2D" to="GPUParticles2D" method="restart"]
+[connection signal="timeout" from="Timer" to="." method="queue_free"]
