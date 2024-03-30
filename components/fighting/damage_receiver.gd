@@ -6,7 +6,7 @@ signal took_damage
 signal hit_direction_update(rotation: float)
 
 @export var invincible: bool
-@export var invis_time: float = 0.0
+@export var invis_time: float = 0.05
 @export var health: Health
 
 var invis_timer: float

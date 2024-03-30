@@ -1,10 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=17 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_q6t38"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
 [ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="2_clbah"]
 [ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="3_6pgig"]
 [ext_resource type="PackedScene" uid="uid://b4a43y8y3pfei" path="res://content/entities/crate/crate.tscn" id="4_qeshn"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="5_8p0uu"]
+[ext_resource type="Shader" path="res://vfx/shaders/sprite_flash.gdshader" id="6_8bo0n"]
+[ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="7_o2qfo"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
@@ -30,9 +33,33 @@ texture = ExtResource("2_clbah")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_xl5km")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocv7n"]
+resource_local_to_scene = true
+shader = ExtResource("6_8bo0n")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_vv1b2"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qnxt6"]
+gradient = SubResource("Gradient_vv1b2")
+fill = 1
+fill_from = Vector2(0.512821, 0.5)
+fill_to = Vector2(0.910256, 0.470085)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06tm4"]
+shader = ExtResource("7_o2qfo")
+shader_parameter/min_a = 0.5
+shader_parameter/spec_intensity = Color(1000, 1000, 1000, 1000)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2v0d8"]
+viewport_path = NodePath("Sprite2D/BloodViewport")
+
 [node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
+y_sort_enabled = true
 script = ExtResource("1_q6t38")
-blood_viewport = NodePath("BloodContainer/BloodViewport")
+blood_viewport = NodePath("Sprite2D/BloodViewport")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_srm4m")
@@ -55,6 +82,12 @@ position = Vector2(67, 25)
 [node name="Crate" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(92, 28)
 
+[node name="Health" parent="Crate" index="1"]
+max_health = 12
+
+[node name="Sprite2D" parent="Crate" index="3"]
+material = SubResource("ShaderMaterial_ocv7n")
+
 [node name="Crate2" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(111, 29)
 
@@ -64,20 +97,29 @@ position = Vector2(142, 29)
 [node name="Crate4" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(177, 30)
 
-[node name="BloodContainer" type="SubViewportContainer" parent="."]
-z_index = -1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 288.0
-offset_bottom = 162.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+energy = 0.0
 
-[node name="BloodViewport" type="SubViewport" parent="BloodContainer"]
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(107, 48)
+texture = SubResource("GradientTexture2D_qnxt6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+material = SubResource("ShaderMaterial_06tm4")
+texture = SubResource("ViewportTexture_2v0d8")
+centered = false
+
+[node name="BloodViewport" type="SubViewport" parent="Sprite2D"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(288, 162)
 render_target_clear_mode = 1
-render_target_update_mode = 4
+
+[node name="BloodEffect" parent="Sprite2D/BloodViewport" instance=ExtResource("5_8p0uu")]
+position = Vector2(100, 50)
+
+[editable path="Crate"]
+[editable path="Sprite2D/BloodViewport/BloodEffect"]
