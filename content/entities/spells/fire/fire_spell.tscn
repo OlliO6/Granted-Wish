@@ -48,7 +48,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GPUParticles2D/GPUParticles2D2:amount_ratio")
+tracks/3/path = NodePath("CanvasGroup/GPUParticles2D/GPUParticles2D2:amount_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -102,7 +102,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("GPUParticles2D/GPUParticles2D2:amount_ratio")
+tracks/3/path = NodePath("CanvasGroup/GPUParticles2D/GPUParticles2D2:amount_ratio")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -319,9 +319,12 @@ autoplay = "default"
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_qju78")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Area2D"]
+[node name="CanvasGroup" type="CanvasGroup" parent="Area2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Area2D/CanvasGroup"]
 modulate = Color(1.5, 1.5, 1, 1)
 material = SubResource("CanvasItemMaterial_21qm4")
 position = Vector2(1, 0)
@@ -331,20 +334,22 @@ texture = ExtResource("4_5a2no")
 explosiveness = 0.19
 local_coords = true
 
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="Area2D/GPUParticles2D"]
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Area2D/CanvasGroup/GPUParticles2D"]
 show_behind_parent = true
 material = SubResource("CanvasItemMaterial_21qm4")
 amount = 6
 process_material = SubResource("ParticleProcessMaterial_kq3wh")
 texture = ExtResource("4_5a2no")
-explosiveness = 0.19
+explosiveness = 0.1
 
 [node name="AttackArea" type="Area2D" parent="Area2D" node_paths=PackedStringArray("damage_dealer")]
+visible = false
 collision_layer = 0
 collision_mask = 5
 monitorable = false
 script = ExtResource("4_0vw7e")
 damage_dealer = NodePath("../../DamageDealer")
+deactivate_on_damage_dealed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/AttackArea"]
 position = Vector2(-1, 0)

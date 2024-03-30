@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=19 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_q6t38"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="3_6pgig"]
 [ext_resource type="PackedScene" uid="uid://b4a43y8y3pfei" path="res://content/entities/crate/crate.tscn" id="4_qeshn"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="5_8p0uu"]
-[ext_resource type="Shader" path="res://vfx/shaders/sprite_flash.gdshader" id="6_8bo0n"]
+[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="6_8bo0n"]
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="7_o2qfo"]
+[ext_resource type="Script" path="res://components/spawner.gd" id="7_ofaj6"]
+[ext_resource type="PackedScene" uid="uid://btv6lbk0s7oeo" path="res://content/entities/spells/fire/fire_spell_enemy.tscn" id="8_xv0h7"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
@@ -81,12 +83,24 @@ position = Vector2(67, 25)
 
 [node name="Crate" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(92, 28)
+collision_layer = 4
 
 [node name="Health" parent="Crate" index="1"]
 max_health = 12
 
 [node name="Sprite2D" parent="Crate" index="3"]
 material = SubResource("ShaderMaterial_ocv7n")
+
+[node name="Spawner" type="Node2D" parent="Crate"]
+position = Vector2(7, 7)
+rotation = 1.5708
+script = ExtResource("7_ofaj6")
+scene = ExtResource("8_xv0h7")
+specified_parent = NodePath("../..")
+
+[node name="Timer" type="Timer" parent="Crate/Spawner"]
+wait_time = 2.0
+autostart = true
 
 [node name="Crate2" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(111, 29)
@@ -120,6 +134,11 @@ render_target_clear_mode = 1
 
 [node name="BloodEffect" parent="Sprite2D/BloodViewport" instance=ExtResource("5_8p0uu")]
 position = Vector2(100, 50)
+
+[node name="GPUParticles2D" parent="Sprite2D/BloodViewport/BloodEffect" index="0"]
+emitting = true
+
+[connection signal="timeout" from="Crate/Spawner/Timer" to="Crate/Spawner" method="spawn"]
 
 [editable path="Crate"]
 [editable path="Sprite2D/BloodViewport/BloodEffect"]

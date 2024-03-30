@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_eryqk"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_m1is0"]
 [ext_resource type="PackedScene" uid="uid://ebxmqawynko7" path="res://utils/dmg_flash_sprite.tscn" id="3_7s35q"]
-[ext_resource type="Shader" path="res://vfx/shaders/sprite_flash.gdshader" id="3_cqbcn"]
+[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="3_cqbcn"]
 [ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="5_ki6pp"]
 [ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="6_kjx8f"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="7_eaasu"]

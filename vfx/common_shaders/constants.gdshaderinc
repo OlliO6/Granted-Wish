@@ -1,0 +1,2 @@
+const vec2 GAME_WINDOW_SIZE = vec2(288, 162);
+const vec2 GAME_PIXEL_SIZE = 1.0 / GAME_WINDOW_SIZE;
