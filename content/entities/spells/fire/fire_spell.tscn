@@ -302,7 +302,7 @@ radius = 4.0
 
 [node name="FireSpell" type="Node2D"]
 
-[node name="DamageDealer" type="Node" parent="."]
+[node name="DamageDealer" type="Node2D" parent="."]
 script = ExtResource("1_pehbd")
 
 [node name="Killable" type="Node" parent="."]

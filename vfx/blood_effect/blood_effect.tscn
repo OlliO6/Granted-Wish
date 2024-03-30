@@ -26,12 +26,14 @@ curve = SubResource("Curve_melm4")
 particle_flag_align_y = true
 particle_flag_disable_z = true
 spread = 60.2
-initial_velocity_min = 9.7
-initial_velocity_max = 20.15
+initial_velocity_min = 18.0
+initial_velocity_max = 35.0
 directional_velocity_min = 1.0
 directional_velocity_max = 13.8
 directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
 gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
 scale_curve = SubResource("CurveTexture_mtubc")
 anim_offset_max = 1.0
 
@@ -44,6 +46,7 @@ emitting = false
 amount = 10
 process_material = SubResource("ParticleProcessMaterial_ey3pc")
 texture = ExtResource("1_fcw08")
+lifetime = 0.4
 one_shot = true
 explosiveness = 0.85
 
