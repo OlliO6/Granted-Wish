@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=28 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -11,8 +11,7 @@
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
 [ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
-[ext_resource type="Script" path="res://content/entities/spells/spell_data.gd" id="11_7qgwh"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="12_4g47f"]
+[ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="13_sx2fl"]
 [ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="14_p1v7n"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="15_m7wyx"]
 [ext_resource type="AudioStream" uid="uid://b43t01npdxdfm" path="res://sfx/player/hurt.wav" id="16_rnpwm"]
@@ -111,17 +110,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Resource" id="Resource_lsy1j"]
-script = ExtResource("11_7qgwh")
-spell_scene = ExtResource("12_4g47f")
-rotated = true
-cast_delay = 1.0
-player_stun_time = 0.2
-allow_hold = true
-color = Color(0.341176, 0.686275, 0.701961, 1)
-cast_sfx = ExtResource("10_vi8ss")
-sfx_pitch_range = Vector2(1.8, 2)
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_v37cn"]
 streams_count = 1
 stream_0/stream = ExtResource("10_vi8ss")
@@ -177,7 +165,7 @@ animation = &"magic"
 [node name="SpellCaster" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("8_4qdl6")
-spell_data = Array[ExtResource("11_7qgwh")]([ExtResource("9_e8mk7"), SubResource("Resource_lsy1j")])
+spell_data = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7"), ExtResource("13_sx2fl")])
 
 [node name="Timer" type="Timer" parent="SpellCaster"]
 one_shot = true

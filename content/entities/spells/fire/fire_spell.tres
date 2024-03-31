@@ -8,7 +8,8 @@
 script = ExtResource("2_v81bl")
 spell_scene = ExtResource("3_lkuia")
 rotated = true
-cast_delay = 1.0
+cast_delay = 0.75
+player_stun_time = 0.2
 allow_hold = true
 color = Color(0.988235, 0.415686, 0.32549, 1)
 cast_sfx = ExtResource("1_r1mxo")
