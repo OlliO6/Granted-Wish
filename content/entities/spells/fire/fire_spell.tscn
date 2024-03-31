@@ -329,7 +329,6 @@ radius = 4.0
 
 [node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
 script = ExtResource("1_pehbd")
-damage = 10
 knockback = ExtResource("2_nrrx3")
 killable = NodePath("../Killable")
 

@@ -7,16 +7,24 @@ signal healed(amount: int)
 signal took_damage(amount: int)
 
 @export var max_health: int = 10
+@export var cap_to_max: bool
 
 var health: int:
 	set(v):
 		if is_dead:
 			return
+
 		health_changing.emit(health, v)
 		health = v
+
 		if health <= 0:
 			die()
+		elif cap_to_max and health > max_health:
+			health = max_health
+
 		health_changed.emit(health)
+	get:
+		return max(0, health)
 
 func _ready() -> void:
 	health = max_health
@@ -34,6 +42,10 @@ func heal(amount: int) -> void:
 		return
 	health = amount
 	healed.emit(amount)
+
+# returns 1 if full live and 0 if dead
+func get_ratio() -> float:
+	return float(health) / float(max_health)
 
 func _on_died() -> void:
 	health = 0

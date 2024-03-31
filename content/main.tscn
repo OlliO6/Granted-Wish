@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=27 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_q6t38"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
@@ -10,6 +10,7 @@
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="7_o2qfo"]
 [ext_resource type="Script" path="res://components/spawner.gd" id="7_ofaj6"]
 [ext_resource type="PackedScene" uid="uid://btv6lbk0s7oeo" path="res://content/entities/spells/fire/fire_spell_enemy.tscn" id="8_xv0h7"]
+[ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_thb3f"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
@@ -56,7 +57,7 @@ shader_parameter/min_a = 0.5
 shader_parameter/spec_intensity = Color(1000, 1000, 1000, 1000)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_2v0d8"]
-viewport_path = NodePath("Sprite2D/BloodViewport")
+viewport_path = NodePath("BloodLayer/BloodViewport")
 
 [sub_resource type="Gradient" id="Gradient_5p7cw"]
 interpolation_mode = 1
@@ -98,16 +99,16 @@ scale_curve = SubResource("CurveTexture_mtubc")
 color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
 anim_offset_max = 1.0
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport", "player")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
 y_sort_enabled = true
 script = ExtResource("1_q6t38")
-blood_viewport = NodePath("Sprite2D/BloodViewport")
-player = NodePath("Player")
+blood_viewport = NodePath("BloodLayer/BloodViewport")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_srm4m")
 
 [node name="Player" parent="." instance=ExtResource("1_v2y50")]
+unique_name_in_owner = true
 position = Vector2(143, 80)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -161,26 +162,31 @@ visible = false
 position = Vector2(107, 48)
 texture = SubResource("GradientTexture2D_qnxt6")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BloodLayer" type="Sprite2D" parent="."]
 z_index = -1
 material = SubResource("ShaderMaterial_06tm4")
+position = Vector2(-11, 33)
 texture = SubResource("ViewportTexture_2v0d8")
 centered = false
 
-[node name="BloodViewport" type="SubViewport" parent="Sprite2D"]
+[node name="BloodViewport" type="SubViewport" parent="BloodLayer"]
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(288, 162)
 render_target_clear_mode = 1
 
-[node name="BloodEffect" parent="Sprite2D/BloodViewport" instance=ExtResource("5_8p0uu")]
+[node name="BloodEffect" parent="BloodLayer/BloodViewport" instance=ExtResource("5_8p0uu")]
 position = Vector2(100, 50)
 
-[node name="GPUParticles2D" parent="Sprite2D/BloodViewport/BloodEffect" index="0"]
+[node name="GPUParticles2D" parent="BloodLayer/BloodViewport/BloodEffect" index="0"]
 process_material = SubResource("ParticleProcessMaterial_t0pgi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="IngameUI" parent="CanvasLayer" instance=ExtResource("11_thb3f")]
 
 [connection signal="timeout" from="Crate/Spawner/Timer" to="Crate/Spawner" method="spawn"]
 
 [editable path="Crate"]
-[editable path="Sprite2D/BloodViewport/BloodEffect"]
+[editable path="BloodLayer/BloodViewport/BloodEffect"]

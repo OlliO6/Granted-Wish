@@ -1,0 +1,110 @@
+[gd_scene load_steps=16 format=3 uid="uid://bfiuv8ahbyid"]
+
+[ext_resource type="Shader" path="res://ui/ingame_ui/health_bar.gdshader" id="1_8h3ij"]
+[ext_resource type="Texture2D" uid="uid://22fijexy4d06" path="res://ui/ingame_ui/empty_heart.png" id="2_8rxnp"]
+[ext_resource type="Texture2D" uid="uid://bdmeyo00v2s1w" path="res://ui/ingame_ui/full_heart.png" id="3_7x7tj"]
+[ext_resource type="Script" path="res://ui/ingame_ui/health_bar.gd" id="4_mhxa2"]
+[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="5_mwaki"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_63dt3"]
+shader = ExtResource("1_8h3ij")
+shader_parameter/amplitude = 0.0
+shader_parameter/speed = 75.0
+shader_parameter/amp_sine_speed = 5.0
+shader_parameter/amplitude_2 = 0.0
+
+[sub_resource type="Curve" id="Curve_ukhi1"]
+max_value = 3.0
+_data = [Vector2(0, 2.50466), 0.0, -0.0680328, 0, 0, Vector2(0.249438, 1.08467), 0.0, 0.0, 0, 0, Vector2(0.748315, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0915081, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7e7ka"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_tw3g2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.540741, 0.993874), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_oxpb4"]
+curve = SubResource("Curve_tw3g2")
+
+[sub_resource type="Curve" id="Curve_jki61"]
+_data = [Vector2(0, 0.00754011), 0.0, 0.0, 0, 0, Vector2(0.345679, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.6422, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_n4sr8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.234568, 1), 0.0, 0.0, 0, 0, Vector2(0.693827, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.71828, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_u4ppi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.08353, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_dki58"]
+curve_x = SubResource("Curve_jki61")
+curve_y = SubResource("Curve_n4sr8")
+curve_z = SubResource("Curve_u4ppi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tqmtv"]
+lifetime_randomness = 0.5
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 12.0
+emission_ring_inner_radius = 6.0
+spread = 180.0
+flatness = 0.801
+radial_velocity_min = 35.0
+radial_velocity_max = 70.0
+gravity = Vector3(0, 98, 0)
+scale_curve = SubResource("CurveXYZTexture_dki58")
+alpha_curve = SubResource("CurveTexture_oxpb4")
+hue_variation_min = -0.03
+anim_offset_max = 1.0
+
+[node name="HealthBar" type="TextureProgressBar"]
+material = SubResource("ShaderMaterial_63dt3")
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = -48.0
+offset_right = 64.0
+offset_bottom = -16.0
+grow_vertical = 0
+mouse_filter = 2
+max_value = 32.0
+fill_mode = 3
+texture_under = ExtResource("2_8rxnp")
+texture_progress = ExtResource("3_7x7tj")
+script = ExtResource("4_mhxa2")
+shake_amp_over_health = SubResource("Curve_ukhi1")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="CenterContainer/Control"]
+unique_name_in_owner = true
+modulate = Color(0.380392, 0.14902, 0.219608, 1)
+material = SubResource("CanvasItemMaterial_7e7ka")
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_tqmtv")
+texture = ExtResource("5_mwaki")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.83
+randomness = 1.0

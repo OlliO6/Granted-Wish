@@ -63,7 +63,7 @@ func _on_spell_casted(_spell: Node2D, spell_data: SpellData) -> void:
 	sm.switch_state(spell_casted_stun_state)
 
 func _on_damage_taken(amount: int, dealer: DamageDealer) -> void:
-	pass
+	Events.player_damaged.emit(amount, dealer)
 
 func _on_knockback_started() -> void:
 	sm.switch_state(knockback_state)
