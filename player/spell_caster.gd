@@ -1,8 +1,8 @@
 class_name SpellCaster
 extends Node2D
 
-signal spell_casted(spell: Node2D)
-signal selected_spell_changed(spell: SpellData)
+signal spell_casted(spell: Node2D, spell_data: SpellData)
+signal selected_spell_changed(spell_data: SpellData)
 
 @export var spell_data: Array[SpellData]
 
@@ -43,7 +43,7 @@ func cast_spell(data: SpellData) -> void:
 	audio_player.pitch_scale = UtilFunctions.rand_range(data.sfx_pitch_range)
 	audio_player.play()
 
-	spell_casted.emit(spell)
+	spell_casted.emit(spell, data)
 	timer.start(data.cast_delay)
 
 func get_current_spell_data() -> SpellData:

@@ -37,7 +37,7 @@ curve = SubResource("Curve_melm4")
 resource_local_to_scene = true
 particle_flag_align_y = true
 particle_flag_disable_z = true
-spread = 48.2
+spread = 38.0
 initial_velocity_max = 35.0
 directional_velocity_min = 1.0
 directional_velocity_max = 13.8
@@ -55,7 +55,6 @@ script = ExtResource("1_c3gfl")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_vr8a1")
 emitting = false
-amount = 5
 process_material = SubResource("ParticleProcessMaterial_ey3pc")
 texture = ExtResource("1_fcw08")
 lifetime = 0.4

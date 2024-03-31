@@ -15,10 +15,13 @@ func _enter_start_state() -> void:
 	if !is_instance_valid(state):
 		switch_state(start_state)
 
-func switch_state(to_state: State, _emit_switched:=true):
+func switch_state(to_state: State):
 	prev_state = state
 	state = to_state
 	if prev_state:
 		prev_state.exit()
 	state.enter()
 	state_switched.emit(to_state, prev_state)
+
+func switch_state_str(state_node_path: NodePath):
+	switch_state(get_node(state_node_path))

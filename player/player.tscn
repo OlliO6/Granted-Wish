@@ -116,6 +116,7 @@ script = ExtResource("11_7qgwh")
 spell_scene = ExtResource("12_4g47f")
 rotated = true
 cast_delay = 1.0
+player_stun_time = 0.2
 allow_hold = true
 color = Color(0.341176, 0.686275, 0.701961, 1)
 cast_sfx = ExtResource("10_vi8ss")
@@ -145,6 +146,9 @@ script = ExtResource("2_mo2lt")
 [node name="KnockbackState" type="Node" parent="StateMachine"]
 script = ExtResource("2_mo2lt")
 
+[node name="SpellCastedStun" type="Node" parent="StateMachine"]
+script = ExtResource("2_mo2lt")
+
 [node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
 script = ExtResource("1_v2v0g")
 invis_time = 2.0
@@ -168,7 +172,7 @@ shape = SubResource("CircleShape2D_ja0ya")
 material = SubResource("ShaderMaterial_1dcy7")
 position = Vector2(0, -7)
 sprite_frames = SubResource("SpriteFrames_0sax3")
-animation = &"damage"
+animation = &"magic"
 
 [node name="SpellCaster" type="Node2D" parent="."]
 position = Vector2(0, -4)
@@ -188,11 +192,13 @@ bus = &"Sfx"
 [connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
 [connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]
 [connection signal="state_entered" from="StateMachine/KnockbackState" to="AnimatedSprite2D" method="play" binds= ["damage"]]
+[connection signal="state_entered" from="StateMachine/SpellCastedStun" to="AnimatedSprite2D" method="play" binds= ["magic"]]
+[connection signal="damage_taken" from="DamageReceiver" to="." method="_on_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="invis_time_ended" from="DamageReceiver" to="." method="_on_invis_time_ended"]
-[connection signal="took_damage" from="DamageReceiver" to="." method="_on_took_damage"]
 [connection signal="took_damage" from="DamageReceiver" to="HurtAudioPlayer2D" method="play"]
 [connection signal="knockback_ended" from="Knockback" to="." method="_on_knockback_ended"]
 [connection signal="knockback_started" from="Knockback" to="." method="_on_knockback_started"]
 [connection signal="selected_spell_changed" from="SpellCaster" to="." method="_on_selected_spell_changed" flags=3]
+[connection signal="spell_casted" from="SpellCaster" to="." method="_on_spell_casted"]
