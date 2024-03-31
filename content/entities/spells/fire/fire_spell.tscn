@@ -147,9 +147,9 @@ tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(5.65685, 1),
+"transitions": PackedFloat32Array(6.9644, 1),
 "update": 0,
-"values": [0.0, -80.0]
+"values": [5.0, -80.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
