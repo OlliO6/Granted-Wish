@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bdwlpvhvpqmqf"]
+[gd_scene load_steps=11 format=3 uid="uid://bdwlpvhvpqmqf"]
 
+[ext_resource type="Script" path="res://vfx/blood_effect/blood_effect.gd" id="1_c3gfl"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_fcw08"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vr8a1"]
@@ -33,11 +34,11 @@ point_count = 4
 curve = SubResource("Curve_melm4")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ey3pc"]
+resource_local_to_scene = true
 particle_flag_align_y = true
 particle_flag_disable_z = true
 spread = 48.2
-initial_velocity_min = 22.44
-initial_velocity_max = 83.89
+initial_velocity_max = 35.0
 directional_velocity_min = 1.0
 directional_velocity_max = 13.8
 directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
@@ -49,6 +50,7 @@ color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
 anim_offset_max = 1.0
 
 [node name="BloodEffect" type="Node2D"]
+script = ExtResource("1_c3gfl")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_vr8a1")
@@ -64,10 +66,4 @@ randomness = 0.5
 interpolate = false
 fract_delta = false
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-autostart = true
-
-[connection signal="ready" from="GPUParticles2D" to="GPUParticles2D" method="restart"]
-[connection signal="timeout" from="Timer" to="." method="queue_free"]
+[connection signal="finished" from="GPUParticles2D" to="." method="queue_free"]

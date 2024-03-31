@@ -4,7 +4,7 @@ extends Node2D
 @export var damage: int = 1
 @export var directional: bool = true
 # Increases knockback and stuff
-@export var impact_force: float = 1
+@export var impact_velocity_magnitude: float = 10
 @export var knockback: KnockbackData
 # Wont deal damage if dead
 @export var killable: Killable
@@ -20,3 +20,6 @@ func apply_damage(node: Node) -> bool:
 		return true
 	
 	return false
+
+func set_impact_velocity_magnitude(v: float):
+	impact_velocity_magnitude = v

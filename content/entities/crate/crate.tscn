@@ -18,6 +18,8 @@ shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [node name="Crate" type="CharacterBody2D"]
+collision_layer = 97
+collision_mask = 33
 
 [node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
 script = ExtResource("1_eryqk")
@@ -44,8 +46,7 @@ position = Vector2(6, 6)
 script = ExtResource("6_kjx8f")
 effect_scn = ExtResource("7_eaasu")
 
-[connection signal="taking_directional_damage" from="DamageReceiver" to="BloodSpawner" method="set_global_rotation"]
+[connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
 [connection signal="took_damage" from="DamageReceiver" to="AudioStreamPlayer2D" method="play"]
-[connection signal="took_damage" from="DamageReceiver" to="BloodSpawner" method="spawn"]
 [connection signal="died" from="Health" to="." method="queue_free"]

@@ -58,6 +58,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../DamageDealer:impact_velocity_magnitude")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
 
 [sub_resource type="Animation" id="Animation_q30au"]
 resource_name = "default"
@@ -138,6 +150,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(5.65685, 1),
 "update": 0,
 "values": [0.0, -80.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../DamageDealer:impact_velocity_magnitude")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2.73208, 1),
+"update": 0,
+"values": [40.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_qn0jv"]
@@ -322,7 +346,6 @@ autoplay = "default"
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("CircleShape2D_qju78")
 
 [node name="CanvasGroup" type="CanvasGroup" parent="Area2D"]
@@ -346,13 +369,11 @@ texture = ExtResource("4_5a2no")
 explosiveness = 0.1
 
 [node name="AttackArea" type="Area2D" parent="Area2D" node_paths=PackedStringArray("damage_dealer")]
-visible = false
 collision_layer = 0
 collision_mask = 5
 monitorable = false
 script = ExtResource("4_0vw7e")
 damage_dealer = NodePath("../../DamageDealer")
-deactivate_on_damage_dealed = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D/AttackArea"]
 position = Vector2(-1, 0)
@@ -369,4 +390,5 @@ bus = &"Sfx"
 [connection signal="died" from="Killable" to="Area2D/AttackArea" method="set_active" binds= [false]]
 [connection signal="body_entered" from="Area2D" to="Killable" method="die" unbinds=1]
 [connection signal="body_entered" from="Area2D" to="ImpactAudioPlayer2D" method="play" unbinds=1]
+[connection signal="damage_applied" from="Area2D/AttackArea" to="Killable" method="die" unbinds=1]
 [connection signal="damage_applied" from="Area2D/AttackArea" to="ImpactAudioPlayer2D" method="play" unbinds=1]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=26 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_q6t38"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="1_v2y50"]
@@ -58,6 +58,46 @@ shader_parameter/spec_intensity = Color(1000, 1000, 1000, 1000)
 [sub_resource type="ViewportTexture" id="ViewportTexture_2v0d8"]
 viewport_path = NodePath("Sprite2D/BloodViewport")
 
+[sub_resource type="Gradient" id="Gradient_5p7cw"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.667513)
+colors = PackedColorArray(0.380392, 0.14902, 0.219608, 1, 0.44, 0.2024, 0.20636, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8sfy7"]
+gradient = SubResource("Gradient_5p7cw")
+width = 32
+
+[sub_resource type="Curve" id="Curve_2bkij"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.31559, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_8vc4f"]
+curve_y = SubResource("Curve_2bkij")
+
+[sub_resource type="Curve" id="Curve_melm4"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 10.1621, 0, 0, Vector2(0.310427, 0.807104), -2.02398, -2.02398, 0, 0, Vector2(0.703791, 0.620504), 1.23336, 1.23336, 0, 0, Vector2(0.990521, 1.64928), -0.800021, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mtubc"]
+curve = SubResource("Curve_melm4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t0pgi"]
+resource_local_to_scene = true
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 48.2
+initial_velocity_max = 35.0
+directional_velocity_min = 1.0
+directional_velocity_max = 13.8
+directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_mtubc")
+color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
+anim_offset_max = 1.0
+
 [node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
 y_sort_enabled = true
 script = ExtResource("1_q6t38")
@@ -83,7 +123,8 @@ position = Vector2(67, 25)
 
 [node name="Crate" parent="." instance=ExtResource("4_qeshn")]
 position = Vector2(92, 28)
-collision_layer = 4
+collision_layer = 100
+collision_mask = 65
 
 [node name="Health" parent="Crate" index="1"]
 max_health = 12
@@ -134,6 +175,9 @@ render_target_clear_mode = 1
 
 [node name="BloodEffect" parent="Sprite2D/BloodViewport" instance=ExtResource("5_8p0uu")]
 position = Vector2(100, 50)
+
+[node name="GPUParticles2D" parent="Sprite2D/BloodViewport/BloodEffect" index="0"]
+process_material = SubResource("ParticleProcessMaterial_t0pgi")
 
 [connection signal="timeout" from="Crate/Spawner/Timer" to="Crate/Spawner" method="spawn"]
 

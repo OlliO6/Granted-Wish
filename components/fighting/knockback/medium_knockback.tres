@@ -13,6 +13,7 @@ point_count = 2
 [resource]
 script = ExtResource("1_wjabt")
 duration = 0.3
-strenght = 80.0
+base_strenght = 30.0
+dynamic_strenght_impact = 1.0
 velocity_curve = SubResource("Curve_e3vsa")
 unrepress_movement_curve = SubResource("Curve_7xyct")

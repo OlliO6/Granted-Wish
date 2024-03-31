@@ -4,7 +4,6 @@ extends Area2D
 signal damage_applied(body: Node2D)
 
 @export var damage_dealer: DamageDealer
-@export var deactivate_on_damage_dealed: bool
 @export var active: bool = true:
 	set(v):
 		active = v
@@ -27,5 +26,3 @@ func _apply_damage(body: Node2D) -> void:
 
 	if damage_dealer and damage_dealer.apply_damage(body):
 		damage_applied.emit(body)
-		if deactivate_on_damage_dealed:
-			active = false
