@@ -3,6 +3,8 @@ extends Node2D
 
 @export var damage: int = 1
 @export var directional: bool = true
+# Increases knockback and stuff
+@export var impact_force: float = 1
 @export var knockback: KnockbackData
 # Wont deal damage if dead
 @export var killable: Killable

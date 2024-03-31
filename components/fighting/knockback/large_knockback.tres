@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="KnockbackData" load_steps=4 format=3 uid="uid://beaxnkdfuwvvp"]
+
+[ext_resource type="Script" path="res://components/fighting/knockback/knockback_data.gd" id="1_evsy5"]
+
+[sub_resource type="Curve" id="Curve_n7rp0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.24962, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_p8xyq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0106467), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[resource]
+script = ExtResource("1_evsy5")
+duration = 0.35
+strenght = 150.0
+velocity_curve = SubResource("Curve_p8xyq")
+unrepress_movement_curve = SubResource("Curve_n7rp0")

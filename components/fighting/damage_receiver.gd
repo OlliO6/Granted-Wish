@@ -35,8 +35,8 @@ func take_damage(dmg: int, dealer: DamageDealer) -> void:
 	if health:
 		health.take_damage(dmg)
 	
-	if knockback:
-		knockback.start_knockback()
+	if knockback and dealer.knockback:
+		knockback.start_knockback(dealer.global_rotation, dealer.knockback)
 
 func is_invincible() -> bool:
 	return invincible or invis_timer > 0

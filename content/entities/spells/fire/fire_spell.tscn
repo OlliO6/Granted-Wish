@@ -1,7 +1,8 @@
-[gd_scene load_steps=32 format=3 uid="uid://b7ifegmm708j0"]
+[gd_scene load_steps=33 format=3 uid="uid://b7ifegmm708j0"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="1_pehbd"]
 [ext_resource type="Script" path="res://components/fighting/killable.gd" id="2_2nxna"]
+[ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="2_nrrx3"]
 [ext_resource type="AudioStream" uid="uid://81oq30bkr5jj" path="res://sfx/spells/fire_spell_sustain.mp3" id="3_cvpat"]
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="4_0vw7e"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="4_5a2no"]
@@ -302,8 +303,10 @@ radius = 4.0
 
 [node name="FireSpell" type="Node2D"]
 
-[node name="DamageDealer" type="Node2D" parent="."]
+[node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
 script = ExtResource("1_pehbd")
+knockback = ExtResource("2_nrrx3")
+killable = NodePath("../Killable")
 
 [node name="Killable" type="Node" parent="."]
 script = ExtResource("2_2nxna")
@@ -363,7 +366,7 @@ bus = &"Sfx"
 bus = &"Sfx"
 
 [connection signal="died" from="Killable" to="AnimationPlayer" method="play" binds= ["die"]]
+[connection signal="died" from="Killable" to="Area2D/AttackArea" method="set_active" binds= [false]]
 [connection signal="body_entered" from="Area2D" to="Killable" method="die" unbinds=1]
 [connection signal="body_entered" from="Area2D" to="ImpactAudioPlayer2D" method="play" unbinds=1]
-[connection signal="damage_applied" from="Area2D/AttackArea" to="Killable" method="die" unbinds=1]
 [connection signal="damage_applied" from="Area2D/AttackArea" to="ImpactAudioPlayer2D" method="play" unbinds=1]
