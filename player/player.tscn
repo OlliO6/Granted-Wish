@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=29 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
 [ext_resource type="Script" path="res://content/entities/spells/spell_data.gd" id="11_7qgwh"]
 [ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="12_4g47f"]
+[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="14_p1v7n"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="15_m7wyx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
 radius = 3.16228
@@ -142,17 +144,20 @@ script = ExtResource("2_mo2lt")
 [node name="KnockbackState" type="Node" parent="StateMachine"]
 script = ExtResource("2_mo2lt")
 
-[node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health", "knockback")]
+[node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
 script = ExtResource("1_v2v0g")
 invis_time = 2.0
 health = NodePath("../Health")
-knockback = NodePath("../Knockback")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_blm1e")
 
 [node name="Knockback" type="Node2D" parent="."]
 script = ExtResource("6_bqetv")
+
+[node name="BloodSpawner" type="Node2D" parent="."]
+script = ExtResource("14_p1v7n")
+effect_scn = ExtResource("15_m7wyx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
@@ -178,6 +183,8 @@ stream = SubResource("AudioStreamRandomizer_v37cn")
 [connection signal="state_entered" from="StateMachine/IdleState" to="AnimatedSprite2D" method="play" binds= ["idle"]]
 [connection signal="state_entered" from="StateMachine/RunState" to="AnimatedSprite2D" method="play" binds= ["run"]]
 [connection signal="state_entered" from="StateMachine/KnockbackState" to="AnimatedSprite2D" method="play" binds= ["damage"]]
+[connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
+[connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="invis_time_ended" from="DamageReceiver" to="." method="_on_invis_time_ended"]
 [connection signal="took_damage" from="DamageReceiver" to="." method="_on_took_damage"]
 [connection signal="knockback_ended" from="Knockback" to="." method="_on_knockback_ended"]

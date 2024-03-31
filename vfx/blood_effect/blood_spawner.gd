@@ -13,5 +13,9 @@ func spawn(impact_velocity_magnitude: float=0) -> Node2D:
 	return effect
 
 func _on_damage_receiver_damage_taken(_amount: int, dealer: DamageDealer) -> void:
+	
+	if !dealer.directional_impact:
+		return
+
 	global_rotation = dealer.global_rotation
 	spawn(dealer.impact_velocity_magnitude)

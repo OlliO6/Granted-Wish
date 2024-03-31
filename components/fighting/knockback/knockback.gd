@@ -25,7 +25,20 @@ func _process(delta: float) -> void:
 func is_knocking() -> bool:
 	return _knocking
 
+func _on_impact(direction: float, velocity_magnitude: float, trigger: Node) -> void:
+
+	var data: KnockbackData
+	if trigger is DamageDealer:
+		data = trigger.knockback
+	else:
+		data = preload ("uid://bj02h8vlqos0j") # small_knockback.tres
+	
+	start_knockback(direction, velocity_magnitude, data)
+
 func start_knockback(direction: float, strenght: float, data: KnockbackData) -> void:
+	
+	if !data:
+		data = preload ("uid://bj02h8vlqos0j") # small_knockback.tres
 	
 	_knocking = true
 	_current_data = data
@@ -43,3 +56,7 @@ func _process_knockback() -> void:
 
 	if _time_passed >= _current_data.duration:
 		_knocking = false
+
+func _on_damage_receiver_damage_taken(_amount: int, dealer: DamageDealer) -> void:
+	if dealer.directional_impact:
+		start_knockback(dealer.global_rotation, dealer.impact_velocity_magnitude, dealer.knockback)
