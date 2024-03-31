@@ -13,6 +13,7 @@ func die() -> void:
 		return
 	is_dead = true
 	died.emit()
+	Events.something_died.emit(get_parent(), self)
 
 func revive() -> bool:
 	if !is_dead or !allow_revival:

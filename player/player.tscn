@@ -186,6 +186,8 @@ bus = &"Sfx"
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="invis_time_ended" from="DamageReceiver" to="." method="_on_invis_time_ended"]
 [connection signal="took_damage" from="DamageReceiver" to="HurtAudioPlayer2D" method="play"]
+[connection signal="died" from="Health" to="." method="_on_died"]
+[connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
 [connection signal="knockback_ended" from="Knockback" to="." method="_on_knockback_ended"]
 [connection signal="knockback_started" from="Knockback" to="." method="_on_knockback_started"]
 [connection signal="selected_spell_changed" from="SpellCaster" to="." method="_on_selected_spell_changed" flags=3]

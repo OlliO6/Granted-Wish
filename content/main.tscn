@@ -98,10 +98,11 @@ scale_curve = SubResource("CurveTexture_mtubc")
 color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
 anim_offset_max = 1.0
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport", "player")]
 y_sort_enabled = true
 script = ExtResource("1_q6t38")
 blood_viewport = NodePath("Sprite2D/BloodViewport")
+player = NodePath("Player")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_srm4m")

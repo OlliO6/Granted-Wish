@@ -1,7 +1,7 @@
 class_name DamageDealer
 extends Node2D
 
-@export var damage: int = 1
+@export var damage: int = 10
 @export var directional_impact: bool = true
 # Increases knockback and stuff
 @export var impact_velocity_magnitude: float = 10

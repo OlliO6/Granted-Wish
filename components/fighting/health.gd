@@ -1,6 +1,7 @@
 class_name Health
 extends Killable
 
+signal health_changing(from: int, to_health: int)
 signal health_changed(health: int)
 signal healed(amount: int)
 signal took_damage(amount: int)
@@ -11,6 +12,7 @@ var health: int:
 	set(v):
 		if is_dead:
 			return
+		health_changing.emit(health, v)
 		health = v
 		if health <= 0:
 			die()

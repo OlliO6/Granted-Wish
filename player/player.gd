@@ -1,9 +1,11 @@
+class_name Player
 extends CharacterBody2D
 
 @export var movement_speed: float
 
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
 @onready var dmg_receiver: DamageReceiver = get_node("DamageReceiver")
+@onready var health_component: Health = get_node("Health")
 @onready var knockback_component: Knockback = get_node("Knockback")
 @onready var sm: StateMachine = get_node("StateMachine")
 @onready var idle_state: State = get_node("StateMachine/IdleState")
@@ -69,3 +71,9 @@ func _on_knockback_started() -> void:
 func _on_knockback_ended() -> void:
 	if knockback_state.is_active():
 		sm.switch_state(idle_state)
+
+func _on_health_changed(health: int) -> void:
+	Events.player_health_changed.emit(health)
+
+func _on_died() -> void:
+	Events.player_died.emit()

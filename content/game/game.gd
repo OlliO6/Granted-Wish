@@ -2,6 +2,7 @@ class_name Game
 extends Node2D
 
 @export var blood_viewport: SubViewport
+@export var player: Player
 
 func _ready() -> void:
 	Globals.game = self
