@@ -165,7 +165,7 @@ animation = &"magic"
 [node name="SpellCaster" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("8_4qdl6")
-spell_data = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7"), ExtResource("13_sx2fl")])
+spell_data_list = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7"), ExtResource("13_sx2fl")])
 
 [node name="Timer" type="Timer" parent="SpellCaster"]
 one_shot = true
