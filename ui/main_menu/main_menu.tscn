@@ -138,5 +138,5 @@ offset_left = 99.0
 offset_top = 134.0
 offset_right = 183.0
 offset_bottom = 147.0
-text = "\"Left mouse\" to start"
+text = "'Left mouse' to start"
 label_settings = SubResource("LabelSettings_ychbp")

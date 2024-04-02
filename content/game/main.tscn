@@ -1,18 +1,13 @@
-[gd_scene load_steps=30 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=16 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
-[ext_resource type="PackedScene" uid="uid://b7ifegmm708j0" path="res://content/entities/spells/fire/fire_spell.tscn" id="4_5earv"]
 [ext_resource type="Texture2D" uid="uid://ddokf0earkhj1" path="res://content/tileset/ground.png" id="4_6ek2t"]
-[ext_resource type="PackedScene" uid="uid://b4a43y8y3pfei" path="res://content/entities/crate/crate.tscn" id="5_4eequ"]
+[ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_spawner.gd" id="5_j3m67"]
 [ext_resource type="Texture2D" uid="uid://cmobit4kchg6m" path="res://content/tileset/tileset.png" id="5_nnika"]
-[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="6_q1y25"]
-[ext_resource type="Script" path="res://components/spawner.gd" id="7_o72nw"]
-[ext_resource type="PackedScene" uid="uid://btv6lbk0s7oeo" path="res://content/entities/spells/fire/fire_spell_enemy.tscn" id="8_fpj4r"]
+[ext_resource type="Script" path="res://content/game/tutorials.gd" id="5_xu1ea"]
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="9_xi51p"]
-[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="10_pkpe8"]
 [ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_rvh8f"]
-[ext_resource type="Texture2D" uid="uid://dwl0tigw35r0f" path="res://content/entities/bosses/evil_witch/evil_witch.png" id="12_pkdte"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
 background_mode = 3
@@ -51,20 +46,9 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_ahlq8")
 sources/2 = SubResource("TileSetAtlasSource_ehng8")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ocv7n"]
-resource_local_to_scene = true
-shader = ExtResource("6_q1y25")
-shader_parameter/flash = 0.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
-
-[sub_resource type="Gradient" id="Gradient_vv1b2"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_qnxt6"]
-gradient = SubResource("Gradient_vv1b2")
-fill = 1
-fill_from = Vector2(0.512821, 0.5)
-fill_to = Vector2(0.910256, 0.470085)
+[sub_resource type="LabelSettings" id="LabelSettings_pv5ks"]
+font_size = 8
+font_color = Color(0.890196, 0.866667, 0.819608, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_06tm4"]
 shader = ExtResource("9_xi51p")
@@ -73,46 +57,6 @@ shader_parameter/spec_intensity = Color(1000, 1000, 1000, 1000)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_2v0d8"]
 viewport_path = NodePath("BloodLayer/BloodViewport")
-
-[sub_resource type="Gradient" id="Gradient_5p7cw"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.667513)
-colors = PackedColorArray(0.380392, 0.14902, 0.219608, 1, 0.44, 0.2024, 0.20636, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_8sfy7"]
-gradient = SubResource("Gradient_5p7cw")
-width = 32
-
-[sub_resource type="Curve" id="Curve_2bkij"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.31559, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_8vc4f"]
-curve_y = SubResource("Curve_2bkij")
-
-[sub_resource type="Curve" id="Curve_melm4"]
-max_value = 2.0
-_data = [Vector2(0, 0), 0.0, 10.1621, 0, 0, Vector2(0.310427, 0.807104), -2.02398, -2.02398, 0, 0, Vector2(0.703791, 0.620504), 1.23336, 1.23336, 0, 0, Vector2(0.990521, 1.64928), -0.800021, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_mtubc"]
-curve = SubResource("Curve_melm4")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t0pgi"]
-resource_local_to_scene = true
-particle_flag_align_y = true
-particle_flag_disable_z = true
-spread = 48.2
-initial_velocity_max = 35.0
-directional_velocity_min = 1.0
-directional_velocity_max = 13.8
-directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
-gravity = Vector3(0, 0, 0)
-scale_min = 0.2
-scale_max = 0.4
-scale_curve = SubResource("CurveTexture_mtubc")
-color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
-anim_offset_max = 1.0
 
 [node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
 y_sort_enabled = true
@@ -123,7 +67,7 @@ blood_viewport = NodePath("BloodLayer/BloodViewport")
 environment = SubResource("Environment_srm4m")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(143, 80)
+anchor_mode = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
@@ -136,47 +80,62 @@ tile_set = SubResource("TileSet_w3q41")
 format = 2
 layer_0/tile_data = PackedInt32Array(0, 1, 0, 65536, 1, 0, 131072, 1, 0, 196608, 1, 0, 262144, 1, 0, 327680, 1, 0, 393216, 1, 0, 458752, 1, 0, 524288, 1, 0, 589824, 1, 0, 1, 1, 0, 65537, 65538, 3, 131073, 65538, 3, 196609, 65538, 3, 262145, 2, 3, 327681, 2, 3, 393217, 2, 3, 458753, 2, 3, 524289, 2, 3, 589825, 1, 0, 2, 1, 0, 65538, 2, 3, 131074, 2, 3, 196610, 65538, 3, 262146, 65538, 3, 327682, 65538, 3, 393218, 2, 3, 458754, 65538, 3, 524290, 2, 3, 589826, 1, 0, 3, 1, 0, 65539, 2, 3, 131075, 65538, 3, 196611, 2, 3, 262147, 65538, 3, 327683, 65538, 3, 393219, 65538, 3, 458755, 65538, 3, 524291, 2, 3, 589827, 1, 0, 4, 1, 0, 65540, 65538, 3, 131076, 65538, 3, 196612, 2, 3, 262148, 2, 3, 327684, 65538, 3, 393220, 2, 3, 458756, 2, 3, 524292, 65538, 3, 589828, 1, 0, 5, 1, 0, 65541, 65538, 3, 131077, 2, 3, 196613, 65538, 3, 262149, 65538, 3, 327685, 2, 3, 393221, 65538, 3, 458757, 65538, 3, 524293, 65538, 3, 589829, 1, 0, 6, 1, 0, 65542, 65538, 3, 131078, 2, 3, 196614, 65538, 3, 262150, 65538, 3, 327686, 65538, 3, 393222, 2, 3, 458758, 65538, 3, 524294, 65538, 3, 589830, 1, 0, 7, 1, 0, 65543, 2, 3, 131079, 65538, 3, 196615, 65538, 3, 262151, 2, 3, 327687, 2, 3, 393223, 65538, 3, 458759, 65538, 3, 524295, 65538, 3, 589831, 1, 0, 8, 1, 0, 65544, 2, 3, 131080, 2, 3, 196616, 65538, 3, 262152, 65538, 3, 327688, 65538, 3, 393224, 65538, 3, 458760, 65538, 3, 524296, 2, 3, 589832, 1, 0, 9, 1, 0, 65545, 65538, 3, 131081, 65538, 3, 196617, 2, 3, 262153, 65538, 3, 327689, 65538, 3, 393225, 65538, 3, 458761, 2, 3, 524297, 65538, 3, 589833, 1, 0, 10, 1, 0, 65546, 2, 3, 131082, 65538, 3, 196618, 2, 3, 262154, 65538, 3, 327690, 2, 3, 393226, 65538, 3, 458762, 2, 3, 524298, 65538, 3, 589834, 1, 0, 11, 1, 0, 65547, 2, 3, 131083, 2, 3, 196619, 2, 3, 262155, 65538, 3, 327691, 65538, 3, 393227, 65538, 3, 458763, 2, 3, 524299, 65538, 3, 589835, 1, 0, 12, 1, 0, 65548, 2, 3, 131084, 2, 3, 196620, 65538, 3, 262156, 2, 3, 327692, 65538, 3, 393228, 65538, 3, 458764, 2, 3, 524300, 2, 3, 589836, 1, 0, 13, 1, 0, 65549, 2, 3, 131085, 2, 3, 196621, 65538, 3, 262157, 2, 3, 327693, 2, 3, 393229, 2, 3, 458765, 2, 3, 524301, 65538, 3, 589837, 1, 0, 14, 1, 0, 65550, 65538, 3, 131086, 65538, 3, 196622, 65538, 3, 262158, 2, 3, 327694, 65538, 3, 393230, 2, 3, 458766, 65538, 3, 524302, 65538, 3, 589838, 1, 0, 15, 1, 0, 65551, 65538, 3, 131087, 2, 3, 196623, 2, 3, 262159, 65538, 3, 327695, 65538, 3, 393231, 2, 3, 458767, 65538, 3, 524303, 2, 3, 589839, 1, 0, 16, 1, 0, 65552, 65538, 3, 131088, 65538, 3, 196624, 65538, 3, 262160, 65538, 3, 327696, 2, 3, 393232, 65538, 3, 458768, 65538, 3, 524304, 65538, 3, 589840, 1, 0, 17, 1, 0, 65553, 1, 0, 131089, 1, 0, 196625, 1, 0, 262161, 1, 0, 327697, 1, 0, 393233, 1, 0, 458769, 1, 0, 524305, 1, 0, 589841, 1, 0, 720895, 131074, 3, 786431, 131074, 3, 655360, 131074, 3, 720896, 131074, 3, 655361, 131074, 3, 720897, 131074, 3, 655362, 131074, 3, 720898, 131074, 3, 655363, 131074, 3, 720899, 131074, 3, 655364, 131074, 3, 720900, 131074, 3, 655365, 131074, 3, 720901, 131074, 3, 655366, 131074, 3, 720902, 131074, 3, 655367, 131074, 3, 720903, 131074, 3, 655368, 131074, 3, 720904, 131074, 3, 655369, 131074, 3, 720905, 131074, 3, 655370, 131074, 3, 720906, 131074, 3, 655371, 131074, 3, 720907, 131074, 3, 655372, 131074, 3, 720908, 131074, 3, 655373, 131074, 3, 720909, 131074, 3, 655374, 131074, 3, 720910, 131074, 3, 655375, 131074, 3, 720911, 131074, 3, 655376, 131074, 3, 720912, 131074, 3, 655377, 131074, 3, 720913, 131074, 3, 655378, 131074, 3, 720914, 131074, 3, -131054, 131074, 3, -65518, 131074, 3, 18, 131074, 3, 65554, 131074, 3, 131090, 131074, 3, 196626, 131074, 3, 262162, 131074, 3, 327698, 131074, 3, 393234, 131074, 3, 458770, 131074, 3, 524306, 131074, 3, 589842, 131074, 3, -131053, 131074, 3, -65517, 131074, 3, 19, 131074, 3, 65555, 131074, 3, 131091, 131074, 3, 196627, 131074, 3, 262163, 131074, 3, 327699, 131074, 3, 393235, 131074, 3, 458771, 131074, 3, 524307, 131074, 3, 589843, 131074, 3, 655379, 131074, 3, 720915, 131074, 3, -131074, 131074, 3, -65538, 131074, 3, -2, 131074, 3, -131073, 131074, 3, -65537, 131074, 3, -1, 131074, 3, -196608, 131074, 3, -131072, 131074, 3, -65536, 131074, 3, -196607, 131074, 3, -131071, 131074, 3, -65535, 131074, 3, -196606, 131074, 3, -131070, 131074, 3, -65534, 131074, 3, -196605, 131074, 3, -131069, 131074, 3, -65533, 131074, 3, -196604, 131074, 3, -131068, 131074, 3, -65532, 131074, 3, -196603, 131074, 3, -131067, 131074, 3, -65531, 131074, 3, -196602, 131074, 3, -131066, 131074, 3, -65530, 131074, 3, -196601, 131074, 3, -131065, 131074, 3, -65529, 131074, 3, -196600, 131074, 3, -131064, 131074, 3, -65528, 131074, 3, -196599, 131074, 3, -131063, 131074, 3, -65527, 131074, 3, -196598, 131074, 3, -131062, 131074, 3, -65526, 131074, 3, -196597, 131074, 3, -131061, 131074, 3, -65525, 131074, 3, -196596, 131074, 3, -131060, 131074, 3, -65524, 131074, 3, -196595, 131074, 3, -131059, 131074, 3, -65523, 131074, 3, -196594, 131074, 3, -131058, 131074, 3, -65522, 131074, 3, -196593, 131074, 3, -131057, 131074, 3, -65521, 131074, 3, -196592, 131074, 3, -131056, 131074, 3, -65520, 131074, 3, -196591, 131074, 3, -131055, 131074, 3, -65519, 131074, 3, -196590, 131074, 3, -196589, 131074, 3, 65534, 131074, 3, 131070, 131074, 3, 196606, 131074, 3, 262142, 131074, 3, 327678, 131074, 3, 393214, 131074, 3, 458750, 131074, 3, 524286, 131074, 3, 589822, 131074, 3, 655358, 131074, 3, 720894, 131074, 3, 786430, 131074, 3, 65535, 131074, 3, 131071, 131074, 3, 196607, 131074, 3, 262143, 131074, 3, 327679, 131074, 3, 393215, 131074, 3, 458751, 131074, 3, 524287, 131074, 3, 589823, 131074, 3, 655359, 131074, 3)
 
-[node name="FireSpell" parent="." instance=ExtResource("4_5earv")]
-position = Vector2(67, 25)
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("5_j3m67")
 
-[node name="Crate" parent="." instance=ExtResource("5_4eequ")]
-position = Vector2(92, 28)
-collision_layer = 100
-collision_mask = 65
+[node name="Tutorials" type="Node2D" parent="." node_paths=PackedStringArray("move_tutorial", "cast_spells_tutorial", "switch_spell_tutorial")]
+script = ExtResource("5_xu1ea")
+move_tutorial = NodePath("MoveLabel")
+cast_spells_tutorial = NodePath("ShootLabel")
+switch_spell_tutorial = NodePath("SwitchSpellLabel")
 
-[node name="Health" parent="Crate" index="1"]
-max_health = 12
+[node name="MoveLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'wasd' to move"
+label_settings = SubResource("LabelSettings_pv5ks")
 
-[node name="Sprite2D" parent="Crate" index="3"]
-material = SubResource("ShaderMaterial_ocv7n")
+[node name="ShootLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'left mouse' to cast spells"
+label_settings = SubResource("LabelSettings_pv5ks")
 
-[node name="Spawner" type="Node2D" parent="Crate"]
-position = Vector2(7, 7)
-rotation = 1.5708
-script = ExtResource("7_o72nw")
-scene = ExtResource("8_fpj4r")
-specified_parent = NodePath("../..")
-
-[node name="Timer" type="Timer" parent="Crate/Spawner"]
-wait_time = 2.0
-autostart = true
-
-[node name="Crate2" parent="." instance=ExtResource("5_4eequ")]
-position = Vector2(111, 29)
-
-[node name="Crate3" parent="." instance=ExtResource("5_4eequ")]
-position = Vector2(142, 29)
-
-[node name="Crate4" parent="." instance=ExtResource("5_4eequ")]
-position = Vector2(177, 30)
-
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-energy = 0.0
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(107, 48)
-texture = SubResource("GradientTexture2D_qnxt6")
+[node name="SwitchSpellLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'1, 2' to switch between spells"
+label_settings = SubResource("LabelSettings_pv5ks")
 
 [node name="BloodLayer" type="Sprite2D" parent="."]
 z_index = -1
@@ -191,23 +150,6 @@ handle_input_locally = false
 size = Vector2i(288, 162)
 render_target_clear_mode = 1
 
-[node name="BloodEffect" parent="BloodLayer/BloodViewport" instance=ExtResource("10_pkpe8")]
-position = Vector2(100, 50)
-
-[node name="GPUParticles2D" parent="BloodLayer/BloodViewport/BloodEffect" index="0"]
-process_material = SubResource("ParticleProcessMaterial_t0pgi")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="IngameUI" parent="CanvasLayer" instance=ExtResource("11_rvh8f")]
-
-[node name="Witch" type="Sprite2D" parent="."]
-position = Vector2(186, 61)
-texture = ExtResource("12_pkdte")
-hframes = 3
-vframes = 2
-
-[connection signal="timeout" from="Crate/Spawner/Timer" to="Crate/Spawner" method="spawn"]
-
-[editable path="Crate"]
-[editable path="BloodLayer/BloodViewport/BloodEffect"]
