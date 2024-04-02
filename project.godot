@@ -11,9 +11,12 @@ config_version=5
 [application]
 
 config/name="Granted Wish"
-run/main_scene="res://content/main.tscn"
+run/main_scene="res://content/intro/intro.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.0431373, 0.0627451, 0.0862745, 1)
+boot_splash/image="res://boot_splash.png"
+boot_splash/use_filter=false
+config/icon="res://ui/ingame_ui/full_heart.png"
 
 [audio]
 
@@ -30,6 +33,8 @@ Events="*res://singletons/events.gd"
 
 window/size/viewport_width=288
 window/size/viewport_height=162
+window/size/window_width_override=1440
+window/size/window_height_override=810
 window/stretch/mode="canvas_items"
 
 [input]

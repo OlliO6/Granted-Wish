@@ -8,6 +8,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	clear_blood()
+	get_node("BloodLayer").show()
 
 func get_player() -> Player:
 	return get_node("%Player")

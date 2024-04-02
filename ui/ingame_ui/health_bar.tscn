@@ -15,8 +15,8 @@ shader_parameter/amplitude_2 = 0.0
 
 [sub_resource type="Curve" id="Curve_ukhi1"]
 max_value = 3.0
-_data = [Vector2(0, 2.50466), 0.0, -0.0680328, 0, 0, Vector2(0.249438, 1.08467), 0.0, 0.0, 0, 0, Vector2(0.748315, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0915081, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 2.34306), 0.0, -2.77378, 0, 0, Vector2(0.647191, 0), -0.0514202, -0.0514202, 0, 0, Vector2(1, 0), 0.0915081, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7e7ka"]
 particles_animation = true
