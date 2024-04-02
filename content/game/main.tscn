@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=20 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
+[ext_resource type="Script" path="res://content/game/game_camera.gd" id="2_w4jg4"]
 [ext_resource type="Texture2D" uid="uid://ddokf0earkhj1" path="res://content/tileset/ground.png" id="4_6ek2t"]
 [ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_spawner.gd" id="5_j3m67"]
 [ext_resource type="Texture2D" uid="uid://cmobit4kchg6m" path="res://content/tileset/tileset.png" id="5_nnika"]
@@ -19,6 +20,9 @@ glow_levels/5 = 0.0
 glow_normalized = true
 glow_strength = 1.15
 glow_blend_mode = 0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ldp46"]
+frequency = 0.15
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ahlq8"]
 texture = ExtResource("4_6ek2t")
@@ -68,10 +72,13 @@ blood_viewport = NodePath("BloodLayer/BloodViewport")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_srm4m")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
 anchor_mode = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
+script = ExtResource("2_w4jg4")
+shake_noise = SubResource("FastNoiseLite_ldp46")
 
 [node name="Player" parent="." instance=ExtResource("2_gqw3t")]
 unique_name_in_owner = true

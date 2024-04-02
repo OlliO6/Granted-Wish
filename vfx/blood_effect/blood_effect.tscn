@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdwlpvhvpqmqf"]
+[gd_scene load_steps=12 format=3 uid="uid://bdwlpvhvpqmqf"]
 
 [ext_resource type="Script" path="res://vfx/blood_effect/blood_effect.gd" id="1_c3gfl"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_fcw08"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="3_t2j2g"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vr8a1"]
 particles_animation = true
@@ -62,3 +63,8 @@ randomness = 0.5
 interpolate = false
 fract_delta = false
 script = ExtResource("1_c3gfl")
+
+[node name="ScreenShakeInducer" type="Node" parent="."]
+script = ExtResource("3_t2j2g")
+
+[connection signal="ready" from="ScreenShakeInducer" to="ScreenShakeInducer" method="induce_shake"]

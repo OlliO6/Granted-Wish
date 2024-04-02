@@ -1,9 +1,10 @@
-[gd_scene load_steps=26 format=3 uid="uid://dchcwvu0u1k6c"]
+[gd_scene load_steps=27 format=3 uid="uid://dchcwvu0u1k6c"]
 
 [ext_resource type="Script" path="res://content/entities/enemies/fruit_fly/fruit_fly.gd" id="1_xegit"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="2_adh2w"]
 [ext_resource type="Script" path="res://components/state.gd" id="3_a4le1"]
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="4_xpxtx"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="5_hsrsm"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="5_t5x1j"]
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="6_aqxn1"]
 [ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="7_hoa4p"]
@@ -167,6 +168,9 @@ shape = SubResource("CircleShape2D_e6axv")
 script = ExtResource("4_xpxtx")
 health = NodePath("../Health")
 
+[node name="ScreenShakeInducer" type="Node" parent="DamageReceiver"]
+script = ExtResource("5_hsrsm")
+
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_t5x1j")
 max_health = 30
@@ -223,9 +227,10 @@ child_of = 4
 [connection signal="state_entered" from="StateMachine/RushState" to="." method="_on_rush_state_entered"]
 [connection signal="state_entered" from="StateMachine/RushState" to="AnimationPlayer" method="play" binds= ["rush"]]
 [connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
-[connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
+[connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
+[connection signal="took_damage" from="DamageReceiver" to="DamageReceiver/ScreenShakeInducer" method="induce_shake"]
 [connection signal="took_damage" from="DamageReceiver" to="StateMachine" method="switch_state_str" binds= ["IdleState"]]
 [connection signal="death_confirmed" from="Health" to="." method="queue_free" flags=3]
 [connection signal="death_confirmed" from="Health" to="RandomSpawner" method="spawn"]

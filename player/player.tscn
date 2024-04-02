@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=34 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="1_v2v0g"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="5_te3rv"]
 [ext_resource type="Script" path="res://components/fighting/knockback/knockback.gd" id="6_bqetv"]
 [ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="7_yubp0"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
@@ -197,6 +198,11 @@ script = ExtResource("1_v2v0g")
 invis_time = 2.0
 health = NodePath("../Health")
 
+[node name="ScreenShakeInducer" type="Node" parent="DamageReceiver"]
+script = ExtResource("5_te3rv")
+amplitude = 4.0
+duration = 0.8
+
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_blm1e")
 max_health = 100
@@ -256,6 +262,7 @@ shape = SubResource("CircleShape2D_60w25")
 [connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="invis_time_ended" from="DamageReceiver" to="." method="_on_invis_time_ended"]
+[connection signal="took_damage" from="DamageReceiver" to="DamageReceiver/ScreenShakeInducer" method="induce_shake"]
 [connection signal="took_damage" from="DamageReceiver" to="HurtAudioPlayer2D" method="play"]
 [connection signal="died" from="Health" to="." method="_on_died"]
 [connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]

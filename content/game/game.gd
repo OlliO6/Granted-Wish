@@ -14,5 +14,8 @@ func _ready() -> void:
 func get_player() -> Player:
 	return get_node("%Player")
 
+func get_camera() -> GameCamera:
+	return get_node("%Camera")
+
 func clear_blood() -> void:
 	blood_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE

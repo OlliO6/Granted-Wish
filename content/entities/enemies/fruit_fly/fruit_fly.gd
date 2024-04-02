@@ -33,7 +33,3 @@ func _on_rush_state_entered() -> void:
 
 func _on_idle_state_entered() -> void:
 	$StateMachine/IdleState/Timer.start(UtilFunctions.rand_range(idle_time_range))
-
-
-func _on_knockback_knockback_started() -> void:
-	pass # Replace with function body.
