@@ -40,7 +40,7 @@ func take_damage(dmg: int) -> void:
 func heal(amount: int) -> void:
 	if _dead:
 		return
-	health = amount
+	health += amount
 	healed.emit(amount)
 
 # returns 1 if full live and 0 if dead

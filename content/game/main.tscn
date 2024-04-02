@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=18 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://content/game/tutorials.gd" id="5_xu1ea"]
 [ext_resource type="PackedScene" uid="uid://dchcwvu0u1k6c" path="res://content/entities/enemies/fruit_fly/fruit_fly.tscn" id="9_stgwo"]
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="9_xi51p"]
+[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/Meat.tscn" id="10_hgfev"]
 [ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_rvh8f"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
@@ -139,6 +140,7 @@ text = "'1, 2' to switch between spells"
 label_settings = SubResource("LabelSettings_pv5ks")
 
 [node name="BloodLayer" type="Sprite2D" parent="."]
+visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_06tm4")
 texture = SubResource("ViewportTexture_2v0d8")
@@ -160,3 +162,12 @@ position = Vector2(63, 38)
 
 [node name="FruitFly2" parent="." instance=ExtResource("9_stgwo")]
 position = Vector2(169, 42)
+
+[node name="Meat" parent="." instance=ExtResource("10_hgfev")]
+position = Vector2(107, 53)
+
+[node name="Meat2" parent="." instance=ExtResource("10_hgfev")]
+position = Vector2(135, 55)
+
+[node name="Meat3" parent="." instance=ExtResource("10_hgfev")]
+position = Vector2(188, 99)

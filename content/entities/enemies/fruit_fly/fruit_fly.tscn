@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dchcwvu0u1k6c"]
+[gd_scene load_steps=25 format=3 uid="uid://dchcwvu0u1k6c"]
 
 [ext_resource type="Script" path="res://content/entities/enemies/fruit_fly/fruit_fly.gd" id="1_xegit"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="2_adh2w"]
@@ -15,6 +15,8 @@
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="13_2ojcw"]
 [ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="14_w4qde"]
 [ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="15_v03jp"]
+[ext_resource type="Script" path="res://components/spawner.gd" id="16_6avot"]
+[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/Meat.tscn" id="17_uu0uw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e6axv"]
 
@@ -26,49 +28,6 @@ shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fxhmp"]
 radius = 8.0
-
-[sub_resource type="Animation" id="Animation_svr48"]
-resource_name = "die"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BloodSpawner:effect_scn")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("15_v03jp")]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("BloodSpawner")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"spawn"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_xxk1v"]
 length = 0.001
@@ -95,6 +54,49 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_svr48"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BloodSpawner:effect_scn")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_v03jp")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BloodSpawner")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"spawn"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Health")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"confirm_death"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_j7hhf"]
@@ -206,6 +208,11 @@ libraries = {
 "": SubResource("AnimationLibrary_wdsys")
 }
 
+[node name="Spawner" type="Node2D" parent="."]
+script = ExtResource("16_6avot")
+scene = ExtResource("17_uu0uw")
+child_of = 4
+
 [connection signal="state_entered" from="StateMachine/IdleState" to="." method="_on_idle_state_entered"]
 [connection signal="timeout" from="StateMachine/IdleState/Timer" to="StateMachine" method="switch_state_str" binds= ["RushState"]]
 [connection signal="state_entered" from="StateMachine/RushState" to="." method="_on_rush_state_entered"]
@@ -213,5 +220,7 @@ libraries = {
 [connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
-[connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]
+[connection signal="death_confirmed" from="Health" to="." method="queue_free"]
+[connection signal="death_confirmed" from="Health" to="Spawner" method="spawn"]
 [connection signal="died" from="Health" to="StateMachine" method="switch_state_str" binds= ["DeadState"]]
+[connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]
