@@ -1,7 +1,7 @@
 [gd_scene load_steps=33 format=3 uid="uid://dvdfi223b70aq"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="1_np4ah"]
-[ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="2_ctfo3"]
+[ext_resource type="Resource" uid="uid://beaxnkdfuwvvp" path="res://components/fighting/knockback/large_knockback.tres" id="2_8cp6r"]
 [ext_resource type="Script" path="res://components/fighting/killable.gd" id="3_pcuhf"]
 [ext_resource type="AudioStream" uid="uid://81oq30bkr5jj" path="res://sfx/spells/fire_spell_sustain.mp3" id="4_4jhbw"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="6_uggip"]
@@ -331,7 +331,7 @@ radius = 4.0
 [node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
 script = ExtResource("1_np4ah")
 damage = 15
-knockback = ExtResource("2_ctfo3")
+knockback = ExtResource("2_8cp6r")
 killable = NodePath("../Killable")
 
 [node name="Killable" type="Node" parent="."]

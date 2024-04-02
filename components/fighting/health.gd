@@ -28,8 +28,6 @@ var health: int:
 
 func _ready() -> void:
 	health = max_health
-	died.connect(_on_died)
-	revived.connect(_on_revived)
 
 func take_damage(dmg: int) -> void:
 	if _dead:
@@ -37,10 +35,13 @@ func take_damage(dmg: int) -> void:
 	health -= dmg
 	took_damage.emit(dmg)
 
-func heal(amount: int) -> void:
+func heal(amount: int, ignore_max_health:=false) -> void:
 	if _dead:
 		return
-	health += amount
+	if ignore_max_health:
+		health += amount
+	else:
+		health = min(health + amount, max_health)
 	healed.emit(amount)
 
 func is_full_health() -> bool:
@@ -50,8 +51,10 @@ func is_full_health() -> bool:
 func get_ratio() -> float:
 	return float(health) / float(max_health)
 
-func _on_died() -> void:
+func die() -> void:
+	super.die()
 	health = 0
 
-func _on_revived() -> void:
+func revive() -> bool:
 	health = max_health
+	return super.revive()

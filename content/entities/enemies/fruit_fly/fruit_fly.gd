@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var idle_time_range: Vector2
 @export var animated_rush_speed: float
 
+@onready var knockback: Knockback = $Knockback
 @onready var sm: StateMachine = $StateMachine
 @onready var idle_state: State = $StateMachine/IdleState
 @onready var rush_state: State = $StateMachine/RushState
@@ -22,6 +23,8 @@ func _physics_process(_delta: float) -> void:
 		dead_state:
 			velocity = Vector2.ZERO
 	
+	velocity = knockback.compute_velocity(velocity)
+	
 	move_and_slide()
 
 func _on_rush_state_entered() -> void:
@@ -30,3 +33,7 @@ func _on_rush_state_entered() -> void:
 
 func _on_idle_state_entered() -> void:
 	$StateMachine/IdleState/Timer.start(UtilFunctions.rand_range(idle_time_range))
+
+
+func _on_knockback_knockback_started() -> void:
+	pass # Replace with function body.

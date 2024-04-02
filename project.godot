@@ -33,6 +33,7 @@ Events="*res://singletons/events.gd"
 
 window/size/viewport_width=288
 window/size/viewport_height=162
+window/size/mode=3
 window/size/window_width_override=1440
 window/size/window_height_override=810
 window/stretch/mode="canvas_items"

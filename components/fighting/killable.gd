@@ -14,7 +14,6 @@ func die() -> void:
 	
 	if _dead:
 		return
-	
 	_dead = true
 	died.emit()
 	Events.something_died.emit(get_parent(), self)
@@ -32,7 +31,6 @@ func confirm_death() -> void:
 	
 	if !_dead:
 		die()
-	
 	_death_confirmed = true
 	death_confirmed.emit()
 

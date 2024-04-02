@@ -20,6 +20,8 @@ func _enter_start_state() -> void:
 		switch_state(get_child(0))
 
 func switch_state(to_state: State):
+	if state and !state._allow_switch_to(to_state):
+		return
 	prev_state = state
 	state = to_state
 	if prev_state:

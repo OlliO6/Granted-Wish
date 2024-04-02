@@ -48,6 +48,11 @@ func start_knockback(direction: float, strenght: float, data: KnockbackData) -> 
 
 	knockback_started.emit()
 
+func compute_velocity(old_velocity: Vector2) -> Vector2:
+	if not is_knocking():
+		return old_velocity
+	return (old_velocity * unrepress_movement) + velocity
+
 func _process_knockback() -> void:
 
 	var progress = clampf(_time_passed / _current_data.duration, 0, 1)
