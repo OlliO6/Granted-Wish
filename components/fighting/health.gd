@@ -11,7 +11,7 @@ signal took_damage(amount: int)
 
 var health: int:
 	set(v):
-		if is_dead:
+		if _dead:
 			return
 
 		health_changing.emit(health, v)
@@ -32,13 +32,13 @@ func _ready() -> void:
 	revived.connect(_on_revived)
 
 func take_damage(dmg: int) -> void:
-	if is_dead:
+	if _dead:
 		return
 	health -= dmg
 	took_damage.emit(dmg)
 
 func heal(amount: int) -> void:
-	if is_dead:
+	if _dead:
 		return
 	health = amount
 	healed.emit(amount)

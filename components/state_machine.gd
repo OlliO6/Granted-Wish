@@ -12,8 +12,12 @@ func _ready() -> void:
 	_enter_start_state()
 	
 func _enter_start_state() -> void:
-	if !is_instance_valid(state):
+	if is_instance_valid(state):
+		return
+	if start_state:
 		switch_state(start_state)
+	else:
+		switch_state(get_child(0))
 
 func switch_state(to_state: State):
 	prev_state = state

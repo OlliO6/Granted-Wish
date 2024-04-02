@@ -4,6 +4,7 @@ extends Node
 signal state_entered
 signal state_exited
 
+@export var disallow_switching: bool
 @export var tags: PackedStringArray
 
 func get_state_machine() -> StateMachine:
@@ -13,13 +14,16 @@ func is_active() -> bool:
 	return get_state_machine().state == self
 
 func enter():
-	emit_signal("state_entered")
+	state_entered.emit()
 
 func exit():
-	emit_signal("state_exited")
+	state_exited.emit()
 
 func _entered() -> void:
 	pass
 	
 func _exited() -> void:
 	pass
+
+func _allow_switch_to(state: State) -> bool:
+	return not disallow_switching

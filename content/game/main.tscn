@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=17 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_spawner.gd" id="5_j3m67"]
 [ext_resource type="Texture2D" uid="uid://cmobit4kchg6m" path="res://content/tileset/tileset.png" id="5_nnika"]
 [ext_resource type="Script" path="res://content/game/tutorials.gd" id="5_xu1ea"]
+[ext_resource type="PackedScene" uid="uid://dchcwvu0u1k6c" path="res://content/entities/enemies/fruit_fly/fruit_fly.tscn" id="9_stgwo"]
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="9_xi51p"]
 [ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_rvh8f"]
 
@@ -153,3 +154,9 @@ render_target_clear_mode = 1
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="IngameUI" parent="CanvasLayer" instance=ExtResource("11_rvh8f")]
+
+[node name="FruitFly" parent="." instance=ExtResource("9_stgwo")]
+position = Vector2(63, 38)
+
+[node name="FruitFly2" parent="." instance=ExtResource("9_stgwo")]
+position = Vector2(169, 42)

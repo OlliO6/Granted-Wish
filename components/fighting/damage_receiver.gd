@@ -32,4 +32,4 @@ func take_damage(dmg: int, dealer: DamageDealer) -> void:
 	took_damage.emit()
 
 func is_invincible() -> bool:
-	return invincible or invis_timer > 0
+	return invincible or invis_timer > 0 or (health and health.is_dead())

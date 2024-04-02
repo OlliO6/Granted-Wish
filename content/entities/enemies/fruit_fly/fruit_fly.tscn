@@ -1,0 +1,217 @@
+[gd_scene load_steps=23 format=3 uid="uid://dchcwvu0u1k6c"]
+
+[ext_resource type="Script" path="res://content/entities/enemies/fruit_fly/fruit_fly.gd" id="1_xegit"]
+[ext_resource type="Script" path="res://components/state_machine.gd" id="2_adh2w"]
+[ext_resource type="Script" path="res://components/state.gd" id="3_a4le1"]
+[ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="4_xpxtx"]
+[ext_resource type="Script" path="res://components/fighting/health.gd" id="5_t5x1j"]
+[ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="6_aqxn1"]
+[ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="7_hoa4p"]
+[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="8_way8p"]
+[ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="9_r37ws"]
+[ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="10_w4wu8"]
+[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="11_cijka"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="12_xiw6n"]
+[ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="13_2ojcw"]
+[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="14_w4qde"]
+[ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="15_v03jp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e6axv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wcrl3"]
+resource_local_to_scene = true
+shader = ExtResource("8_way8p")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fxhmp"]
+radius = 8.0
+
+[sub_resource type="Animation" id="Animation_svr48"]
+resource_name = "die"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BloodSpawner:effect_scn")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_v03jp")]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BloodSpawner")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"spawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_xxk1v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BloodSpawner:effect_scn")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("12_xiw6n")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animated_rush_speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_j7hhf"]
+resource_name = "rush"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StateMachine")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [NodePath("IdleState")],
+"method": &"switch_state_str"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animated_rush_speed")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 1),
+"transitions": PackedFloat32Array(1, 2, 1),
+"update": 0,
+"values": [0.0, 80.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wdsys"]
+_data = {
+"RESET": SubResource("Animation_xxk1v"),
+"die": SubResource("Animation_svr48"),
+"rush": SubResource("Animation_j7hhf")
+}
+
+[node name="FruitFly" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 65
+motion_mode = 1
+script = ExtResource("1_xegit")
+idle_time_range = Vector2(0.5, 1)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
+script = ExtResource("2_adh2w")
+start_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("3_a4le1")
+
+[node name="Timer" type="Timer" parent="StateMachine/IdleState"]
+one_shot = true
+
+[node name="RushState" type="Node" parent="StateMachine"]
+script = ExtResource("3_a4le1")
+
+[node name="DeadState" type="Node" parent="StateMachine"]
+script = ExtResource("3_a4le1")
+disallow_switching = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_e6axv")
+
+[node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
+script = ExtResource("4_xpxtx")
+health = NodePath("../Health")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("5_t5x1j")
+max_health = 30
+
+[node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
+script = ExtResource("6_aqxn1")
+damage = null
+directional_impact = null
+impact_velocity_magnitude = null
+force_away = true
+knockback = ExtResource("7_hoa4p")
+killable = NodePath("../Health")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_wcrl3")
+position = Vector2(0.500002, 7.15256e-07)
+scale = Vector2(0.132812, 0.125)
+texture = ExtResource("9_r37ws")
+script = ExtResource("10_w4wu8")
+
+[node name="BloodSpawner" type="Node2D" parent="."]
+script = ExtResource("11_cijka")
+effect_scn = ExtResource("12_xiw6n")
+
+[node name="AttackArea" type="Area2D" parent="." node_paths=PackedStringArray("damage_dealer")]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("13_2ojcw")
+damage_dealer = NodePath("../DamageDealer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_fxhmp")
+
+[node name="HurtAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_w4qde")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wdsys")
+}
+
+[connection signal="state_entered" from="StateMachine/IdleState" to="." method="_on_idle_state_entered"]
+[connection signal="timeout" from="StateMachine/IdleState/Timer" to="StateMachine" method="switch_state_str" binds= ["RushState"]]
+[connection signal="state_entered" from="StateMachine/RushState" to="." method="_on_rush_state_entered"]
+[connection signal="state_entered" from="StateMachine/RushState" to="AnimationPlayer" method="play" binds= ["rush"]]
+[connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
+[connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
+[connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
+[connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]
+[connection signal="died" from="Health" to="StateMachine" method="switch_state_str" binds= ["DeadState"]]

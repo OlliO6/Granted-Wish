@@ -693,8 +693,6 @@ bbcode_enabled = true
 text = "[shake level=8]SCHRINK!!![/shake] "
 fit_content = true
 autowrap_mode = 0
-visible_characters = 41
-visible_ratio = 3.72727
 
 [node name="WhiteScreen" type="CanvasLayer" parent="."]
 layer = 5

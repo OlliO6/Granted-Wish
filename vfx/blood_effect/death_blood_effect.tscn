@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bdwlpvhvpqmqf"]
+[gd_scene load_steps=11 format=3 uid="uid://d4h7ucmhr53fi"]
 
-[ext_resource type="Script" path="res://vfx/blood_effect/blood_effect.gd" id="1_c3gfl"]
-[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_fcw08"]
+[ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_34iw7"]
+[ext_resource type="Script" path="res://vfx/blood_effect/blood_effect.gd" id="2_kl1wr"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vr8a1"]
 particles_animation = true
@@ -33,12 +33,13 @@ point_count = 4
 [sub_resource type="CurveTexture" id="CurveTexture_mtubc"]
 curve = SubResource("Curve_melm4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ey3pc"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u5prm"]
 resource_local_to_scene = true
 particle_flag_align_y = true
 particle_flag_disable_z = true
-spread = 38.0
-initial_velocity_max = 35.0
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 45.0
 directional_velocity_min = 1.0
 directional_velocity_max = 13.8
 directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
@@ -52,8 +53,9 @@ anim_offset_max = 1.0
 [node name="GPUParticles2D" type="GPUParticles2D"]
 material = SubResource("CanvasItemMaterial_vr8a1")
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_ey3pc")
-texture = ExtResource("1_fcw08")
+amount = 18
+process_material = SubResource("ParticleProcessMaterial_u5prm")
+texture = ExtResource("1_34iw7")
 lifetime = 0.4
 one_shot = true
 speed_scale = 1.5
@@ -61,4 +63,5 @@ explosiveness = 0.85
 randomness = 0.5
 interpolate = false
 fract_delta = false
-script = ExtResource("1_c3gfl")
+script = ExtResource("2_kl1wr")
+impact_velocity_magnitude_scale = 0.3

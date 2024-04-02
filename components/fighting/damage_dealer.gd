@@ -15,7 +15,7 @@ signal dealed_damage(receiver: DamageReceiver)
 
 func apply_damage(node: Node) -> bool:
 
-	if killable and killable.is_dead:
+	if killable and killable.is_dead():
 		return false
 
 	var dmg := Components.get_damage_receiver(node)
