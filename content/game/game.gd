@@ -7,6 +7,7 @@ func _init() -> void:
 	Globals.game = self
 
 func _ready() -> void:
+	randomize()
 	clear_blood()
 	get_node("BloodLayer").show()
 

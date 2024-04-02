@@ -43,6 +43,9 @@ func heal(amount: int) -> void:
 	health += amount
 	healed.emit(amount)
 
+func is_full_health() -> bool:
+	return health >= max_health
+
 # returns 1 if full live and 0 if dead
 func get_ratio() -> float:
 	return float(health) / float(max_health)

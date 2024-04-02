@@ -8,13 +8,13 @@
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="2_blm1e"]
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
 [ext_resource type="Script" path="res://components/fighting/knockback/knockback.gd" id="6_bqetv"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="7_yubp0"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
 [ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
 [ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="13_sx2fl"]
-[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="14_p1v7n"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="15_m7wyx"]
-[ext_resource type="Script" path="res://player/item_collect_area.gd" id="16_nlix2"]
+[ext_resource type="Script" path="res://components/item_collect_area.gd" id="16_cvdok"]
 [ext_resource type="AudioStream" uid="uid://b43t01npdxdfm" path="res://sfx/player/hurt.wav" id="16_rnpwm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ja0ya"]
@@ -205,7 +205,7 @@ max_health = 100
 script = ExtResource("6_bqetv")
 
 [node name="BloodSpawner" type="Node2D" parent="."]
-script = ExtResource("14_p1v7n")
+script = ExtResource("7_yubp0")
 effect_scn = ExtResource("15_m7wyx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -242,7 +242,7 @@ bus = &"Sfx"
 collision_layer = 0
 collision_mask = 16
 monitorable = false
-script = ExtResource("16_nlix2")
+script = ExtResource("16_cvdok")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ItemCollectArea"]
 position = Vector2(0, -2)

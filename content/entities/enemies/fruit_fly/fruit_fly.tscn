@@ -10,13 +10,13 @@
 [ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="8_way8p"]
 [ext_resource type="Texture2D" uid="uid://c7lg1tgf5uy5j" path="res://icon.svg" id="9_r37ws"]
 [ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="10_w4wu8"]
-[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="11_cijka"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="11_hrhad"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="12_xiw6n"]
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="13_2ojcw"]
 [ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="14_w4qde"]
 [ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="15_v03jp"]
-[ext_resource type="Script" path="res://components/spawner.gd" id="16_6avot"]
 [ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/Meat.tscn" id="17_uu0uw"]
+[ext_resource type="Script" path="res://components/spawning/random_spawner.gd" id="18_pui1q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e6axv"]
 
@@ -187,7 +187,7 @@ texture = ExtResource("9_r37ws")
 script = ExtResource("10_w4wu8")
 
 [node name="BloodSpawner" type="Node2D" parent="."]
-script = ExtResource("11_cijka")
+script = ExtResource("11_hrhad")
 effect_scn = ExtResource("12_xiw6n")
 
 [node name="AttackArea" type="Area2D" parent="." node_paths=PackedStringArray("damage_dealer")]
@@ -208,8 +208,8 @@ libraries = {
 "": SubResource("AnimationLibrary_wdsys")
 }
 
-[node name="Spawner" type="Node2D" parent="."]
-script = ExtResource("16_6avot")
+[node name="RandomSpawner" type="Node2D" parent="."]
+script = ExtResource("18_pui1q")
 scene = ExtResource("17_uu0uw")
 child_of = 4
 
@@ -220,7 +220,7 @@ child_of = 4
 [connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
-[connection signal="death_confirmed" from="Health" to="." method="queue_free"]
-[connection signal="death_confirmed" from="Health" to="Spawner" method="spawn"]
+[connection signal="death_confirmed" from="Health" to="." method="queue_free" flags=3]
+[connection signal="death_confirmed" from="Health" to="RandomSpawner" method="spawn"]
 [connection signal="died" from="Health" to="StateMachine" method="switch_state_str" binds= ["DeadState"]]
 [connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]

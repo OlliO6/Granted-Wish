@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://d6ulig0t18hs"]
 
 [ext_resource type="Texture2D" uid="uid://to6mfmauigpx" path="res://content/items/meat/meat.png" id="1_mechj"]
-[ext_resource type="Script" path="res://vfx/blood_effect/blood_spawner.gd" id="2_d3gkk"]
 [ext_resource type="Script" path="res://content/items/item_effects/heal_item_effect.gd" id="2_k480f"]
 [ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="3_bnfcx"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="4_k8cpq"]
 [ext_resource type="Script" path="res://components/item.gd" id="4_kx8cf"]
 
 [sub_resource type="Resource" id="Resource_dsuho"]
@@ -28,7 +28,7 @@ texture = ExtResource("1_mechj")
 shape = SubResource("CircleShape2D_yutbq")
 
 [node name="BloodSpawner" type="Node2D" parent="."]
-script = ExtResource("2_d3gkk")
+script = ExtResource("4_k8cpq")
 effect_scn = ExtResource("3_bnfcx")
 
 [connection signal="collected" from="ItemComponent" to="." method="queue_free" flags=3]
