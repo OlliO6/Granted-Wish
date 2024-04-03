@@ -10,6 +10,9 @@ signal death_confirmed
 var _dead: bool
 var _death_confirmed: bool
 
+func _ready() -> void:
+	tree_exiting.connect(_on_exiting_tree)
+
 func die() -> void:
 	
 	if _dead:
@@ -39,3 +42,7 @@ func is_death_confirmed() -> bool:
 
 func is_dead() -> bool:
 	return _dead
+
+func _on_exiting_tree() -> void:
+	if !_death_confirmed and is_queued_for_deletion():
+		confirm_death()

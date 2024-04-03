@@ -6,6 +6,11 @@ static func rand_range(v_range: Vector2, rng: RandomNumberGenerator=null) -> flo
 		return rng.randf_range(v_range.x, v_range.y)
 	return randf_range(v_range.x, v_range.y)
 
+static func rand_range_i(v_range: Vector2i, rng: RandomNumberGenerator=null) -> int:
+	if rng:
+		return rng.randi_range(v_range.x, v_range.y)
+	return randi_range(v_range.x, v_range.y)
+	
 static func get_all_children(node: Node) -> Array[Node]:
 	var nodes: Array = []
 

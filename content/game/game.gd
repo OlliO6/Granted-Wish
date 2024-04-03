@@ -3,6 +3,8 @@ extends Node2D
 
 @export var blood_viewport: SubViewport
 
+var celebrated_waves_cleared: int
+
 func _init() -> void:
 	Globals.game = self
 
@@ -19,3 +21,6 @@ func get_camera() -> GameCamera:
 
 func clear_blood() -> void:
 	blood_viewport.render_target_clear_mode = SubViewport.CLEAR_MODE_ONCE
+
+func _on_enemy_spawning_celebrated_wave_cleared() -> void:
+	celebrated_waves_cleared += 1

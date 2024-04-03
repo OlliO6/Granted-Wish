@@ -170,6 +170,7 @@ health = NodePath("../Health")
 
 [node name="ScreenShakeInducer" type="Node" parent="DamageReceiver"]
 script = ExtResource("5_hsrsm")
+amplitude = 3.0
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("5_t5x1j")
@@ -219,6 +220,8 @@ libraries = {
 
 [node name="RandomSpawner" type="Node2D" parent="."]
 script = ExtResource("18_pui1q")
+use_spawn_data = null
+spawn_data = Array[Resource("res://components/spawning/random_spawn_data.gd")]([])
 scene = ExtResource("17_uu0uw")
 child_of = 4
 
@@ -229,8 +232,8 @@ child_of = 4
 [connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
 [connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
-[connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
 [connection signal="took_damage" from="DamageReceiver" to="DamageReceiver/ScreenShakeInducer" method="induce_shake"]
+[connection signal="took_damage" from="DamageReceiver" to="Sprite2D" method="flash"]
 [connection signal="took_damage" from="DamageReceiver" to="StateMachine" method="switch_state_str" binds= ["IdleState"]]
 [connection signal="death_confirmed" from="Health" to="." method="queue_free" flags=3]
 [connection signal="death_confirmed" from="Health" to="RandomSpawner" method="spawn"]

@@ -82,7 +82,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 2),
-"transitions": PackedFloat32Array(2, 1),
+"transitions": PackedFloat32Array(2.37841, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
@@ -162,6 +162,20 @@ tracks/6/keys = {
 "transitions": PackedFloat32Array(2.73208, 1),
 "update": 0,
 "values": [40.0, 0.0]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../Killable")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_qn0jv"]
@@ -384,6 +398,7 @@ stream = ExtResource("5_gaogb")
 bus = &"Sfx"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = 5.0
 bus = &"Sfx"
 
 [connection signal="died" from="Killable" to="AnimationPlayer" method="play" binds= ["die"]]
