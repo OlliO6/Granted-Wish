@@ -6,8 +6,9 @@ signal selected_spell_changed(spell_data: SpellData)
 
 @export var spell_data_list: Array[SpellData]
 
-@onready var timer: Timer = get_node("Timer")
 @onready var audio_player: AudioStreamPlayer2D = get_node("AudioStreamPlayer2D")
+
+var _time_elapsed: float
 
 var current_spell_idx: int:
 	set(v):
@@ -23,13 +24,21 @@ var _current_spell: SpellData:
 func _ready() -> void:
 	current_spell_idx = 0
 
-	selected_spell_changed.connect(_on_selected_spell_changed)
-	timer.timeout.connect(_on_timeout)
 	Events.event_fired.connect(_on_event)
 	InputManager.attack_pressed.connect(_on_attack_pressed)
 	InputManager.spell_selected.connect(func(i): current_spell_idx=i - 1)
 	InputManager.next_spell_pressed.connect(func(): current_spell_idx += 1)
 	InputManager.previous_spell_pressed.connect(func(): current_spell_idx -= 1)
+
+func _process(delta: float) -> void:
+	
+	if !_current_spell:
+		return
+	
+	_time_elapsed += delta
+	
+	if _time_elapsed > _current_spell.cast_delay and _current_spell.allow_hold and InputManager.is_attack_pressed():
+		cast_spell(_current_spell)
 
 func cast_spell(data: SpellData) -> void:
 
@@ -46,23 +55,14 @@ func cast_spell(data: SpellData) -> void:
 	audio_player.play()
 
 	spell_casted.emit(spell, data)
-	timer.start(data.cast_delay)
+	_time_elapsed = 0
 
 func get_current_spell_data() -> SpellData:
 	return _current_spell
 
 func _on_attack_pressed() -> void:
-	if !timer.is_stopped() or !_current_spell:
-		return
-		
-	cast_spell(_current_spell)
-
-func _on_timeout() -> void:
-	if _current_spell.allow_hold and InputManager.is_attack_pressed():
+	if  _current_spell and _time_elapsed > _current_spell.cast_delay:
 		cast_spell(_current_spell)
-
-func _on_selected_spell_changed(spell_data: SpellData) -> void:
-	timer.start(spell_data.cast_delay)
 
 func _on_event(event: Event) -> void:
 	if event is UnlockSpellEvent:

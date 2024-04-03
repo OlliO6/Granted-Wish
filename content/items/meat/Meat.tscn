@@ -1,18 +1,37 @@
-[gd_scene load_steps=12 format=3 uid="uid://d6ulig0t18hs"]
+[gd_scene load_steps=14 format=3 uid="uid://d6ulig0t18hs"]
 
 [ext_resource type="Script" path="res://components/item.gd" id="1_lmxgw"]
 [ext_resource type="Script" path="res://content/items/item_effects/heal_item_effect.gd" id="2_7m02q"]
+[ext_resource type="Script" path="res://content/items/item_effects/always_collectable_item_effect.gd" id="3_4ulgn"]
 [ext_resource type="Texture2D" uid="uid://to6mfmauigpx" path="res://content/items/meat/meat.png" id="3_arbt4"]
 [ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="4_lufco"]
 [ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="5_hhw7m"]
 [ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="6_6fx7l"]
 
-[sub_resource type="Resource" id="Resource_dsuho"]
+[sub_resource type="Resource" id="Resource_i5num"]
 script = ExtResource("2_7m02q")
 health_to_heal = 30
 
+[sub_resource type="Resource" id="Resource_wvmc4"]
+script = ExtResource("3_4ulgn")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_yutbq"]
 radius = 5.0
+
+[sub_resource type="Animation" id="Animation_si17k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_coqbs"]
 resource_name = "default"
@@ -58,21 +77,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_si17k"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k67ik"]
 _data = {
 "RESET": SubResource("Animation_si17k"),
@@ -85,7 +89,7 @@ motion_mode = 1
 
 [node name="Item" type="Node" parent="."]
 script = ExtResource("1_lmxgw")
-effects = Array[Resource("res://content/items/item_effects/item_effect.gd")]([SubResource("Resource_dsuho")])
+effects = Array[Resource("res://content/items/item_effects/item_effect.gd")]([SubResource("Resource_i5num"), SubResource("Resource_wvmc4")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = -1

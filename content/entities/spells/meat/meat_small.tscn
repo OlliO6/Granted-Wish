@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://hjh7572fchuq"]
+[gd_scene load_steps=6 format=3 uid="uid://hjh7572fchuq"]
 
 [ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/meat.tscn" id="1_yaism"]
 [ext_resource type="Script" path="res://content/items/item_effects/heal_item_effect.gd" id="2_3mitd"]
+[ext_resource type="Script" path="res://content/items/item_effects/always_collectable_item_effect.gd" id="3_iyak7"]
 
 [sub_resource type="Resource" id="Resource_ulw3l"]
 script = ExtResource("2_3mitd")
 health_to_heal = 10
 
+[sub_resource type="Resource" id="Resource_qliyf"]
+script = ExtResource("3_iyak7")
+
 [node name="Meat" instance=ExtResource("1_yaism")]
 scale = Vector2(0.5, 0.5)
 
 [node name="Item" parent="." index="0"]
-effects = Array[Resource("res://content/items/item_effects/item_effect.gd")]([SubResource("Resource_ulw3l")])
+effects = Array[Resource("res://content/items/item_effects/item_effect.gd")]([SubResource("Resource_ulw3l"), SubResource("Resource_qliyf")])

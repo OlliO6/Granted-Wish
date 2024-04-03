@@ -233,9 +233,6 @@ position = Vector2(0, -4)
 script = ExtResource("8_4qdl6")
 spell_data_list = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7")])
 
-[node name="Timer" type="Timer" parent="SpellCaster"]
-one_shot = true
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="SpellCaster"]
 stream = SubResource("AudioStreamRandomizer_v37cn")
 

@@ -21,7 +21,8 @@ func collect(collector: Node) -> void:
 		return
 	
 	for effect in effects:
-		effect.use(collector)
+		if effect.can_use(collector):
+			effect.use(collector)
 	
 	_collected = true
 	collected.emit()
