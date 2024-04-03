@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://bvhjqn6er6tqe"]
 
 [ext_resource type="Script" path="res://content/intro/intro.gd" id="1_bepu8"]
-[ext_resource type="Texture2D" uid="uid://dwl0tigw35r0f" path="res://content/entities/bosses/evil_witch/evil_witch.png" id="1_mwi15"]
+[ext_resource type="Texture2D" uid="uid://dwl0tigw35r0f" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.png" id="1_mwi15"]
 [ext_resource type="Shader" path="res://vfx/common_shaders/canvas_group/outline_thick.gdshader" id="1_mxhjo"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="1_pc5o6"]
 [ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="3_su3vp"]

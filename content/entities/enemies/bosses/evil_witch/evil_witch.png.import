@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwl0tigw35r0f"
-path="res://.godot/imported/evil_witch.png-00da673e757731d60b3a09e56a79761d.ctex"
+path="res://.godot/imported/evil_witch.png-82e27c4088940fd35044a10b27fcc7d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://content/entities/bosses/evil_witch/evil_witch.png"
-dest_files=["res://.godot/imported/evil_witch.png-00da673e757731d60b3a09e56a79761d.ctex"]
+source_file="res://content/entities/enemies/bosses/evil_witch/evil_witch.png"
+dest_files=["res://.godot/imported/evil_witch.png-82e27c4088940fd35044a10b27fcc7d2.ctex"]
 
 [params]
 

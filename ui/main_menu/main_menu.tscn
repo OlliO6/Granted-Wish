@@ -5,8 +5,8 @@
 [ext_resource type="Theme" uid="uid://d17ndole8gkfd" path="res://ui/theme/theme.tres" id="1_ya01g"]
 [ext_resource type="PackedScene" uid="uid://7cw2k7tpryji" path="res://content/game/main.tscn" id="2_e5lv4"]
 [ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="2_f0nt5"]
-[ext_resource type="Texture2D" uid="uid://dwl0tigw35r0f" path="res://content/entities/bosses/evil_witch/evil_witch.png" id="3_4hig0"]
 [ext_resource type="Shader" path="res://vfx/common_shaders/sine_movement.gdshader" id="5_4o5d8"]
+[ext_resource type="Texture2D" uid="uid://dwl0tigw35r0f" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.png" id="5_xwv7c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blx8n"]
 shader = ExtResource("2_f0nt5")
@@ -86,7 +86,7 @@ z_index = -2
 material = SubResource("ShaderMaterial_blx8n")
 position = Vector2(136, 48)
 scale = Vector2(2, 2)
-texture = ExtResource("3_4hig0")
+texture = ExtResource("5_xwv7c")
 hframes = 3
 vframes = 2
 frame = 4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=34 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://singletons/events/unlock_spell_event.gd" id="11_vclut"]
 [ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="12_ixlkq"]
 [ext_resource type="Resource" uid="uid://b7tw06p3042o2" path="res://content/entities/spells/meat/meat_spell.tres" id="13_yd7eg"]
+[ext_resource type="PackedScene" uid="uid://dtjpanhxa4wvc" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.tscn" id="14_hknfx"]
 [ext_resource type="Script" path="res://content/game/celebration_ui.gd" id="15_7k1ak"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
@@ -235,6 +236,15 @@ script = ExtResource("5_j3m67")
 enemy_count_range = Vector2i(3, 4)
 spawn_delay_range = Vector2(2, 4)
 spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_upqha")])
+child_of = 3
+
+[node name="FinalBoss" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/FinalBoss"]
+script = ExtResource("5_j3m67")
+use_spawn_data = false
+scene = ExtResource("14_hknfx")
 child_of = 3
 
 [node name="EnemySpawnPositions" type="Node2D" parent="."]

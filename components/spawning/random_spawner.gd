@@ -6,12 +6,12 @@ signal failed_to_spawn
 
 @export_range(0, 1) var chance_to_spawn: float = 1.0
 @export var use_spawn_data: bool = true
-@export var spawn_data := [] as Array[RandomSpawnData]
+@export var spawn_data: Array[RandomSpawnData]
 
 func _get_configuration_warnings() -> PackedStringArray:
 	if specified_parent.is_empty() and child_of == ChildOfEnum.SpecifiedParent:
 		return ["Parent not specified"]
-	if spawn_data.size() == 0:
+	if spawn_data.size() == 0 and use_spawn_data:
 		return ["Set Spawn Data"]
 	return []
 

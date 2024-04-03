@@ -178,9 +178,6 @@ max_health = 30
 
 [node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
 script = ExtResource("6_aqxn1")
-damage = null
-directional_impact = null
-impact_velocity_magnitude = null
 force_away = true
 knockback = ExtResource("7_hoa4p")
 killable = NodePath("../Health")
@@ -220,7 +217,7 @@ libraries = {
 
 [node name="RandomSpawner" type="Node2D" parent="."]
 script = ExtResource("18_pui1q")
-spawn_data = Array[Resource("res://components/spawning/random_spawn_data.gd")]([])
+use_spawn_data = false
 scene = ExtResource("19_fcxpb")
 child_of = 4
 
