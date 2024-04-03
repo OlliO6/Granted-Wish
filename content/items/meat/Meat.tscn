@@ -1,41 +1,113 @@
-[gd_scene load_steps=9 format=3 uid="uid://d6ulig0t18hs"]
+[gd_scene load_steps=12 format=3 uid="uid://d6ulig0t18hs"]
 
-[ext_resource type="Texture2D" uid="uid://to6mfmauigpx" path="res://content/items/meat/meat.png" id="1_mechj"]
-[ext_resource type="Script" path="res://content/items/item_effects/heal_item_effect.gd" id="2_k480f"]
-[ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="3_bnfcx"]
-[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="4_k8cpq"]
-[ext_resource type="Script" path="res://components/item.gd" id="4_kx8cf"]
-[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="6_nhls0"]
+[ext_resource type="Script" path="res://components/item.gd" id="1_lmxgw"]
+[ext_resource type="Script" path="res://content/items/item_effects/heal_item_effect.gd" id="2_7m02q"]
+[ext_resource type="Texture2D" uid="uid://to6mfmauigpx" path="res://content/items/meat/meat.png" id="3_arbt4"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="4_lufco"]
+[ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="5_hhw7m"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="6_6fx7l"]
 
 [sub_resource type="Resource" id="Resource_dsuho"]
-script = ExtResource("2_k480f")
+script = ExtResource("2_7m02q")
 health_to_heal = 30
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yutbq"]
 radius = 5.0
 
+[sub_resource type="Animation" id="Animation_coqbs"]
+resource_name = "default"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BloodSpawner")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"spawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_si17k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k67ik"]
+_data = {
+"RESET": SubResource("Animation_si17k"),
+"default": SubResource("Animation_coqbs")
+}
+
 [node name="Meat" type="CharacterBody2D"]
 collision_layer = 16
 
 [node name="Item" type="Node" parent="."]
-script = ExtResource("4_kx8cf")
+script = ExtResource("1_lmxgw")
 effects = Array[Resource("res://content/items/item_effects/item_effect.gd")]([SubResource("Resource_dsuho")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(-1, -1)
-texture = ExtResource("1_mechj")
+texture = ExtResource("3_arbt4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_yutbq")
 
 [node name="BloodSpawner" type="Node2D" parent="."]
-script = ExtResource("4_k8cpq")
-effect_scn = ExtResource("3_bnfcx")
+script = ExtResource("4_lufco")
+effect_scn = ExtResource("5_hhw7m")
 
 [node name="ScreenShakeInducer" type="Node" parent="."]
-script = ExtResource("6_nhls0")
+script = ExtResource("6_6fx7l")
 amplitude = 1.0
 duration = 0.4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_k67ik")
+}
+autoplay = "default"
 
 [connection signal="collected" from="Item" to="." method="queue_free" flags=3]
 [connection signal="collected" from="Item" to="BloodSpawner" method="spawn"]

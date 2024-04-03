@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SpellData" load_steps=3 format=3 uid="uid://b7tw06p3042o2"]
+
+[ext_resource type="Script" path="res://content/entities/spells/spell_data.gd" id="1_imlg8"]
+[ext_resource type="PackedScene" uid="uid://hjh7572fchuq" path="res://content/entities/spells/meat/meat_small.tscn" id="2_mj3g5"]
+
+[resource]
+script = ExtResource("1_imlg8")
+spell_scene = ExtResource("2_mj3g5")
+rotated = false
+cast_delay = 1.0
+player_stun_time = 1.0
+allow_hold = true
+color = Color(0.380392, 0.14902, 0.219608, 1)
+sfx_pitch_range = Vector2(1, 1)

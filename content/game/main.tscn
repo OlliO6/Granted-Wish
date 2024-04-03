@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=33 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
@@ -13,8 +13,10 @@
 [ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="9_xi51p"]
 [ext_resource type="Theme" uid="uid://d17ndole8gkfd" path="res://ui/theme/theme.tres" id="10_mk7em"]
 [ext_resource type="Script" path="res://components/spawning/random_spawn_data.gd" id="10_xl5dl"]
-[ext_resource type="Script" path="res://components/event.gd" id="11_blk8a"]
 [ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_rvh8f"]
+[ext_resource type="Script" path="res://singletons/events/unlock_spell_event.gd" id="11_vclut"]
+[ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="12_ixlkq"]
+[ext_resource type="Resource" uid="uid://b7tw06p3042o2" path="res://content/entities/spells/meat/meat_spell.tres" id="13_yd7eg"]
 [ext_resource type="Script" path="res://content/game/celebration_ui.gd" id="15_7k1ak"]
 
 [sub_resource type="Environment" id="Environment_srm4m"]
@@ -206,11 +208,34 @@ wait_time = 5.0
 one_shot = true
 
 [node name="UnlockIceSpellsEvent" type="Node" parent="EnemySpawning"]
-script = ExtResource("11_blk8a")
+script = ExtResource("11_vclut")
+spell_to_unlock = ExtResource("12_ixlkq")
 
 [node name="Timer4" type="Timer" parent="EnemySpawning"]
 wait_time = 5.0
 one_shot = true
+
+[node name="Timer5" type="Timer" parent="EnemySpawning"]
+wait_time = 5.0
+one_shot = true
+
+[node name="UnlockMeatSpellsEvent" type="Node" parent="EnemySpawning"]
+script = ExtResource("11_vclut")
+spell_to_unlock = ExtResource("13_yd7eg")
+
+[node name="Timer6" type="Timer" parent="EnemySpawning"]
+wait_time = 5.0
+one_shot = true
+
+[node name="EnemyWave2" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave2"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(3, 4)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_upqha")])
+child_of = 3
 
 [node name="EnemySpawnPositions" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -375,3 +400,4 @@ vertical_alignment = 1
 [connection signal="wave_started" from="EnemySpawning/FirstEnemy" to="Tutorials" method="_on_first_enemy_wave_started"]
 [connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="Tutorials" method="_on_unlock_ice_spells_event_fired"]
 [connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Ice Magic"]]
+[connection signal="fired" from="EnemySpawning/UnlockMeatSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Meat Magic"]]

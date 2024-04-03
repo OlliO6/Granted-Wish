@@ -1,12 +1,28 @@
-[gd_scene load_steps=33 format=3 uid="uid://dvdfi223b70aq"]
+[gd_scene load_steps=36 format=3 uid="uid://dvdfi223b70aq"]
 
 [ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="1_np4ah"]
-[ext_resource type="Resource" uid="uid://beaxnkdfuwvvp" path="res://components/fighting/knockback/large_knockback.tres" id="2_8cp6r"]
+[ext_resource type="Script" path="res://components/fighting/knockback/knockback_data.gd" id="2_a7ek6"]
 [ext_resource type="Script" path="res://components/fighting/killable.gd" id="3_pcuhf"]
 [ext_resource type="AudioStream" uid="uid://81oq30bkr5jj" path="res://sfx/spells/fire_spell_sustain.mp3" id="4_4jhbw"]
 [ext_resource type="Texture2D" uid="uid://3ko6dglu7234" path="res://vfx/particle_sheet.png" id="6_uggip"]
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="7_maejd"]
 [ext_resource type="AudioStream" uid="uid://4xjqrgtw7yk7" path="res://sfx/spells/fire_spell_impact.mp3" id="8_q210c"]
+
+[sub_resource type="Curve" id="Curve_juxsf"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.822581, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 15.2553, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_qn1l3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.0806452, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Resource" id="Resource_hti3g"]
+script = ExtResource("2_a7ek6")
+duration = 3.0
+base_strenght = 70.0
+dynamic_strenght_impact = 1.2
+velocity_curve = SubResource("Curve_qn1l3")
+unrepress_movement_curve = SubResource("Curve_juxsf")
 
 [sub_resource type="Animation" id="Animation_jiilk"]
 length = 0.001
@@ -331,7 +347,7 @@ radius = 4.0
 [node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
 script = ExtResource("1_np4ah")
 damage = 15
-knockback = ExtResource("2_8cp6r")
+knockback = SubResource("Resource_hti3g")
 killable = NodePath("../Killable")
 
 [node name="Killable" type="Node" parent="."]

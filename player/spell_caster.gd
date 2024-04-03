@@ -25,6 +25,7 @@ func _ready() -> void:
 
 	selected_spell_changed.connect(_on_selected_spell_changed)
 	timer.timeout.connect(_on_timeout)
+	Events.event_fired.connect(_on_event)
 	InputManager.attack_pressed.connect(_on_attack_pressed)
 	InputManager.spell_selected.connect(func(i): current_spell_idx=i - 1)
 	InputManager.next_spell_pressed.connect(func(): current_spell_idx += 1)
@@ -62,3 +63,7 @@ func _on_timeout() -> void:
 
 func _on_selected_spell_changed(spell_data: SpellData) -> void:
 	timer.start(spell_data.cast_delay)
+
+func _on_event(event: Event) -> void:
+	if event is UnlockSpellEvent:
+		spell_data_list.append(event.spell_to_unlock)

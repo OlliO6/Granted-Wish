@@ -17,8 +17,8 @@
 [ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="13_2ojcw"]
 [ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="14_w4qde"]
 [ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="15_v03jp"]
-[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/Meat.tscn" id="17_uu0uw"]
 [ext_resource type="Script" path="res://components/spawning/random_spawner.gd" id="18_pui1q"]
+[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/meat.tscn" id="19_fcxpb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e6axv"]
 
@@ -220,9 +220,8 @@ libraries = {
 
 [node name="RandomSpawner" type="Node2D" parent="."]
 script = ExtResource("18_pui1q")
-use_spawn_data = null
 spawn_data = Array[Resource("res://components/spawning/random_spawn_data.gd")]([])
-scene = ExtResource("17_uu0uw")
+scene = ExtResource("19_fcxpb")
 child_of = 4
 
 [connection signal="state_entered" from="StateMachine/IdleState" to="." method="_on_idle_state_entered"]

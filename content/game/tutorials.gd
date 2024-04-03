@@ -22,4 +22,4 @@ func _on_first_enemy_wave_started() -> void:
 	show_tutorial(cast_spells_tutorial, 3)
 
 func _on_unlock_ice_spells_event_fired() -> void:
-	show_tutorial(cast_spells_tutorial, 5)
+	show_tutorial(switch_spell_tutorial, 5)

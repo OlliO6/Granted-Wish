@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=33 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
 [ext_resource type="AudioStream" uid="uid://c11pfc1stax0m" path="res://sfx/spells/fire_spell_cast.mp3" id="10_vi8ss"]
-[ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="13_sx2fl"]
 [ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="15_m7wyx"]
 [ext_resource type="Script" path="res://components/item_collect_area.gd" id="16_cvdok"]
 [ext_resource type="AudioStream" uid="uid://b43t01npdxdfm" path="res://sfx/player/hurt.wav" id="16_rnpwm"]
@@ -232,7 +231,7 @@ libraries = {
 [node name="SpellCaster" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("8_4qdl6")
-spell_data_list = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7"), ExtResource("13_sx2fl")])
+spell_data_list = Array[Resource("res://content/entities/spells/spell_data.gd")]([ExtResource("9_e8mk7")])
 
 [node name="Timer" type="Timer" parent="SpellCaster"]
 one_shot = true
