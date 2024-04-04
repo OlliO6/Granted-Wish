@@ -1,35 +1,35 @@
-[gd_scene load_steps=28 format=3 uid="uid://dchcwvu0u1k6c"]
+[gd_scene load_steps=27 format=3 uid="uid://cr3s7p3fayfpa"]
 
-[ext_resource type="Script" path="res://content/entities/enemies/fruit_fly/fruit_fly.gd" id="1_xegit"]
-[ext_resource type="Script" path="res://components/state_machine.gd" id="2_adh2w"]
-[ext_resource type="Script" path="res://components/state.gd" id="3_a4le1"]
-[ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="4_xpxtx"]
-[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="5_hsrsm"]
-[ext_resource type="Script" path="res://components/fighting/health.gd" id="5_t5x1j"]
-[ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="6_aqxn1"]
-[ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="7_hoa4p"]
-[ext_resource type="Script" path="res://components/fighting/knockback/knockback.gd" id="8_3mvra"]
-[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="8_way8p"]
-[ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="10_w4wu8"]
-[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="11_hrhad"]
-[ext_resource type="Texture2D" uid="uid://bq0rvc2j4ojjs" path="res://content/entities/enemies/enemies.png" id="11_l65j7"]
-[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="12_xiw6n"]
-[ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="13_2ojcw"]
-[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="14_w4qde"]
-[ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="15_v03jp"]
-[ext_resource type="Script" path="res://components/spawning/random_spawner.gd" id="18_pui1q"]
-[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/meat.tscn" id="19_fcxpb"]
+[ext_resource type="Script" path="res://content/entities/enemies/circle/circle_enemy.gd" id="1_e8oqa"]
+[ext_resource type="Script" path="res://components/state_machine.gd" id="2_fxmex"]
+[ext_resource type="Script" path="res://components/state.gd" id="3_fqrp5"]
+[ext_resource type="Script" path="res://components/fighting/damage_receiver.gd" id="4_edabk"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="5_ewivp"]
+[ext_resource type="Script" path="res://components/fighting/health.gd" id="6_77mau"]
+[ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="7_uquc8"]
+[ext_resource type="Resource" uid="uid://bmgi6xtytij76" path="res://components/fighting/knockback/medium_knockback.tres" id="8_o0gqu"]
+[ext_resource type="Script" path="res://components/fighting/knockback/knockback.gd" id="9_lf386"]
+[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="10_iwu5x"]
+[ext_resource type="Texture2D" uid="uid://bq0rvc2j4ojjs" path="res://content/entities/enemies/enemies.png" id="11_8orjv"]
+[ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="12_dsmle"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="13_87gft"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="14_n0al5"]
+[ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="15_pnrq0"]
+[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="16_w50nl"]
+[ext_resource type="PackedScene" uid="uid://d4h7ucmhr53fi" path="res://vfx/blood_effect/death_blood_effect.tscn" id="17_nt5ju"]
+[ext_resource type="Script" path="res://components/spawning/random_spawner.gd" id="18_8uy3n"]
+[ext_resource type="PackedScene" uid="uid://d6ulig0t18hs" path="res://content/items/meat/meat.tscn" id="19_o28cp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e6axv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wcrl3"]
 resource_local_to_scene = true
-shader = ExtResource("8_way8p")
+shader = ExtResource("10_iwu5x")
 shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fxhmp"]
-radius = 4.12311
+radius = 5.0
 
 [sub_resource type="Animation" id="Animation_xxk1v"]
 length = 0.001
@@ -43,7 +43,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("12_xiw6n")]
+"values": [ExtResource("14_n0al5")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -82,7 +82,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("15_v03jp")]
+"values": [ExtResource("17_nt5ju")]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -111,35 +111,6 @@ tracks/2/keys = {
 "args": [],
 "method": &"confirm_death"
 }]
-}
-
-[sub_resource type="Animation" id="Animation_j7hhf"]
-resource_name = "rush"
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("StateMachine")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [NodePath("IdleState")],
-"method": &"switch_state_str"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:animated_rush_speed")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 1),
-"transitions": PackedFloat32Array(1, 2, 1),
-"update": 0,
-"values": [0.0, 80.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_r3ss6"]
@@ -175,87 +146,81 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_xxk1v"),
 "die": SubResource("Animation_svr48"),
-"rush": SubResource("Animation_j7hhf"),
 "spawn": SubResource("Animation_r3ss6")
 }
 
-[node name="FruitFly" type="CharacterBody2D"]
+[node name="Circle" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 65
 motion_mode = 1
-script = ExtResource("1_xegit")
-idle_time_range = Vector2(1, 1.5)
+script = ExtResource("1_e8oqa")
+speed = 50.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
-script = ExtResource("2_adh2w")
+script = ExtResource("2_fxmex")
 start_state = NodePath("SpawnState")
 
 [node name="SpawnState" type="Node" parent="StateMachine"]
-script = ExtResource("3_a4le1")
+script = ExtResource("3_fqrp5")
 
 [node name="IdleState" type="Node" parent="StateMachine"]
-script = ExtResource("3_a4le1")
-
-[node name="Timer" type="Timer" parent="StateMachine/IdleState"]
-one_shot = true
-
-[node name="RushState" type="Node" parent="StateMachine"]
-script = ExtResource("3_a4le1")
+script = ExtResource("3_fqrp5")
 
 [node name="DeadState" type="Node" parent="StateMachine"]
-script = ExtResource("3_a4le1")
+script = ExtResource("3_fqrp5")
 disallow_switching = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_e6axv")
 
 [node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
-script = ExtResource("4_xpxtx")
+script = ExtResource("4_edabk")
 health = NodePath("../Health")
 
 [node name="ScreenShakeInducer" type="Node" parent="DamageReceiver"]
-script = ExtResource("5_hsrsm")
+script = ExtResource("5_ewivp")
 amplitude = 3.0
 
 [node name="Health" type="Node" parent="."]
-script = ExtResource("5_t5x1j")
+script = ExtResource("6_77mau")
 max_health = 30
 
 [node name="DamageDealer" type="Node2D" parent="." node_paths=PackedStringArray("killable")]
-script = ExtResource("6_aqxn1")
+script = ExtResource("7_uquc8")
 force_away = true
-knockback = ExtResource("7_hoa4p")
+knockback = ExtResource("8_o0gqu")
 killable = NodePath("../Health")
 
 [node name="Knockback" type="Node2D" parent="."]
-script = ExtResource("8_3mvra")
+script = ExtResource("9_lf386")
 strenght_multiplier = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_wcrl3")
 scale = Vector2(1e-05, 1e-05)
-texture = ExtResource("11_l65j7")
+texture = ExtResource("11_8orjv")
 offset = Vector2(0, -3)
 vframes = 2
-script = ExtResource("10_w4wu8")
+frame = 1
+script = ExtResource("12_dsmle")
 flip_h_to_player = true
 
 [node name="BloodSpawner" type="Node2D" parent="."]
-script = ExtResource("11_hrhad")
-effect_scn = ExtResource("12_xiw6n")
+script = ExtResource("13_87gft")
+effect_scn = ExtResource("14_n0al5")
 
 [node name="AttackArea" type="Area2D" parent="." node_paths=PackedStringArray("damage_dealer")]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
-script = ExtResource("13_2ojcw")
+script = ExtResource("15_pnrq0")
 damage_dealer = NodePath("../DamageDealer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_fxhmp")
 
 [node name="HurtAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("14_w4qde")
+stream = ExtResource("16_w50nl")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -264,16 +229,12 @@ libraries = {
 autoplay = "spawn"
 
 [node name="RandomSpawner" type="Node2D" parent="."]
-script = ExtResource("18_pui1q")
+script = ExtResource("18_8uy3n")
 use_spawn_data = false
-scene = ExtResource("19_fcxpb")
+scene = ExtResource("19_o28cp")
 child_of = 4
 
 [connection signal="state_entered" from="StateMachine/IdleState" to="." method="_on_idle_state_entered"]
-[connection signal="timeout" from="StateMachine/IdleState/Timer" to="StateMachine" method="switch_state_str" binds= ["RushState"]]
-[connection signal="state_entered" from="StateMachine/RushState" to="." method="_on_rush_state_entered"]
-[connection signal="state_entered" from="StateMachine/RushState" to="AnimationPlayer" method="play" binds= ["rush"]]
-[connection signal="state_entered" from="StateMachine/DeadState" to="StateMachine/IdleState/Timer" method="stop"]
 [connection signal="damage_taken" from="DamageReceiver" to="Knockback" method="_on_damage_receiver_damage_taken"]
 [connection signal="damage_taken" from="DamageReceiver" to="BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="DamageReceiver" to="DamageReceiver/ScreenShakeInducer" method="induce_shake"]
@@ -283,3 +244,4 @@ child_of = 4
 [connection signal="death_confirmed" from="Health" to="RandomSpawner" method="spawn"]
 [connection signal="died" from="Health" to="StateMachine" method="switch_state_str" binds= ["DeadState"]]
 [connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

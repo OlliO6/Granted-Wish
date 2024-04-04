@@ -15,3 +15,6 @@ material = SubResource("ShaderMaterial_yg0sn")
 
 [node name="AttackArea" parent="Area2D" index="2"]
 collision_mask = 3
+
+[node name="AudioStreamPlayer2D" parent="." index="5"]
+volume_db = 4.99885

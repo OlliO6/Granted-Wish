@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dpkbomvltkwjd"]
+[gd_scene load_steps=34 format=3 uid="uid://dpkbomvltkwjd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_fwlov"]
 [ext_resource type="Shader" path="res://player/player.gdshader" id="1_g6ufr"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://components/state.gd" id="2_mo2lt"]
 [ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="5_te3rv"]
 [ext_resource type="Script" path="res://components/fighting/knockback/knockback.gd" id="6_bqetv"]
+[ext_resource type="AudioStream" uid="uid://c2x3t03p05jrt" path="res://sfx/power_up.wav" id="7_85ptf"]
 [ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="7_yubp0"]
 [ext_resource type="Script" path="res://player/spell_caster.gd" id="8_4qdl6"]
 [ext_resource type="Resource" uid="uid://capjs85u3qpvr" path="res://content/entities/spells/fire/fire_spell.tres" id="9_e8mk7"]
@@ -206,6 +207,10 @@ duration = 0.8
 script = ExtResource("2_blm1e")
 max_health = 100
 
+[node name="HealAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Health"]
+stream = ExtResource("7_85ptf")
+volume_db = -11.692
+
 [node name="Knockback" type="Node2D" parent="."]
 script = ExtResource("6_bqetv")
 
@@ -238,6 +243,7 @@ stream = SubResource("AudioStreamRandomizer_v37cn")
 
 [node name="HurtAudioPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_rnpwm")
+volume_db = 2.462
 bus = &"Sfx"
 
 [node name="ItemCollectArea" type="Area2D" parent="."]
@@ -262,6 +268,7 @@ shape = SubResource("CircleShape2D_60w25")
 [connection signal="took_damage" from="DamageReceiver" to="HurtAudioPlayer2D" method="play"]
 [connection signal="died" from="Health" to="." method="_on_died"]
 [connection signal="died" from="Health" to="AnimationPlayer" method="play" binds= ["die"]]
+[connection signal="healed" from="Health" to="Health/HealAudioStreamPlayer2D" method="play" unbinds=1]
 [connection signal="health_changed" from="Health" to="." method="_on_health_changed"]
 [connection signal="knockback_ended" from="Knockback" to="." method="_on_knockback_ended"]
 [connection signal="knockback_started" from="Knockback" to="." method="_on_knockback_started"]

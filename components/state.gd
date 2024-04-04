@@ -15,9 +15,11 @@ func is_active() -> bool:
 
 func enter():
 	state_entered.emit()
+	_entered()
 
 func exit():
 	state_exited.emit()
+	_exited()
 
 func _entered() -> void:
 	pass

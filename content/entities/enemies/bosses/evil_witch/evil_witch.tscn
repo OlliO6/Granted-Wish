@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dtjpanhxa4wvc"]
+[gd_scene load_steps=32 format=3 uid="uid://dtjpanhxa4wvc"]
 
 [ext_resource type="Script" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.gd" id="1_hu0do"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="1_ks78y"]
@@ -10,6 +10,15 @@
 [ext_resource type="Script" path="res://utils/damage_flash_sprite.gd" id="4_7geal"]
 [ext_resource type="Script" path="res://components/state_machine.gd" id="5_7kvhu"]
 [ext_resource type="Script" path="res://components/state.gd" id="6_ov4kn"]
+[ext_resource type="Script" path="res://components/screen_shake_inducer.gd" id="7_fgy1d"]
+[ext_resource type="Script" path="res://content/entities/enemies/bosses/evil_witch/witch_body.gd" id="7_yyijv"]
+[ext_resource type="Script" path="res://content/entities/enemies/bosses/evil_witch/witch_attack_state.gd" id="8_m4vul"]
+[ext_resource type="Script" path="res://components/fighting/attack_area.gd" id="14_qk2w7"]
+[ext_resource type="Script" path="res://components/fighting/damage_dealer.gd" id="15_i3fcy"]
+[ext_resource type="Resource" uid="uid://beaxnkdfuwvvp" path="res://components/fighting/knockback/large_knockback.tres" id="16_1swhu"]
+[ext_resource type="Script" path="res://components/spawning/spawner.gd" id="17_36h2k"]
+[ext_resource type="PackedScene" uid="uid://c4dkyvfbye584" path="res://content/entities/enemies/bosses/evil_witch/spells/fire_salve.tscn" id="18_cq2cd"]
+[ext_resource type="PackedScene" uid="uid://dchcwvu0u1k6c" path="res://content/entities/enemies/fruit_fly/fruit_fly.tscn" id="19_ujb7q"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nty7r"]
 shader = ExtResource("2_rtqxk")
@@ -80,26 +89,230 @@ _data = {
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_17jof"]
 
+[sub_resource type="Animation" id="Animation_liy6n"]
+resource_name = "teleport"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/teleport")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.3, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:material:shader_parameter/teleport_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 3.3, 3.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_tp_to_rand_postion"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AttackArea:active")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CollisionShape2D:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 3.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_d06xl"]
+resource_name = "fire_attack"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spells/FireSalveSpellSpawner")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hk8cy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/teleport")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:material:shader_parameter/teleport_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackArea:active")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_wu2b2"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g7vjj"]
+_data = {
+"RESET": SubResource("Animation_hk8cy"),
+"fire_attack": SubResource("Animation_d06xl"),
+"idle": SubResource("Animation_wu2b2"),
+"teleport": SubResource("Animation_liy6n")
+}
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xe6vr"]
 shader = ExtResource("3_ueagc")
 shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/teleport = 0.0
+shader_parameter/teleport_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_usq44"]
+radius = 8.0
 
 [node name="EvilWitch" type="Node2D"]
 script = ExtResource("1_hu0do")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
 script = ExtResource("5_7kvhu")
-start_state = NodePath("Idle")
+start_state = NodePath("Spawning")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Spawning" type="Node" parent="StateMachine"]
+script = ExtResource("6_ov4kn")
+
+[node name="Fighting" type="Node" parent="StateMachine"]
 script = ExtResource("6_ov4kn")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("1_ks78y")
-max_health = 500
+max_health = 400
 
 [node name="SpawnSprite" type="Sprite2D" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_nty7r")
 texture = ExtResource("3_marsn")
 offset = Vector2(0, -12)
@@ -107,7 +320,8 @@ hframes = 3
 vframes = 2
 frame = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpawnSprite"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_ru377")
 }
@@ -115,7 +329,32 @@ autoplay = "spawn"
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 collision_layer = 4
+collision_mask = 65
 motion_mode = 1
+script = ExtResource("7_yyijv")
+idle_time_range = Vector2(3, 6)
+attack_tp_ratio = 0.5
+
+[node name="StateMachine" type="Node" parent="CharacterBody2D"]
+script = ExtResource("5_7kvhu")
+
+[node name="Idle" type="Node" parent="CharacterBody2D/StateMachine"]
+script = ExtResource("6_ov4kn")
+
+[node name="Timer" type="Timer" parent="CharacterBody2D/StateMachine/Idle"]
+one_shot = true
+
+[node name="Attack" type="Node" parent="CharacterBody2D/StateMachine"]
+script = ExtResource("8_m4vul")
+
+[node name="Teleporting" type="Node" parent="CharacterBody2D/StateMachine"]
+script = ExtResource("6_ov4kn")
+
+[node name="Knocked" type="Node" parent="CharacterBody2D/StateMachine"]
+script = ExtResource("6_ov4kn")
+
+[node name="ScreenShakeInducer" type="Node" parent="CharacterBody2D"]
+script = ExtResource("7_fgy1d")
 
 [node name="DamageReceiver" type="Node" parent="CharacterBody2D" node_paths=PackedStringArray("health")]
 script = ExtResource("2_g2sqk")
@@ -123,9 +362,15 @@ health = NodePath("../../Health")
 
 [node name="Knockback" type="Node2D" parent="CharacterBody2D"]
 script = ExtResource("3_47f2s")
+strenght_multiplier = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("CircleShape2D_17jof")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_g7vjj")
+}
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 material = SubResource("ShaderMaterial_xe6vr")
@@ -135,6 +380,42 @@ hframes = 3
 vframes = 2
 script = ExtResource("4_7geal")
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_spawn_animation_finished"]
+[node name="AttackArea" type="Area2D" parent="CharacterBody2D" node_paths=PackedStringArray("damage_dealer")]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("14_qk2w7")
+damage_dealer = NodePath("../DamageDealer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/AttackArea"]
+shape = SubResource("CircleShape2D_usq44")
+
+[node name="DamageDealer" type="Node2D" parent="CharacterBody2D" node_paths=PackedStringArray("killable")]
+script = ExtResource("15_i3fcy")
+force_away = true
+knockback = ExtResource("16_1swhu")
+killable = NodePath("../../Health")
+
+[node name="Spells" type="Node2D" parent="CharacterBody2D"]
+
+[node name="FireSalveSpellSpawner" type="Node2D" parent="CharacterBody2D/Spells"]
+script = ExtResource("17_36h2k")
+scene = ExtResource("18_cq2cd")
+child_of = 0
+
+[node name="EnemySpawner" type="Node2D" parent="CharacterBody2D/Spells"]
+script = ExtResource("17_36h2k")
+scene = ExtResource("19_ujb7q")
+child_of = 5
+
+[connection signal="state_entered" from="StateMachine/Spawning" to="CharacterBody2D" method="hide"]
+[connection signal="animation_finished" from="SpawnSprite/AnimationPlayer" to="." method="_on_spawn_animation_finished"]
+[connection signal="state_entered" from="CharacterBody2D/StateMachine/Idle" to="CharacterBody2D" method="_on_idle_state_entered"]
+[connection signal="state_entered" from="CharacterBody2D/StateMachine/Idle" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["idle"]]
+[connection signal="timeout" from="CharacterBody2D/StateMachine/Idle/Timer" to="CharacterBody2D" method="_on_idle_timer_timeout"]
+[connection signal="fire_attack" from="CharacterBody2D/StateMachine/Attack" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["fire_attack"]]
+[connection signal="state_entered" from="CharacterBody2D/StateMachine/Teleporting" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["teleport"]]
 [connection signal="damage_taken" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/Knockback" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/Sprite2D" method="flash"]
+[connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/ScreenShakeInducer" method="induce_shake"]
+[connection signal="animation_finished" from="CharacterBody2D/AnimationPlayer" to="CharacterBody2D" method="_on_animation_finished"]

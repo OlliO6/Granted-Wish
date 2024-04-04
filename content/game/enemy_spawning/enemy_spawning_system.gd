@@ -26,9 +26,15 @@ func _start_phase() -> void:
 func _next_phase() -> void:
 	if _phase is EnemyWave and _phase.celebrated:
 		celebrated_wave_cleared.emit()
+	_phase.process_mode = Node.PROCESS_MODE_DISABLED
 	_current_phase_idx += 1
 	if _current_phase_idx >= get_child_count():
 		all_waves_cleared.emit()
 		print("cleared all phases")
 	else:
 		_start_phase()
+
+func _input(event: InputEvent) -> void:
+	if OS.is_debug_build() and event.is_pressed() and event is InputEventKey and (event as InputEventKey).keycode == KEY_0:
+		_next_phase()
+		print(_phase.name)

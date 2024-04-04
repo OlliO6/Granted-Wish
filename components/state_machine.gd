@@ -9,6 +9,7 @@ var state: State
 var prev_state: State
 
 func _ready() -> void:
+	await get_parent().ready
 	_enter_start_state()
 	
 func _enter_start_state() -> void:
