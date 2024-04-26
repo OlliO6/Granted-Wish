@@ -151,7 +151,7 @@ _data = {
 
 [node name="Circle" type="CharacterBody2D"]
 collision_layer = 4
-collision_mask = 65
+collision_mask = 577
 motion_mode = 1
 script = ExtResource("1_e8oqa")
 speed = 40.0

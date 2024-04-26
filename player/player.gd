@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+const INVIS_COLL_LAYER = 10
+
 @export var movement_speed: float
 
 @onready var anim_sprite: AnimatedSprite2D = get_node("AnimatedSprite2D")
@@ -64,6 +66,7 @@ func _on_spell_casted(_spell: Node2D, spell_data: SpellData) -> void:
 
 func _on_damage_taken(amount: int, dealer: DamageDealer) -> void:
 	Events.player_damaged.emit(amount, dealer)
+	set_collision_layer_value(INVIS_COLL_LAYER, true)
 
 func _on_knockback_started() -> void:
 	sm.switch_state(knockback_state)
@@ -78,3 +81,6 @@ func _on_health_changed(health: int) -> void:
 func _on_died() -> void:
 	Events.player_died.emit()
 	get_tree().change_scene_to_file.call_deferred("res://ui/main_menu/main_menu.tscn")
+
+func _on_invis_time_ended() -> void:
+	set_collision_layer_value(INVIS_COLL_LAYER, false)

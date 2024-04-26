@@ -84,6 +84,7 @@ previous_spell={
 2d_physics/layer_5="item"
 2d_physics/layer_6="collide_w_friendly"
 2d_physics/layer_7="collide_w_enemy"
+2d_physics/layer_10="player_invincible"
 
 [rendering]
 
