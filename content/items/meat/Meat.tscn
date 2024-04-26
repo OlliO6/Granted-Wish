@@ -35,7 +35,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_coqbs"]
 resource_name = "default"
-length = 5.0
+length = 3.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -43,7 +43,7 @@ tracks/0/path = NodePath("Sprite2D:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 5),
+"times": PackedFloat32Array(0, 3.6),
 "transitions": PackedFloat32Array(3, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -55,7 +55,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(5),
+"times": PackedFloat32Array(3.6),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -69,7 +69,7 @@ tracks/2/path = NodePath("BloodSpawner")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(5),
+"times": PackedFloat32Array(3.6),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0.0],

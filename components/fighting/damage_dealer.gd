@@ -18,12 +18,12 @@ func apply_damage(node: Node) -> bool:
 	if killable and killable.is_dead():
 		return false
 
-	var dmg := Components.get_damage_receiver(node)
-	if dmg and !dmg.is_invincible():
+	var receiver := Components.get_damage_receiver(node)
+	if receiver and !receiver.is_invincible():
 		if force_away and node is Node2D:
 			global_transform = global_transform.looking_at(node.global_position)
-		dmg.take_damage(damage, self)
-		dealed_damage.emit(damage)
+		receiver.take_damage(damage, self)
+		dealed_damage.emit(receiver)
 		return true
 	
 	return false

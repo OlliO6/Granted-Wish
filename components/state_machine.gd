@@ -26,8 +26,8 @@ func switch_state(to_state: State):
 	prev_state = state
 	state = to_state
 	if prev_state:
-		prev_state.exit()
-	state.enter()
+		prev_state._sm_exit()
+	state._sm_enter()
 	state_switched.emit(to_state, prev_state)
 
 func switch_state_str(state_node_path: NodePath):

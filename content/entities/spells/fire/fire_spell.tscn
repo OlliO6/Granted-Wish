@@ -81,7 +81,7 @@ tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.7),
 "transitions": PackedFloat32Array(2.37841, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -93,7 +93,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(2),
+"times": PackedFloat32Array(1.7),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -107,7 +107,7 @@ tracks/2/path = NodePath(".:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.7),
 "transitions": PackedFloat32Array(0.466517, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(50, 0)]
@@ -119,7 +119,7 @@ tracks/3/path = NodePath("CanvasGroup/GPUParticles2D/GPUParticles2D2:amount_rati
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.7),
 "transitions": PackedFloat32Array(2, 1),
 "update": 0,
 "values": [1.0, 0.0]
@@ -136,7 +136,7 @@ tracks/4/keys = {
 "start_offset": 0.0,
 "stream": ExtResource("3_cvpat")
 }],
-"times": PackedFloat32Array(0)
+"times": PackedFloat32Array(-0.3)
 }
 tracks/4/use_blend = true
 tracks/5/type = "value"
@@ -146,7 +146,7 @@ tracks/5/path = NodePath("../AudioStreamPlayer2D:volume_db")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.7),
 "transitions": PackedFloat32Array(6.9644, 1),
 "update": 0,
 "values": [5.0, -80.0]
@@ -158,7 +158,7 @@ tracks/6/path = NodePath("../DamageDealer:impact_velocity_magnitude")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0, 2),
+"times": PackedFloat32Array(0, 1.7),
 "transitions": PackedFloat32Array(2.73208, 1),
 "update": 0,
 "values": [40.0, 0.0]
@@ -170,7 +170,7 @@ tracks/7/path = NodePath("../Killable")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(1.7),
+"times": PackedFloat32Array(1.4),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],

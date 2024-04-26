@@ -13,11 +13,14 @@ func get_state_machine() -> StateMachine:
 func is_active() -> bool:
 	return get_state_machine().state == self
 
-func enter():
+func enter() -> void:
+	get_state_machine().switch_state(self)
+
+func _sm_enter() -> void:
 	state_entered.emit()
 	_entered()
 
-func exit():
+func _sm_exit() -> void:
 	state_exited.emit()
 	_exited()
 
