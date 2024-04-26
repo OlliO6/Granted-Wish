@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dtjpanhxa4wvc"]
+[gd_scene load_steps=41 format=3 uid="uid://dtjpanhxa4wvc"]
 
 [ext_resource type="Script" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.gd" id="1_hu0do"]
 [ext_resource type="Script" path="res://components/fighting/health.gd" id="1_ks78y"]
@@ -18,7 +18,13 @@
 [ext_resource type="Resource" uid="uid://beaxnkdfuwvvp" path="res://components/fighting/knockback/large_knockback.tres" id="16_1swhu"]
 [ext_resource type="Script" path="res://components/spawning/spawner.gd" id="17_36h2k"]
 [ext_resource type="PackedScene" uid="uid://c4dkyvfbye584" path="res://content/entities/enemies/bosses/evil_witch/spells/fire_salve.tscn" id="18_cq2cd"]
+[ext_resource type="Script" path="res://components/spawning/random_spawner.gd" id="19_oonp2"]
 [ext_resource type="PackedScene" uid="uid://dchcwvu0u1k6c" path="res://content/entities/enemies/fruit_fly/fruit_fly.tscn" id="19_ujb7q"]
+[ext_resource type="Script" path="res://components/spawning/blood_spawner.gd" id="20_73u1o"]
+[ext_resource type="PackedScene" uid="uid://bdwlpvhvpqmqf" path="res://vfx/blood_effect/blood_effect.tscn" id="21_2ecbe"]
+[ext_resource type="Script" path="res://components/spawning/random_spawn_data.gd" id="21_lwdqa"]
+[ext_resource type="AudioStream" uid="uid://mb85a2q4y8vl" path="res://sfx/hit_hurt_1.wav" id="22_awwwj"]
+[ext_resource type="PackedScene" uid="uid://cr3s7p3fayfpa" path="res://content/entities/enemies/circle/circle.tscn" id="22_t81j6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nty7r"]
 shader = ExtResource("2_rtqxk")
@@ -88,6 +94,144 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_17jof"]
+
+[sub_resource type="Animation" id="Animation_hk8cy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:material:shader_parameter/teleport")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:material:shader_parameter/teleport_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AttackArea:active")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_vfaye"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Health")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"confirm_death"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_d06xl"]
+resource_name = "fire_attack"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Spells/FireSalveSpellSpawner")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"spawn"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_wu2b2"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_liy6n"]
 resource_name = "teleport"
@@ -167,118 +311,10 @@ tracks/5/keys = {
 "values": [true, false]
 }
 
-[sub_resource type="Animation" id="Animation_d06xl"]
-resource_name = "fire_attack"
-length = 2.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 2]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Spells/FireSalveSpellSpawner")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"spawn"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_hk8cy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:material:shader_parameter/teleport")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:material:shader_parameter/teleport_color")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AttackArea:active")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D:disabled")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_wu2b2"]
-resource_name = "idle"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g7vjj"]
 _data = {
 "RESET": SubResource("Animation_hk8cy"),
+"die": SubResource("Animation_vfaye"),
 "fire_attack": SubResource("Animation_d06xl"),
 "idle": SubResource("Animation_wu2b2"),
 "teleport": SubResource("Animation_liy6n")
@@ -293,6 +329,16 @@ shader_parameter/teleport_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_usq44"]
 radius = 8.0
+
+[sub_resource type="Resource" id="Resource_x23w7"]
+script = ExtResource("21_lwdqa")
+priority = 1
+scene = ExtResource("19_ujb7q")
+
+[sub_resource type="Resource" id="Resource_734ry"]
+script = ExtResource("21_lwdqa")
+priority = 1
+scene = ExtResource("22_t81j6")
 
 [node name="EvilWitch" type="Node2D"]
 script = ExtResource("1_hu0do")
@@ -404,11 +450,19 @@ scene = ExtResource("18_cq2cd")
 child_of = 0
 
 [node name="EnemySpawner" type="Node2D" parent="CharacterBody2D/Spells"]
-script = ExtResource("17_36h2k")
-scene = ExtResource("19_ujb7q")
+script = ExtResource("19_oonp2")
+spawn_data = Array[ExtResource("21_lwdqa")]([SubResource("Resource_x23w7"), SubResource("Resource_734ry")])
 child_of = 5
 
+[node name="BloodSpawner" type="Node2D" parent="CharacterBody2D"]
+script = ExtResource("20_73u1o")
+effect_scn = ExtResource("21_2ecbe")
+
+[node name="HurtAudioPlayer2D" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("22_awwwj")
+
 [connection signal="state_entered" from="StateMachine/Spawning" to="CharacterBody2D" method="hide"]
+[connection signal="died" from="Health" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["die"]]
 [connection signal="animation_finished" from="SpawnSprite/AnimationPlayer" to="." method="_on_spawn_animation_finished"]
 [connection signal="state_entered" from="CharacterBody2D/StateMachine/Idle" to="CharacterBody2D" method="_on_idle_state_entered"]
 [connection signal="state_entered" from="CharacterBody2D/StateMachine/Idle" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["idle"]]
@@ -416,6 +470,8 @@ child_of = 5
 [connection signal="fire_attack" from="CharacterBody2D/StateMachine/Attack" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["fire_attack"]]
 [connection signal="state_entered" from="CharacterBody2D/StateMachine/Teleporting" to="CharacterBody2D/AnimationPlayer" method="play" binds= ["teleport"]]
 [connection signal="damage_taken" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/Knockback" method="_on_damage_receiver_damage_taken"]
-[connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/Sprite2D" method="flash"]
+[connection signal="damage_taken" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/BloodSpawner" method="_on_damage_receiver_damage_taken"]
 [connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/ScreenShakeInducer" method="induce_shake"]
+[connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/Sprite2D" method="flash"]
+[connection signal="took_damage" from="CharacterBody2D/DamageReceiver" to="CharacterBody2D/HurtAudioPlayer2D" method="play"]
 [connection signal="animation_finished" from="CharacterBody2D/AnimationPlayer" to="CharacterBody2D" method="_on_animation_finished"]

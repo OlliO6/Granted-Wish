@@ -10,8 +10,6 @@ extends CharacterBody2D
 var rush_dir: Vector2
 
 func _physics_process(_delta: float) -> void:
-	if sm.state:
-		print(sm.state.name)
 	
 	match sm.state:
 		idle_state:
@@ -36,4 +34,4 @@ func _on_idle_state_entered() -> void:
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "spawn":
-		idle_state.enter()
+		sm.switch_state(idle_state)

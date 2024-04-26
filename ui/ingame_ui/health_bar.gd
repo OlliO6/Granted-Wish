@@ -16,4 +16,6 @@ func _on_player_damaged(amount: int, _dealer: DamageDealer) -> void:
 	particles.amount = max(1, amount)
 	particles.restart()
 	var tween := create_tween()
+	if !tween:
+		return
 	tween.tween_property(material, "shader_parameter/amplitude_2", 0.0, 0.6).from(2)

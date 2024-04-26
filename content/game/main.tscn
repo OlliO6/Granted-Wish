@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://7cw2k7tpryji"]
+[gd_scene load_steps=37 format=3 uid="uid://7cw2k7tpryji"]
 
 [ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
 [ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
@@ -64,12 +64,22 @@ sources/2 = SubResource("TileSetAtlasSource_ehng8")
 [sub_resource type="Resource" id="Resource_ceio1"]
 script = ExtResource("10_xl5dl")
 priority = 1
-scene = ExtResource("9_31y36")
+scene = ExtResource("20_o4xva")
 
-[sub_resource type="Resource" id="Resource_upqha"]
+[sub_resource type="Resource" id="Resource_vrfj0"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("20_o4xva")
+
+[sub_resource type="Resource" id="Resource_1lqsi"]
 script = ExtResource("10_xl5dl")
 priority = 1
 scene = ExtResource("9_31y36")
+
+[sub_resource type="Resource" id="Resource_25dtv"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("20_o4xva")
 
 [sub_resource type="LabelSettings" id="LabelSettings_pv5ks"]
 font_size = 8
@@ -202,7 +212,7 @@ script = ExtResource("7_aeksu")
 script = ExtResource("5_j3m67")
 enemy_count_range = Vector2i(2, 2)
 spawn_delay_range = Vector2(2, 3)
-spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_upqha")])
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_vrfj0")])
 child_of = 3
 
 [node name="Timer3" type="Timer" parent="EnemySpawning"]
@@ -217,6 +227,26 @@ spell_to_unlock = ExtResource("12_ixlkq")
 wait_time = 5.0
 one_shot = true
 
+[node name="EnemyWave2" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave2"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(2, 3)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi")])
+child_of = 3
+
+[node name="EnemyWave3" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave3"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(4, 5)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi"), SubResource("Resource_25dtv")])
+child_of = 3
+
 [node name="Timer5" type="Timer" parent="EnemySpawning"]
 wait_time = 5.0
 one_shot = true
@@ -229,18 +259,19 @@ spell_to_unlock = ExtResource("13_yd7eg")
 wait_time = 5.0
 one_shot = true
 
-[node name="EnemyWave2" type="Node2D" parent="EnemySpawning"]
+[node name="EnemyWave4" type="Node2D" parent="EnemySpawning"]
 script = ExtResource("7_aeksu")
 
-[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave2"]
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave4"]
 script = ExtResource("5_j3m67")
-enemy_count_range = Vector2i(3, 4)
+enemy_count_range = Vector2i(6, 7)
 spawn_delay_range = Vector2(2, 4)
-spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_upqha")])
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi"), SubResource("Resource_25dtv")])
 child_of = 3
 
 [node name="FinalBoss" type="Node2D" parent="EnemySpawning"]
 script = ExtResource("7_aeksu")
+celebrated = false
 
 [node name="EnemySpawner" type="Node2D" parent="EnemySpawning/FinalBoss"]
 script = ExtResource("5_j3m67")
@@ -406,13 +437,10 @@ label_settings = SubResource("LabelSettings_fw8fl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Circle" parent="." instance=ExtResource("20_o4xva")]
-position = Vector2(75, 97)
-speed = 10.0
-
 [connection signal="celebrated_wave_cleared" from="EnemySpawning" to="." method="_on_enemy_spawning_celebrated_wave_cleared"]
 [connection signal="celebrated_wave_cleared" from="EnemySpawning" to="CanvasLayer/Celebration" method="celebrate" binds= ["Wave Cleared"]]
 [connection signal="wave_started" from="EnemySpawning/FirstEnemy" to="Tutorials" method="_on_first_enemy_wave_started"]
 [connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="Tutorials" method="_on_unlock_ice_spells_event_fired"]
 [connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Ice Magic"]]
 [connection signal="fired" from="EnemySpawning/UnlockMeatSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Meat Magic"]]
+[connection signal="wave_cleared" from="EnemySpawning/FinalBoss" to="CanvasLayer/Celebration" method="celebrate" binds= ["finish"]]

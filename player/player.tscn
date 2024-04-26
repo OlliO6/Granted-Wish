@@ -205,7 +205,7 @@ duration = 0.8
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_blm1e")
-max_health = 100
+max_health = 30
 
 [node name="HealAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Health"]
 stream = ExtResource("7_85ptf")

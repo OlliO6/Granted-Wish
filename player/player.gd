@@ -77,3 +77,4 @@ func _on_health_changed(health: int) -> void:
 
 func _on_died() -> void:
 	Events.player_died.emit()
+	get_tree().change_scene_to_file.call_deferred("res://ui/main_menu/main_menu.tscn")

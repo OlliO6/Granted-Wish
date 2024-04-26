@@ -265,6 +265,7 @@ autoplay = "spawn"
 
 [node name="RandomSpawner" type="Node2D" parent="."]
 script = ExtResource("18_pui1q")
+chance_to_spawn = 0.5
 use_spawn_data = false
 scene = ExtResource("19_fcxpb")
 child_of = 4

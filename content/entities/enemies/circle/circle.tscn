@@ -154,7 +154,7 @@ collision_layer = 4
 collision_mask = 65
 motion_mode = 1
 script = ExtResource("1_e8oqa")
-speed = 50.0
+speed = 35.0
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
 script = ExtResource("2_fxmex")
@@ -230,6 +230,7 @@ autoplay = "spawn"
 
 [node name="RandomSpawner" type="Node2D" parent="."]
 script = ExtResource("18_8uy3n")
+chance_to_spawn = 0.5
 use_spawn_data = false
 scene = ExtResource("19_o28cp")
 child_of = 4

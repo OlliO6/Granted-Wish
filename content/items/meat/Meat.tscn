@@ -10,7 +10,7 @@
 
 [sub_resource type="Resource" id="Resource_i5num"]
 script = ExtResource("2_7m02q")
-health_to_heal = 30
+health_to_heal = 10
 
 [sub_resource type="Resource" id="Resource_wvmc4"]
 script = ExtResource("3_4ulgn")
