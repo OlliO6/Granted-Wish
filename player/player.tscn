@@ -195,7 +195,7 @@ script = ExtResource("2_mo2lt")
 
 [node name="DamageReceiver" type="Node" parent="." node_paths=PackedStringArray("health")]
 script = ExtResource("1_v2v0g")
-invis_time = 2.0
+invis_time = 2.4
 health = NodePath("../Health")
 
 [node name="ScreenShakeInducer" type="Node" parent="DamageReceiver"]

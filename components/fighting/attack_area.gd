@@ -12,6 +12,7 @@ signal damage_applied(body: Node2D)
 
 func _ready() -> void:
 	body_entered.connect(_apply_damage)
+	Globals.game.get_player().dmg_receiver.invis_time_ended.connect(rescan)
 
 func rescan() -> void:
 	for b in get_overlapping_bodies():
