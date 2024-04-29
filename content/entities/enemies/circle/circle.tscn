@@ -91,7 +91,7 @@ tracks/1/path = NodePath("BloodSpawner")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(1),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0.0],
@@ -175,6 +175,7 @@ script = ExtResource("3_fqrp5")
 
 [node name="Timer" type="Timer" parent="StateMachine/CelebrateHitState"]
 process_callback = 0
+wait_time = 3.0
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
