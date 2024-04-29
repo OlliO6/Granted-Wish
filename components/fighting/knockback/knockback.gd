@@ -55,7 +55,7 @@ func compute_velocity(old_velocity: Vector2) -> Vector2:
 
 func _process_knockback() -> void:
 
-	var progress = clampf(_time_passed / _current_data.duration, 0, 1)
+	var progress := clampf(_time_passed / _current_data.duration, 0, 1)
 	velocity = ((_current_data.base_strenght + (_strenght * _current_data.dynamic_strenght_impact)) * _current_data.velocity_curve.sample(progress)) * transform.x * strenght_multiplier
 	unrepress_movement = _current_data.unrepress_movement_curve.sample(progress)
 

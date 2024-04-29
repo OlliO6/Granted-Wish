@@ -13,7 +13,7 @@ func _ready() -> void:
 
 func show_tutorial(tutorial: CanvasItem, duration: float) -> void:
 
-	var tween = create_tween()
+	var tween := create_tween()
 	tween.tween_property(tutorial, "modulate:a", 1.0, 0.5)
 	tween.tween_interval(duration)
 	tween.tween_property(tutorial, "modulate:a", 0.0, 3).set_trans(Tween.TRANS_SINE)

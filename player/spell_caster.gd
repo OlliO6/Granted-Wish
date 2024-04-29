@@ -26,9 +26,12 @@ func _ready() -> void:
 
 	Events.event_fired.connect(_on_event)
 	InputManager.attack_pressed.connect(_on_attack_pressed)
-	InputManager.spell_selected.connect(func(i): current_spell_idx=i - 1)
-	InputManager.next_spell_pressed.connect(func(): current_spell_idx += 1)
-	InputManager.previous_spell_pressed.connect(func(): current_spell_idx -= 1)
+	InputManager.spell_selected.connect(func(i: int) -> void:
+		current_spell_idx = i - 1)
+	InputManager.next_spell_pressed.connect(func() -> void:
+		current_spell_idx += 1)
+	InputManager.previous_spell_pressed.connect(func() -> void:
+		current_spell_idx -= 1)
 
 func _process(delta: float) -> void:
 	

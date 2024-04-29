@@ -32,5 +32,5 @@ func _on_enemy_died(_enemy: Node2D) -> void:
 	enemies_alive -= 1
 	
 	# clear wave only if nothing will be spawned
-	if enemies_alive <= 0 and !_enemy_spawners.any(func(s): s.is_spawning()):
+	if enemies_alive <= 0 and !_enemy_spawners.any(func(s: EnemySpawner) -> bool: return s.is_spawning()):
 		wave_cleared.emit()

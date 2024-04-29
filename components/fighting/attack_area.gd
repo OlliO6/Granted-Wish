@@ -18,7 +18,7 @@ func rescan() -> void:
 	for b in get_overlapping_bodies():
 		_apply_damage(b)
 
-func set_active(a: bool):
+func set_active(a: bool) -> void:
 	active = a
 
 func _apply_damage(body: Node2D) -> void:

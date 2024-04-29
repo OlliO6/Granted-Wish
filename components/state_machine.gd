@@ -20,7 +20,7 @@ func _enter_start_state() -> void:
 	else:
 		switch_state(get_child(0))
 
-func switch_state(to_state: State):
+func switch_state(to_state: State) -> void:
 	if state and !state._allow_switch_to(to_state):
 		return
 	prev_state = state
@@ -30,5 +30,5 @@ func switch_state(to_state: State):
 	state._sm_enter()
 	state_switched.emit(to_state, prev_state)
 
-func switch_state_str(state_node_path: NodePath):
+func switch_state_str(state_node_path: NodePath) -> void:
 	switch_state(get_node(state_node_path))

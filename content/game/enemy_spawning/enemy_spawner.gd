@@ -10,11 +10,10 @@ signal enemy_died(enemy: Node2D)
 @export var spawn_delay_range := Vector2(1, 2)
 @export_range(16, 100) var min_player_dist: float = 46
 
-@onready var spawn_positions_parent = get_node("%EnemySpawnPositions")
+@onready var spawn_positions_parent: Node = get_node("%EnemySpawnPositions")
 
 var _target_enemy_count: int
 var _enemies_spawned: int
-var _enemies_died: int
 var _spawning: bool
 var _timer: Timer
 
@@ -35,12 +34,12 @@ func is_spawning() -> bool:
 	return _spawning
 
 func spawn() -> Node:
+	@warning_ignore("unassigned_variable")
 	var position_nodes: Array[Node2D]
 	position_nodes.assign(spawn_positions_parent.get_children())
 	position_nodes.shuffle()
 	
 	for pos in position_nodes:
-		var player := Globals.get_player() as Player
 		if !_in_player_dist(pos.global_position):
 			global_transform = pos.global_transform
 			break
@@ -49,9 +48,10 @@ func spawn() -> Node:
 	if !enemy:
 		return
 	
-	var killable_component = Components.get_killable(enemy)
+	var killable_component := Components.get_killable(enemy)
 	assert(killable_component, "Enemies need to be Killable. '" + enemy.name + "' is not Killable.")
-	killable_component.death_confirmed.connect(func(): enemy_died.emit(enemy))
+	killable_component.death_confirmed.connect(func() -> void:
+		enemy_died.emit(enemy))
 	return enemy
 
 func _in_player_dist(pos: Vector2) -> bool:
@@ -67,4 +67,5 @@ func _on_timeout() -> void:
 	if _enemies_spawned < _target_enemy_count:
 		_start_timer()
 	else:
+		_spawning = false
 		spawning_ended.emit()

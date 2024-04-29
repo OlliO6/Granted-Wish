@@ -1,0 +1,609 @@
+[gd_scene load_steps=65 format=3 uid="uid://7cw2k7tpryji"]
+
+[ext_resource type="Script" path="res://content/game/game.gd" id="1_4q2k4"]
+[ext_resource type="PackedScene" uid="uid://dpkbomvltkwjd" path="res://player/player.tscn" id="2_gqw3t"]
+[ext_resource type="Script" path="res://content/game/game_camera.gd" id="2_w4jg4"]
+[ext_resource type="Texture2D" uid="uid://ddokf0earkhj1" path="res://content/tileset/ground.png" id="4_6ek2t"]
+[ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_spawner.gd" id="5_j3m67"]
+[ext_resource type="Texture2D" uid="uid://cmobit4kchg6m" path="res://content/tileset/tileset.png" id="5_nnika"]
+[ext_resource type="Script" path="res://content/game/tutorials.gd" id="5_xu1ea"]
+[ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_spawning_system.gd" id="6_xvvpa"]
+[ext_resource type="Script" path="res://content/game/enemy_spawning/enemy_wave.gd" id="7_aeksu"]
+[ext_resource type="PackedScene" uid="uid://dchcwvu0u1k6c" path="res://content/entities/enemies/fruit_fly/fruit_fly.tscn" id="9_31y36"]
+[ext_resource type="Shader" path="res://vfx/blood_effect/blood_container.gdshader" id="9_xi51p"]
+[ext_resource type="Theme" uid="uid://d17ndole8gkfd" path="res://ui/theme/theme.tres" id="10_mk7em"]
+[ext_resource type="Script" path="res://components/spawning/random_spawn_data.gd" id="10_xl5dl"]
+[ext_resource type="PackedScene" uid="uid://fkjb4cs11d3n" path="res://ui/ingame_ui/ingame_ui.tscn" id="11_rvh8f"]
+[ext_resource type="Script" path="res://singletons/events/unlock_spell_event.gd" id="11_vclut"]
+[ext_resource type="Resource" uid="uid://bctlttw0thmn5" path="res://content/entities/spells/ice/ice_spell.tres" id="12_ixlkq"]
+[ext_resource type="Resource" uid="uid://b7tw06p3042o2" path="res://content/entities/spells/meat/meat_spell.tres" id="13_yd7eg"]
+[ext_resource type="PackedScene" uid="uid://dtjpanhxa4wvc" path="res://content/entities/enemies/bosses/evil_witch/evil_witch.tscn" id="14_hknfx"]
+[ext_resource type="Script" path="res://content/game/celebration_ui.gd" id="15_7k1ak"]
+[ext_resource type="PackedScene" uid="uid://cr3s7p3fayfpa" path="res://content/entities/enemies/circle/circle.tscn" id="20_o4xva"]
+[ext_resource type="Script" path="res://content/game/shader_pre_compilation.gd" id="21_kbrt4"]
+[ext_resource type="Shader" path="res://vfx/common_shaders/sprite_flash.gdshader" id="33_24xp8"]
+
+[sub_resource type="Environment" id="Environment_srm4m"]
+background_mode = 3
+glow_enabled = true
+glow_levels/4 = 0.5
+glow_levels/5 = 0.0
+glow_normalized = true
+glow_strength = 1.15
+glow_blend_mode = 0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ldp46"]
+frequency = 0.15
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ahlq8"]
+texture = ExtResource("4_6ek2t")
+0:0/0 = 0
+0:0/0/z_index = -1
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ehng8"]
+texture = ExtResource("5_nnika")
+0:3/0 = 0
+0:3/0/z_index = -1
+0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/next_alternative_id = 2
+1:3/0 = 0
+1:3/0/z_index = -1
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0 = 0
+2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_w3q41"]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_ahlq8")
+sources/2 = SubResource("TileSetAtlasSource_ehng8")
+
+[sub_resource type="Resource" id="Resource_ceio1"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("20_o4xva")
+
+[sub_resource type="Resource" id="Resource_vrfj0"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("20_o4xva")
+
+[sub_resource type="Resource" id="Resource_1lqsi"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("9_31y36")
+
+[sub_resource type="Resource" id="Resource_25dtv"]
+script = ExtResource("10_xl5dl")
+priority = 1
+scene = ExtResource("20_o4xva")
+
+[sub_resource type="LabelSettings" id="LabelSettings_pv5ks"]
+font_size = 8
+font_color = Color(0.890196, 0.866667, 0.819608, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_06tm4"]
+shader = ExtResource("9_xi51p")
+shader_parameter/min_a = 0.5
+shader_parameter/spec_intensity = Color(1000, 1000, 1000, 1000)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_2v0d8"]
+viewport_path = NodePath("BloodLayer/BloodViewport")
+
+[sub_resource type="Animation" id="Animation_ctk8l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(92, 69)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ndqlk"]
+resource_name = "celebrate"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1, 2.6, 3.5),
+"transitions": PackedFloat32Array(-2, 2, -2, -2, 1),
+"update": 0,
+"values": [Vector2(-200, 69), Vector2(102, 69), Vector2(92, 69), Vector2(92, 69), Vector2(319, 69)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x6qc5"]
+_data = {
+"RESET": SubResource("Animation_ctk8l"),
+"celebrate": SubResource("Animation_ndqlk")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_fw8fl"]
+font_color = Color(0.890196, 0.866667, 0.819608, 1)
+outline_size = 12
+outline_color = Color(0.0431373, 0.0627451, 0.0862745, 1)
+
+[sub_resource type="Gradient" id="Gradient_5p7cw"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.667513)
+colors = PackedColorArray(0.380392, 0.14902, 0.219608, 1, 0.44, 0.2024, 0.20636, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8sfy7"]
+gradient = SubResource("Gradient_5p7cw")
+width = 32
+
+[sub_resource type="Curve" id="Curve_2bkij"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.31559, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_8vc4f"]
+curve_y = SubResource("Curve_2bkij")
+
+[sub_resource type="Curve" id="Curve_melm4"]
+max_value = 2.0
+_data = [Vector2(0, 0), 0.0, 10.1621, 0, 0, Vector2(0.310427, 0.807104), -2.02398, -2.02398, 0, 0, Vector2(0.703791, 0.620504), 1.23336, 1.23336, 0, 0, Vector2(0.990521, 1.64928), -0.800021, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_mtubc"]
+curve = SubResource("Curve_melm4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uehti"]
+resource_local_to_scene = true
+particle_flag_align_y = true
+particle_flag_disable_z = true
+spread = 38.0
+initial_velocity_max = 35.0
+directional_velocity_min = 1.0
+directional_velocity_max = 13.8
+directional_velocity_curve = SubResource("CurveXYZTexture_8vc4f")
+gravity = Vector3(0, 0, 0)
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_mtubc")
+color_initial_ramp = SubResource("GradientTexture1D_8sfy7")
+anim_offset_max = 1.0
+
+[sub_resource type="Curve" id="Curve_emjv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.56792, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5841j"]
+curve = SubResource("Curve_emjv0")
+
+[sub_resource type="Curve" id="Curve_snmov"]
+min_value = -1.0
+max_value = 0.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, -1), -3.8424, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_nuy0s"]
+curve_y = SubResource("Curve_snmov")
+
+[sub_resource type="Curve" id="Curve_6pl41"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 26.9784), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iew3n"]
+curve = SubResource("Curve_6pl41")
+
+[sub_resource type="Curve" id="Curve_bbiyu"]
+_data = [Vector2(0.007109, 0), 0.0, 0.0, 0, 0, Vector2(0.222749, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_piat4"]
+curve = SubResource("Curve_bbiyu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cunom"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.55
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, 0, 0)
+flatness = 0.533
+initial_velocity_min = 8.8
+initial_velocity_max = 14.2
+directional_velocity_min = 20.2
+directional_velocity_max = 20.2
+directional_velocity_curve = SubResource("CurveXYZTexture_nuy0s")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 2.0
+linear_accel_max = 2.0
+linear_accel_curve = SubResource("CurveTexture_iew3n")
+scale_min = 0.5
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_piat4")
+color = Color(1, 0.505882, 0.309804, 1)
+alpha_curve = SubResource("CurveTexture_5841j")
+anim_offset_max = 1.0
+
+[sub_resource type="Curve" id="Curve_nje61"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.56792, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oid6m"]
+curve = SubResource("Curve_nje61")
+
+[sub_resource type="Curve" id="Curve_jhubh"]
+min_value = -1.0
+max_value = 0.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, -1), -3.461, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_huc6t"]
+curve_y = SubResource("Curve_jhubh")
+
+[sub_resource type="Curve" id="Curve_pxddx"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 26.9784), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_63og4"]
+curve = SubResource("Curve_pxddx")
+
+[sub_resource type="Curve" id="Curve_f7jof"]
+_data = [Vector2(0.007109, 0), 0.0, 0.0, 0, 0, Vector2(0.222749, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_qdb1n"]
+curve = SubResource("Curve_f7jof")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k84pr"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 0.55
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(-1, 0, 0)
+spread = 18.835
+flatness = 0.533
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+directional_velocity_min = 20.2
+directional_velocity_max = 20.2
+directional_velocity_curve = SubResource("CurveXYZTexture_huc6t")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = 2.0
+linear_accel_max = 2.0
+linear_accel_curve = SubResource("CurveTexture_63og4")
+scale_curve = SubResource("CurveTexture_qdb1n")
+color = Color(1, 0.74902, 0.678431, 1)
+alpha_curve = SubResource("CurveTexture_oid6m")
+anim_offset_max = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_adsgp"]
+resource_local_to_scene = true
+shader = ExtResource("33_24xp8")
+shader_parameter/flash = 0.0
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("blood_viewport")]
+y_sort_enabled = true
+script = ExtResource("1_4q2k4")
+blood_viewport = NodePath("BloodLayer/BloodViewport")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_srm4m")
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+anchor_mode = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+script = ExtResource("2_w4jg4")
+shake_noise = SubResource("FastNoiseLite_ldp46")
+
+[node name="Player" parent="." instance=ExtResource("2_gqw3t")]
+unique_name_in_owner = true
+position = Vector2(143, 80)
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_w3q41")
+format = 2
+layer_0/tile_data = PackedInt32Array(0, 1, 0, 65536, 1, 0, 131072, 1, 0, 196608, 1, 0, 262144, 1, 0, 327680, 1, 0, 393216, 1, 0, 458752, 1, 0, 524288, 1, 0, 589824, 1, 0, 1, 1, 0, 65537, 65538, 3, 131073, 65538, 3, 196609, 65538, 3, 262145, 2, 3, 327681, 2, 3, 393217, 2, 3, 458753, 2, 3, 524289, 2, 3, 589825, 1, 0, 2, 1, 0, 65538, 2, 3, 131074, 2, 3, 196610, 65538, 3, 262146, 65538, 3, 327682, 65538, 3, 393218, 2, 3, 458754, 65538, 3, 524290, 2, 3, 589826, 1, 0, 3, 1, 0, 65539, 2, 3, 131075, 65538, 3, 196611, 2, 3, 262147, 65538, 3, 327683, 65538, 3, 393219, 65538, 3, 458755, 65538, 3, 524291, 2, 3, 589827, 1, 0, 4, 1, 0, 65540, 65538, 3, 131076, 65538, 3, 196612, 2, 3, 262148, 2, 3, 327684, 65538, 3, 393220, 2, 3, 458756, 2, 3, 524292, 65538, 3, 589828, 1, 0, 5, 1, 0, 65541, 65538, 3, 131077, 2, 3, 196613, 65538, 3, 262149, 65538, 3, 327685, 2, 3, 393221, 65538, 3, 458757, 65538, 3, 524293, 65538, 3, 589829, 1, 0, 6, 1, 0, 65542, 65538, 3, 131078, 2, 3, 196614, 65538, 3, 262150, 65538, 3, 327686, 65538, 3, 393222, 2, 3, 458758, 65538, 3, 524294, 65538, 3, 589830, 1, 0, 7, 1, 0, 65543, 2, 3, 131079, 65538, 3, 196615, 65538, 3, 262151, 2, 3, 327687, 2, 3, 393223, 65538, 3, 458759, 65538, 3, 524295, 65538, 3, 589831, 1, 0, 8, 1, 0, 65544, 2, 3, 131080, 2, 3, 196616, 65538, 3, 262152, 65538, 3, 327688, 65538, 3, 393224, 65538, 3, 458760, 65538, 3, 524296, 2, 3, 589832, 1, 0, 9, 1, 0, 65545, 65538, 3, 131081, 65538, 3, 196617, 2, 3, 262153, 65538, 3, 327689, 65538, 3, 393225, 65538, 3, 458761, 2, 3, 524297, 65538, 3, 589833, 1, 0, 10, 1, 0, 65546, 2, 3, 131082, 65538, 3, 196618, 2, 3, 262154, 65538, 3, 327690, 2, 3, 393226, 65538, 3, 458762, 2, 3, 524298, 65538, 3, 589834, 1, 0, 11, 1, 0, 65547, 2, 3, 131083, 2, 3, 196619, 2, 3, 262155, 65538, 3, 327691, 65538, 3, 393227, 65538, 3, 458763, 2, 3, 524299, 65538, 3, 589835, 1, 0, 12, 1, 0, 65548, 2, 3, 131084, 2, 3, 196620, 65538, 3, 262156, 2, 3, 327692, 65538, 3, 393228, 65538, 3, 458764, 2, 3, 524300, 2, 3, 589836, 1, 0, 13, 1, 0, 65549, 2, 3, 131085, 2, 3, 196621, 65538, 3, 262157, 2, 3, 327693, 2, 3, 393229, 2, 3, 458765, 2, 3, 524301, 65538, 3, 589837, 1, 0, 14, 1, 0, 65550, 65538, 3, 131086, 65538, 3, 196622, 65538, 3, 262158, 2, 3, 327694, 65538, 3, 393230, 2, 3, 458766, 65538, 3, 524302, 65538, 3, 589838, 1, 0, 15, 1, 0, 65551, 65538, 3, 131087, 2, 3, 196623, 2, 3, 262159, 65538, 3, 327695, 65538, 3, 393231, 2, 3, 458767, 65538, 3, 524303, 2, 3, 589839, 1, 0, 16, 1, 0, 65552, 65538, 3, 131088, 65538, 3, 196624, 65538, 3, 262160, 65538, 3, 327696, 2, 3, 393232, 65538, 3, 458768, 65538, 3, 524304, 65538, 3, 589840, 1, 0, 17, 1, 0, 65553, 1, 0, 131089, 1, 0, 196625, 1, 0, 262161, 1, 0, 327697, 1, 0, 393233, 1, 0, 458769, 1, 0, 524305, 1, 0, 589841, 1, 0, 720895, 131074, 3, 786431, 131074, 3, 655360, 131074, 3, 720896, 131074, 3, 655361, 131074, 3, 720897, 131074, 3, 655362, 131074, 3, 720898, 131074, 3, 655363, 131074, 3, 720899, 131074, 3, 655364, 131074, 3, 720900, 131074, 3, 655365, 131074, 3, 720901, 131074, 3, 655366, 131074, 3, 720902, 131074, 3, 655367, 131074, 3, 720903, 131074, 3, 655368, 131074, 3, 720904, 131074, 3, 655369, 131074, 3, 720905, 131074, 3, 655370, 131074, 3, 720906, 131074, 3, 655371, 131074, 3, 720907, 131074, 3, 655372, 131074, 3, 720908, 131074, 3, 655373, 131074, 3, 720909, 131074, 3, 655374, 131074, 3, 720910, 131074, 3, 655375, 131074, 3, 720911, 131074, 3, 655376, 131074, 3, 720912, 131074, 3, 655377, 131074, 3, 720913, 131074, 3, 655378, 131074, 3, 720914, 131074, 3, -131054, 131074, 3, -65518, 131074, 3, 18, 131074, 3, 65554, 131074, 3, 131090, 131074, 3, 196626, 131074, 3, 262162, 131074, 3, 327698, 131074, 3, 393234, 131074, 3, 458770, 131074, 3, 524306, 131074, 3, 589842, 131074, 3, -131053, 131074, 3, -65517, 131074, 3, 19, 131074, 3, 65555, 131074, 3, 131091, 131074, 3, 196627, 131074, 3, 262163, 131074, 3, 327699, 131074, 3, 393235, 131074, 3, 458771, 131074, 3, 524307, 131074, 3, 589843, 131074, 3, 655379, 131074, 3, 720915, 131074, 3, -131074, 131074, 3, -65538, 131074, 3, -2, 131074, 3, -131073, 131074, 3, -65537, 131074, 3, -1, 131074, 3, -196608, 131074, 3, -131072, 131074, 3, -65536, 131074, 3, -196607, 131074, 3, -131071, 131074, 3, -65535, 131074, 3, -196606, 131074, 3, -131070, 131074, 3, -65534, 131074, 3, -196605, 131074, 3, -131069, 131074, 3, -65533, 131074, 3, -196604, 131074, 3, -131068, 131074, 3, -65532, 131074, 3, -196603, 131074, 3, -131067, 131074, 3, -65531, 131074, 3, -196602, 131074, 3, -131066, 131074, 3, -65530, 131074, 3, -196601, 131074, 3, -131065, 131074, 3, -65529, 131074, 3, -196600, 131074, 3, -131064, 131074, 3, -65528, 131074, 3, -196599, 131074, 3, -131063, 131074, 3, -65527, 131074, 3, -196598, 131074, 3, -131062, 131074, 3, -65526, 131074, 3, -196597, 131074, 3, -131061, 131074, 3, -65525, 131074, 3, -196596, 131074, 3, -131060, 131074, 3, -65524, 131074, 3, -196595, 131074, 3, -131059, 131074, 3, -65523, 131074, 3, -196594, 131074, 3, -131058, 131074, 3, -65522, 131074, 3, -196593, 131074, 3, -131057, 131074, 3, -65521, 131074, 3, -196592, 131074, 3, -131056, 131074, 3, -65520, 131074, 3, -196591, 131074, 3, -131055, 131074, 3, -65519, 131074, 3, -196590, 131074, 3, -196589, 131074, 3, 65534, 131074, 3, 131070, 131074, 3, 196606, 131074, 3, 262142, 131074, 3, 327678, 131074, 3, 393214, 131074, 3, 458750, 131074, 3, 524286, 131074, 3, 589822, 131074, 3, 655358, 131074, 3, 720894, 131074, 3, 786430, 131074, 3, 65535, 131074, 3, 131071, 131074, 3, 196607, 131074, 3, 262143, 131074, 3, 327679, 131074, 3, 393215, 131074, 3, 458751, 131074, 3, 524287, 131074, 3, 589823, 131074, 3, 655359, 131074, 3)
+
+[node name="EnemySpawning" type="Node2D" parent="."]
+script = ExtResource("6_xvvpa")
+
+[node name="Timer" type="Timer" parent="EnemySpawning"]
+wait_time = 5.0
+one_shot = true
+
+[node name="FirstEnemy" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/FirstEnemy"]
+script = ExtResource("5_j3m67")
+spawn_delay_range = Vector2(2, 2)
+min_player_dist = 100.0
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_ceio1")])
+child_of = 3
+
+[node name="Timer2" type="Timer" parent="EnemySpawning"]
+wait_time = 4.0
+one_shot = true
+
+[node name="EnemyWave" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(2, 2)
+spawn_delay_range = Vector2(2, 3)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_vrfj0")])
+child_of = 3
+
+[node name="Timer3" type="Timer" parent="EnemySpawning"]
+wait_time = 4.0
+one_shot = true
+
+[node name="UnlockIceSpellsEvent" type="Node" parent="EnemySpawning"]
+script = ExtResource("11_vclut")
+spell_to_unlock = ExtResource("12_ixlkq")
+
+[node name="Timer4" type="Timer" parent="EnemySpawning"]
+wait_time = 4.0
+one_shot = true
+
+[node name="EnemyWave2" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave2"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(2, 3)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi")])
+child_of = 3
+
+[node name="EnemyWave3" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave3"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(4, 5)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi"), SubResource("Resource_25dtv")])
+child_of = 3
+
+[node name="Timer5" type="Timer" parent="EnemySpawning"]
+wait_time = 4.0
+one_shot = true
+
+[node name="UnlockMeatSpellsEvent" type="Node" parent="EnemySpawning"]
+script = ExtResource("11_vclut")
+spell_to_unlock = ExtResource("13_yd7eg")
+
+[node name="Timer6" type="Timer" parent="EnemySpawning"]
+wait_time = 4.0
+one_shot = true
+
+[node name="EnemyWave4" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/EnemyWave4"]
+script = ExtResource("5_j3m67")
+enemy_count_range = Vector2i(6, 7)
+spawn_delay_range = Vector2(2, 4)
+spawn_data = Array[ExtResource("10_xl5dl")]([SubResource("Resource_1lqsi"), SubResource("Resource_25dtv")])
+child_of = 3
+
+[node name="FinalBoss" type="Node2D" parent="EnemySpawning"]
+script = ExtResource("7_aeksu")
+celebrated = false
+
+[node name="EnemySpawner" type="Node2D" parent="EnemySpawning/FinalBoss"]
+script = ExtResource("5_j3m67")
+use_spawn_data = false
+scene = ExtResource("14_hknfx")
+child_of = 3
+
+[node name="EnemySpawnPositions" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Node2D" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(28, 29)
+
+[node name="Node2D2" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(74, 33)
+
+[node name="Node2D3" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(136, 32)
+
+[node name="Node2D4" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(191, 34)
+
+[node name="Node2D5" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(246, 33)
+
+[node name="Node2D6" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(248, 73)
+
+[node name="Node2D7" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(193, 76)
+
+[node name="Node2D8" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(143, 75)
+
+[node name="Node2D9" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(92, 76)
+
+[node name="Node2D10" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(34, 78)
+
+[node name="Node2D11" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(33, 120)
+
+[node name="Node2D12" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(93, 121)
+
+[node name="Node2D13" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(150, 122)
+
+[node name="Node2D14" type="Node2D" parent="EnemySpawnPositions"]
+position = Vector2(194, 125)
+
+[node name="Tutorials" type="Control" parent="." node_paths=PackedStringArray("move_tutorial", "cast_spells_tutorial", "switch_spell_tutorial")]
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("10_mk7em")
+script = ExtResource("5_xu1ea")
+move_tutorial = NodePath("MoveLabel")
+cast_spells_tutorial = NodePath("ShootLabel")
+switch_spell_tutorial = NodePath("SwitchSpellLabel")
+
+[node name="MoveLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'wasd' to move"
+label_settings = SubResource("LabelSettings_pv5ks")
+
+[node name="ShootLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'left mouse' to cast spells"
+label_settings = SubResource("LabelSettings_pv5ks")
+
+[node name="SwitchSpellLabel" type="Label" parent="Tutorials"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 114.0
+offset_top = 98.0
+offset_right = 172.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "'1, 2' to switch between spells"
+label_settings = SubResource("LabelSettings_pv5ks")
+
+[node name="BloodLayer" type="Sprite2D" parent="."]
+visible = false
+z_index = -1
+material = SubResource("ShaderMaterial_06tm4")
+texture = SubResource("ViewportTexture_2v0d8")
+centered = false
+
+[node name="BloodViewport" type="SubViewport" parent="BloodLayer"]
+own_world_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(288, 162)
+render_target_clear_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="IngameUI" parent="CanvasLayer" instance=ExtResource("11_rvh8f")]
+
+[node name="Celebration" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("10_mk7em")
+script = ExtResource("15_7k1ak")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Celebration"]
+libraries = {
+"": SubResource("AnimationLibrary_x6qc5")
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Celebration"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -12.0
+offset_right = 58.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Wave Cleared!"
+label_settings = SubResource("LabelSettings_fw8fl")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShaderPreCompilation" type="Node" parent="."]
+script = ExtResource("21_kbrt4")
+materials = Array[Material]([SubResource("ParticleProcessMaterial_uehti"), SubResource("ParticleProcessMaterial_cunom"), SubResource("ParticleProcessMaterial_k84pr"), SubResource("ShaderMaterial_adsgp")])
+
+[connection signal="celebrated_wave_cleared" from="EnemySpawning" to="." method="_on_enemy_spawning_celebrated_wave_cleared"]
+[connection signal="celebrated_wave_cleared" from="EnemySpawning" to="CanvasLayer/Celebration" method="celebrate" binds= ["Wave Cleared"]]
+[connection signal="wave_started" from="EnemySpawning/FirstEnemy" to="Tutorials" method="_on_first_enemy_wave_started"]
+[connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="Tutorials" method="_on_unlock_ice_spells_event_fired"]
+[connection signal="fired" from="EnemySpawning/UnlockIceSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Ice Magic"]]
+[connection signal="fired" from="EnemySpawning/UnlockMeatSpellsEvent" to="CanvasLayer/Celebration" method="celebrate" binds= ["Unlocked Meat Magic"]]
+[connection signal="wave_cleared" from="EnemySpawning/FinalBoss" to="CanvasLayer/Celebration" method="celebrate" binds= ["finish"]]

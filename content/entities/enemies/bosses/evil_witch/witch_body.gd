@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 
 func teleport() -> void:
 	if owner.is_phase_2():
-		var spawner = $Spells/EnemySpawner
+		var spawner := $Spells/EnemySpawner as Spawner
 		spawner.global_rotation = 0
 		spawner.spawn()
 	teleporting_state.enter()

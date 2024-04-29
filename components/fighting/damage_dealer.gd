@@ -28,5 +28,5 @@ func apply_damage(node: Node) -> bool:
 	
 	return false
 
-func set_impact_velocity_magnitude(v: float):
+func set_impact_velocity_magnitude(v: float) -> void:
 	impact_velocity_magnitude = v

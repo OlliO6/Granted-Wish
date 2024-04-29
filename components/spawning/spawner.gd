@@ -20,7 +20,7 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 func _draw() -> void:
 	if Engine.is_editor_hint():
-		var clr = Color.SLATE_BLUE
+		var clr := Color.SLATE_BLUE
 		clr.a = 0.8
 		draw_line(Vector2.ZERO, Vector2.RIGHT * 2, clr, 1)
 		draw_circle(Vector2.ZERO, 1, clr)

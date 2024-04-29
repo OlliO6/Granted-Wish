@@ -6,7 +6,7 @@ extends Node
 
 func induce_shake() -> void:
 	
-	var cam = Globals.game.get_camera() as GameCamera
+	var cam := Globals.game.get_camera() as GameCamera
 	
 	if cam:
 		cam.shake(amplitude, duration)
